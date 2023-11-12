@@ -1,0 +1,43 @@
+<div>
+    <div class="leaderboard-val">
+        <div class="leaderboard-val-logo">
+            <img id="rankimage" src="/img/badges/radiant-badge.png" alt="Radiant Badge">
+        </div>
+        <div class="leaderboard-val-rank">
+            <select id="selectrank" style="width: 100%;" data-bind="options: optionsRanks, value: selectedRank">
+                <!-- <option value="Radiant">Radiant</option>
+                <option value="Immortal3">Immortal 3</option>
+                <option value="Immortal2">Immortal 2</option>
+                <option value="Immortal1">Immortal 1</option> --> 
+            </select>
+        </div>
+        <div class="leaderboard-val-season">
+            <h1 data-bind="text: season"></h1>
+        </div>
+    </div>
+    <div class="leaderboard-divider">
+        <div style="width: 24%">RANK</div>
+        <div>NAME</div>
+    </div>
+    <div class="leaderboard-rankedview" data-bind="foreach: p">
+        <div class="leaderboard-playerholder">
+            <div class="leaderboard-rank">
+                <span data-bind="text: $data.rankNum"></span>
+                <div class="playerrankimg">
+                    <!-- ko if: $data.fuzzedMMR() > 500 -->
+                    <img src="/img/badges/radiant-badge.png" alt="Radiant Badge" height="40" class="playerankimg"> <span data-bind="text: $data.fuzzedMMR"></span>
+                    <!-- /ko -->
+                    <!-- ko if: !($data.fuzzedMMR() > 500) -->
+                    <img src="/img/badges/immortal-badge.png" alt="Radiant Badge" height="40" class="playerankimg"> <span data-bind="text: $data.fuzzedMMR"></span>
+                    <!-- /ko -->
+                </div>
+            </div>
+            <div class="leaderboard-name">
+                <a data-bind="attr: { href: '/l/' + $parent.lid() + /player/ + $data.pid() }"><span data-bind="text: $data.abbrev"></span> <span data-bind="text: $data.userID"></span></a>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="leaderboard-pagination" id="pagination-1">
+    </div>
+</div>
