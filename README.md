@@ -18,6 +18,8 @@ IndexedDB. This game is a fork of LOL GM by Jeremy Scheff.
 
 ```bash
 git clone https://github.com/qwertydelle/valgm.git
+cd valgm
+npm install
 ```
 
 ### 2. Running
