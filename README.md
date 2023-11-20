@@ -1,65 +1,31 @@
-# Basketball GM 3.4.0
+# Valorant GM Alpha
 
-A single-player basketball simulation game. Make trades, set rosters, draft
-players, and try to build the next dynasty, all from within your web browser.
+A single-player esport simulation game about the game valorant. Make trades, set rosters, draft
+rookies, and try to build the next dynasty, all from within your web browser.
 The game is implemented entirely in client-side JavaScript, backed by
-IndexedDB.
-
-Copyright (C) Jeremy Scheff. All rights reserved.
-
-* Email: jdscheff@gmail.com
-
-* Website: http://www.basketball-gm.com/
-
-* Development website: https://bitbucket.org/dumbmatter/basketball-gm
-
-
+IndexedDB. This game is a fork of LOL GM by Jeremy Scheff.
 
 ## Installing and Running
 
-If you just want to play the game, go to http://www.basketball-gm.com/
-Instructions below are for developers who want to run a copy so that they can
-test changes to the code locally.
+### Prerequisites:
 
-To run the game with local files, you need some way of running a web server to
-display the content. There are currently three ways to do it. It doesn't matter
-which you use as long as you can get it to run on your computer.
+- Node
+  - [https://nodejs.org/en/](https://nodejs.org/en/)
+- Make
+  - [https://www.gnu.org/software/make/](https://www.gnu.org/software/make/)
 
+### 1. Installing
 
+```bash
+git clone https://github.com/qwertydelle/valgm.git
+```
 
-### 1. Mongoose - Easiest on Windows
+### 2. Running
 
-Run `mongoose-tiny-4.1.exe`. Point your browser to http://localhost:8080/
-
-That's it.
-
-If that doesn't work, try right clicking on the Mongoose icon in your
-notification area and poke around in there. You can also see if there is a
-newer version of Mongoose available http://cesanta.com/downloads.html 
-
-
-
-### 2. web.py - Easiest on Linux
-
-Install Python and web.py (as simple as `sudo apt-get install python-webpy` on
-Ubuntu). Then, from the command line, run:
-
-    python runserver.py
-
-Point your browser to http://localhost:8080/
-
-If that URL doesn't work, try http://0.0.0.0:8080/
-
-
-
-### 3. Apache
-
-If you can't get one of the above methods to work, the mod_rewrite rules in
-`.htaccess` can be used to make Apache run Basketball GM. Everything should work
-if you just have a domain/subdomain point at this folder with mod_rewrite
-enabled.
-
-
+```bash
+cd valgm
+node server.js
+```
 
 ## Debugging and Problem Solving
 
