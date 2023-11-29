@@ -151,7 +151,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
     GameSim.prototype.simRound = function(roundCounter, teamId, creditsData) {
         creditsData = creditsData === undefined? [[800,800,800,800,800],[800,800,800,800,800]]: creditsData;
-        let basicActions = ["peek", "hold", "fight"];
+        let basicActions = ["peek", "hold", "fight", "fight", "utilPeek", "utilPeek", "utilTeamFight"];
         let deadPlayers = [[],[]];
         let enemyTeamID = teamId == 1? 0: 1;
 
@@ -160,8 +160,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
         let normalTimer = 0;
 
         this.manageBuys(creditsData)
-        console.log(this.teams)
-        console.log(this.currentWeapon)
+
 
         //Rounds 
         /*For Later 
@@ -189,6 +188,8 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                 agent: this.playerAgentPicks[enemyTeamID][randomEnemyPick]
             }
 
+            console.log(currentPlayer)
+            console.log(enemyPlayer)
 
             for(let i = 0; i < 5; i++) {
                 let randomBasicAction = Math.floor(Math.random() * basicActions.length);
@@ -430,6 +431,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                     }        
                                 }
                             } else {
+                                //Kill
                                 this.recordStat(enemyTeamID, randomEnemyPick, "fg", 1);
                                 deadPlayers[teamId].push(randomPlayerPick);
                                 this.recordStat(teamId, randomPlayerPick, "fga", 1)
@@ -507,6 +509,65 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                 normalTimer = 175;
                             }    
                         }
+                    } else if(basicActions[randomBasicAction] == "utilPeek") {
+                        if(currentPlayer.player.matchRating.utilUsage + currentPlayer.agent.ratings.ability  > enemyPlayer.player.matchRating.utilUsage + currentPlayer.agent.ratings.ability) {
+                            this.recordStat(teamId, randomPlayerPick, "fg", 1);
+                            deadPlayers[enemyTeamID].push(randomEnemyPick);
+                            this.recordStat(enemyTeamID, randomEnemyPick, "fga", 1)
+
+                            creditsData[teamId][randomPlayerPick] += 200;
+
+                            if(enemyPlayer.agent.role === "Sentinal" || (Math.random() > 0.8)) {
+                                plantedSpike = true;
+                            } 
+                        } else {
+                            this.recordStat(enemyTeamID, randomEnemyPick, "fg", 1);
+                            deadPlayers[teamId].push(randomPlayerPick);
+                            this.recordStat(teamId, randomPlayerPick, "fga", 1)
+
+                            creditsData[enemyTeamID][randomEnemyPick] += 200;
+
+                            if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.8)) && (plantedSpike)) {
+                                plantedSpike = false;
+                                normalTimer = 175;
+                            } 
+                        }
+                    } else if(basicActions[randomBasicAction] == "utilTeamFight") {
+                        if(currentPlayer.player.matchRating.teamwork + currentPlayer.agent.ratings.ability > enemyPlayer.player.matchRating.teamwork + currentPlayer.agent.ratings.ability) {
+                            this.recordStat(teamId, randomPlayerPick, "fg", 1);
+                            deadPlayers[enemyTeamID].push(randomEnemyPick);
+                            this.recordStat(enemyTeamID, randomEnemyPick, "fga", 1)
+
+                            this.recordStat(teamId, randomPlayerPick + 1, "fgp", 1);
+                            this.recordStat(teamId, randomPlayerPick + 1, "tp", 25)
+
+                            //ACS
+                            this.recordStat(teamId, randomPlayerPick, "tp", 30)
+
+                            creditsData[teamId][randomPlayerPick] += 200;
+
+                            if(Math.random() > 0.5) {
+                                plantedSpike = true;
+                            }
+                        } else {
+                            this.recordStat(enemyTeamID, randomEnemyPick, "fg", 1);
+                            deadPlayers[teamId].push(randomPlayerPick);
+                            this.recordStat(teamId, randomPlayerPick, "fga", 1)
+
+                            this.recordStat(enemyTeamID, randomEnemyPick, "tp", 90)
+
+                            creditsData[enemyTeamID][randomEnemyPick] += 200;
+
+                            if(Math.random() > 0.5) {
+                                this.recordStat(enemyTeamID, randomEnemyPick + 1, "fgp", 1);
+                                this.recordStat(enemyTeamID, randomEnemyPick + 1, "tp", 25)
+                            }
+
+                            if((Math.random() > 0.5) && (plantedSpike)) {
+                                plantedSpike = false;
+                                normalTimer = 175;
+                            }
+                        }
                     }
                 } else {
                     if(deadPlayers[0].length >= 5 || deadPlayers[1].length >= 5) {
@@ -564,7 +625,10 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
             for(let k = 0; k < creditsData[i].length; k++) {
                 if(creditsData[i][k] < 0) {
                     creditsData[i][k] = 0;
+                } else if(creditsData[i][k] > 9000) {
+                    creditsData[i][k] = 9000
                 }
+
                 average += creditsData[i][k]
             }
 
@@ -577,9 +641,6 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
             } else {
                 roundType = "buy"
             }
-
-            console.log("[core.gameSim.manageBuys]Average: " + average)
-            console.log(roundType)
 
             for(let j = 0; j < 5; j++) {
                 let currentPlayer = { 
@@ -777,8 +838,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 			} else {
 				this.teams[t].player[p].stat[s] += amt;				
 			}
-//			console.log(this.team[t].player[p].stat[s]);					
-		//	console.log(s);					
+			
             if (this.playByPlay !== undefined) {
                 this.playByPlay.push({
                     type: "stat",

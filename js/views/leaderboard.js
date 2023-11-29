@@ -115,7 +115,6 @@ define(["dao", "ui", "util/bbgmView", "lib/knockout", "globals", "lib/bluebird",
             //Give each player a ranknum based on their position
             let i = 0;
             p = p.map(e => {
-                console.log(e)
                 if(e.tid != -3) {
                     e.rankNum = ++i;
                 }

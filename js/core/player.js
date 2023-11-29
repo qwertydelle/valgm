@@ -831,6 +831,8 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
 				}
 			}
 
+            skillMMR = 300;
+
 			p.ratings[r].MMR = MMRcalc(p.ratings[r].ovr,skillMMR);
 
 			fuzzedMMR = p.ratings[0].MMR + random.randInt(-500, 100);

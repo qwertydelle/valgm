@@ -268,8 +268,8 @@ define(["dao", "globals", "lib/knockout", "util/eventLog"], function (dao, g, ko
 
         patchType = [
 		
-			// change champion rankings or keep them fixed, could have more game options here
-            {patchid: 0, name: "Each Season Changes (large nerfs/buffs for top/bottom champs)"},
+			// change agent rankings or keep them fixed, could have more game options here
+            {patchid: 0, name: "Each Season Changes (large nerfs/buffs for agents)"},
             {patchid: 2, name: "Each Season Changes (gradual weakening/strengthening)"},
             {patchid: 1, name: "Fixed (only user can change)"}
         ];
