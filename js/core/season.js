@@ -559,8 +559,8 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
         tx = dao.tx("schedule", "readwrite", tx);
 
 		//Updates leaderboard position
-		dao.players.getAll().then(p => {
-			p = p.sort((a,b) => {
+		dao.players.getAll().then(function(p) {
+			p = p.sort(function(a,b) {
 				if(a.ratings[a.ratings.length - 1].fuzzedMMR > b.ratings[b.ratings.length - 1].fuzzedMMR) {
 					return -1
 				} else if(a.ratings[a.ratings.length - 1].fuzzedMMR < b.ratings[b.ratings.length - 1].fuzzedMMR) {
@@ -570,7 +570,7 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 				}
 			})
 
-			p = p.filter((e) => {
+			p = p.filter(function(e) {
 				return e.tid != -3
 			})
 

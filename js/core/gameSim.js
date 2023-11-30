@@ -50,7 +50,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
         for(let teamID = 0;teamID < 2;teamID++) {
 
-            this.teams[teamID].sortedPlayers = [...this.teams[teamID].player.slice(0,5)].sort((a,b) => {
+            this.teams[teamID].sortedPlayers = this.teams[teamID].player.slice(0,5).concat().sort(function(a,b) {
                 if(a.ovr > b.ovr) {
                     return -1;
                 } else if(b.ovr > a.ovr) {
@@ -60,7 +60,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                 }
             })
 
-            this.teams[teamID].sortedIDs = [this.teams[teamID].player.findIndex((e) => e.id == this.teams[teamID].sortedPlayers[0].id),this.teams[teamID].player.findIndex((e) => e.id == this.teams[teamID].sortedPlayers[1].id)]
+            this.teams[teamID].sortedIDs = [this.teams[teamID].player.findIndex((function(e) { return e.id == this.teams[teamID].sortedPlayers[0].id}).bind(this)),this.teams[teamID].player.findIndex((function(e) { return e.id == this.teams[teamID].sortedPlayers[1].id}).bind(this))]
         }
 
 
@@ -161,6 +161,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
         this.manageBuys(creditsData)
 
+        console.log(this.teams)
 
         //Rounds 
         /*For Later 
@@ -745,7 +746,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 				this.teams[i].player[shuffledPlayerId[j]].champions.length = 22;
 				let playerAgentData = Array.from(this.teams[i].player[shuffledPlayerId[j]].champions)
 
-				let filteredByBestAgents = playerAgentData.sort((a,b) => {
+				let filteredByBestAgents = playerAgentData.sort(function(a,b) {
 					if(a.draftValue > b.draftValue) {
 						return -1;
 					} else if(a.draftValue < b.draftValue) {
@@ -762,7 +763,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 					while(!picked) {
 						let pick = filteredByBestAgents[o].name;
 
-						let agentData = agents.find((el) => {
+						let agentData = agents.find(function(el) {
 							if(el.name == pick) {
 								return true;
 							} else {
@@ -790,7 +791,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 					while(!picked) {
 						let pick = filteredByBestAgents[randomPick].name;
 
-						let agentData = agents.find((el) => {
+						let agentData = agents.find(function(el) {
 							if(el.name == pick) {
 								return true;
 							} else {

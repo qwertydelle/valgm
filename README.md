@@ -13,13 +13,16 @@ IndexedDB. This game is a fork of LOL GM by Jeremy Scheff.
   - [https://nodejs.org/en/](https://nodejs.org/en/)
 - Make
   - [https://www.gnu.org/software/make/](https://www.gnu.org/software/make/)
+- Global install of Node-minify
+  - [https://www.npmjs.com/package/node-minify](https://www.npmjs.com/package/node-minify)
 
-### 1. Installing
+### 1. Building
 
 ```bash
 git clone https://github.com/qwertydelle/valgm.git
 cd valgm
 npm install
+make
 ```
 
 ### 2. Running

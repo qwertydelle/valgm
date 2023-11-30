@@ -19,14 +19,14 @@ define(["dao", "ui", "util/bbgmView", "lib/knockout", "globals", "lib/bluebird",
         this.selectedRank = ko.observable()
         this.navigate = true;
 
-        this.selectedRank.subscribe((newValue) => {
+        this.selectedRank.subscribe(function(newValue) {
             console.log(this)
             if(newValue.startsWith("Immortal")) {
                 $("#rankimage").attr("src", "/img/badges/immortal-badge.png").css("opacity", 0).animate({opacity: 1}, 1000)
                 let index;
 
                 if(newValue === "Immortal 3") {
-                    index = g.leaderboardData.players.findIndex(e => {
+                    index = g.leaderboardData.players.findIndex(function(e) {
                         if(e.fuzzedMMR < 500) {
                             return true;
                         } else {
@@ -34,7 +34,7 @@ define(["dao", "ui", "util/bbgmView", "lib/knockout", "globals", "lib/bluebird",
                         }
                     })
                 } else if(newValue === "Immortal 2") {
-                    index = g.leaderboardData.players.findIndex(e => {
+                    index = g.leaderboardData.players.findIndex(function(e) {
                         if(e.fuzzedMMR < 90) {
                             return true;
                         } else {
@@ -103,7 +103,7 @@ define(["dao", "ui", "util/bbgmView", "lib/knockout", "globals", "lib/bluebird",
             
 
             //Sort rank by greatest to least
-            p = p.sort((a, b) => {
+            p = p.sort(function(a, b) {
                 if((a.fuzzedMMR > b.fuzzedMMR) || (a.fuzzedMMR == b.fuzzedMMR)) {         
                     return -1
                 } else {
@@ -114,7 +114,7 @@ define(["dao", "ui", "util/bbgmView", "lib/knockout", "globals", "lib/bluebird",
 
             //Give each player a ranknum based on their position
             let i = 0;
-            p = p.map(e => {
+            p = p.map(function(e) {
                 if(e.tid != -3) {
                     e.rankNum = ++i;
                 }
@@ -122,7 +122,7 @@ define(["dao", "ui", "util/bbgmView", "lib/knockout", "globals", "lib/bluebird",
             });
 
 
-            p = p.filter(p => p.tid != -3);
+            p = p.filter(function(p) { return p.tid != -3});
 
 
             //Merge content creators here
@@ -135,7 +135,7 @@ define(["dao", "ui", "util/bbgmView", "lib/knockout", "globals", "lib/bluebird",
 
             let portion = p.slice(min,max);
 
-            if(portion.find(p => p.fuzzedMMR < 90)) {
+            if(portion.find(function(p){ return p.fuzzedMMR < 90})) {
                 vm.navigate = false;
                 
                 if(vm.selectedRank() === "Immortal 2") {
@@ -143,7 +143,7 @@ define(["dao", "ui", "util/bbgmView", "lib/knockout", "globals", "lib/bluebird",
                 } else {
                     vm.selectedRank("Immortal 2");
                 }
-            } else if(portion.find(p => p.fuzzedMMR < 500)) {
+            } else if(portion.find(function(p) { return p.fuzzedMMR < 500})) {
                 vm.navigate = false;
                 
                 if(vm.selectedRank() === "Immortal 3") {
@@ -181,7 +181,7 @@ define(["dao", "ui", "util/bbgmView", "lib/knockout", "globals", "lib/bluebird",
                 let index = ((pageNumber * 9) - 9);
                 let portion = g.leaderboardData.players.slice(index, index + 9);
 
-                if(portion.find(p => p.fuzzedMMR < 90)) {
+                if(portion.find(function(p) { return p.fuzzedMMR < 90})) {
                     vm.navigate = false;
 
                     if(vm.selectedRank() === "Immortal 2") {
@@ -189,7 +189,7 @@ define(["dao", "ui", "util/bbgmView", "lib/knockout", "globals", "lib/bluebird",
                     } else {
                         vm.selectedRank("Immortal 2");
                     }
-                } else if(portion.find(p => p.fuzzedMMR < 500)) {
+                } else if(portion.find(function(p) { return p.fuzzedMMR < 500})) {
                     vm.navigate = false;
                     
                     if(vm.selectedRank() === "Immortal 3") {
