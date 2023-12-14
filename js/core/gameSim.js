@@ -240,6 +240,16 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                         if((enemyPlayer.player.pos == "Duelist" && enemyPlayer.agent.role == "Duelist") || (enemyPlayer.player.pos == "Initiator" && enemyPlayer.agent.role == "Initiator")) {
                             enemyBoost += Math.floor(Math.random() * 5);
                         }
+
+
+                        //Most pro players rarely ever have 0 kills a game this is to counter some players being plain horrible
+                        if(Math.random() > 0.9) {
+                            if(Math.random() > 0.5) {
+                                boost += 200;
+                            } else {
+                                enemyBoost += 200;
+                            }
+                        }
     
     
                         if(Math.random() > 0.3) {
@@ -344,6 +354,15 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                             enemyBoost += Math.floor(Math.random() * 5) - 0.5;
                         }
                         
+                        if(Math.random() > 0.9) {
+                            if(Math.random() > 0.5) {
+                                boost += 200;
+                            } else {
+                                enemyBoost += 200;
+                            }
+                        }
+    
+
                         if(Math.random() > 0.4) {
                             if(currentPlayer.player.matchRating.aim + boost > enemyPlayer.player.matchRating.aim + enemyBoost) {
                                 if(Math.random() > 0.5) {
@@ -461,6 +480,15 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                         if(enemyPlayer.player.pos == "Duelist" && enemyPlayer.agent.role == "Duelist") {
                             enemyBoost += Math.floor(Math.random() * 5);
                         }
+
+                        if(Math.random() > 0.9) {
+                            if(Math.random() > 0.5) {
+                                boost += 200;
+                            } else {
+                                enemyBoost += 200;
+                            }
+                        }
+    
                         
                         //Fighting the enemy
                         if(currentPlayer.player.matchRating.aim + boost > enemyPlayer.player.matchRating.aim + enemyBoost) {

@@ -1100,24 +1100,29 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
     function genRatings(profile, baseRating, pot, season, scoutingRank, tid) {
         var i, j, key, profileId, profiles, ratingKeys, ratings, rawRating, rawRatings, sigmas;
 
-        if (profile === "Point") { //support
+        if (profile === "Point") { //Duelist
             profileId = 1;
-        } else if (profile === "Wing") { //jungle
+        } else if (profile === "Wing") { //Initiator
             profileId = 2;
-        } else if (profile === "Big") {  // top/mid/adc
+        } else if (profile === "Big") {  // Smokes/Sentinal
             profileId = 3;
         } else {
             profileId = 0;  //
         }
 
+         /*  Val Ratings:
+            * Mental: (0)hgt = Adaptability, (1)stre = Patience, (2)spd = Consistency, (3)jmp = Team Player, (4)endu = Leadership
+            * Tactical: (5)ins = Awareness, (6)dnk = Utility Usage, (7)ft = Team Fighting, (8)fg = Risk Taking
+            * Game: (9)tp = Positioning, (10)blk = Aim, (11)stl = Clutch, (12)drb = Movement */
+        
         // Each row should sum to ~150
-        profiles = [[10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10], // Base 150
+        profiles = [[10, 10, 10, 10, 10, 10, 10, 30, 10, 10, 10, 10, 10, 10, 10], // Base 150
 //                    [10, 10, 10, 70, 10, 50, -30, 50, -30, 10, 10, -30, -30, 10, 10], // Support
-                    [10, 10, 10, 10, 10, 30, 30, 30, -30, 15, 10, -10, -10, 10, 10], // Smokes
+                    [10, 10, 10, 10, 10, 30, 30, 30, -30, 15, 10, -10, -10, 10, 10], // Initiator
 //                    [10, 10, 10, 25, 10, 35, -30, -30, 35, 10, 10, -30, 35, 10, 10], // Jungle
 //                    [10, 10, 10, 25, 10, 35, -30, -30, 35, 10, 10, -30, 35, 10, 10], // Jungle
 //                    [5, 5, 5, 35, 5, 45, -30, -30, 45, 5, 5, -30, 45, 5, 5], // Jungle
-                    [15, 15, 10, 10, 15, 10, -30, -30, 30, 15, 30, -10, 30, 15, 15], // Initiator/Sentinals
+                    [25, -5, 15, 10, 10, 25, 10, 30, 30, 15, 30, -10, 30, 15, 15], // Smokes/Sentinals
 //                    [10, 10, 10, 90, 10, 50, -30, 50, -30, 10, 10, -30, -30, 10, 10], // Support
   //                  [10, 10, 10, 30, 10, 40, -30, -30, 40, 10, 10, -30, 40, 10, 10], // Jungle
                     [10, 10, 10, 10, 10, -20, 30, 20, 0, 10, 30, 10, -10, 10, 10]]; // Duelist
@@ -1187,6 +1192,14 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
         ratingKeys = ["hgt", "stre", "spd", "jmp", "endu", "ins", "dnk", "ft", "fg", "tp", "blk", "stl", "drb", "pss", "reb"];
         for (i = 0; i < ratingKeys.length; i++) {
             key = ratingKeys[i];
+
+            if(rawRatings[i] <= 10) {
+                rawRatings[i] = Math.floor(Math.random() * (40 - 10 + 1) + 10);
+            } else if(rawRatings[i] == 100) {
+                rawRatings[i] = Math.floor(Math.random() * (100 - 80 + 1) + 80);
+            }
+
+
             ratings[key] = rawRatings[i];
         }
 

@@ -282,8 +282,6 @@ define(["dao", "db", "globals", "ui", "core/champion", "data/championPatch", "da
 			typeid = 1;
 			regionType = "EU";
 		}
-		console.log(typeid);
-		console.log(regionType);
 
         // Record in meta db
         return dao.leagues.add({
@@ -310,7 +308,6 @@ define(["dao", "db", "globals", "ui", "core/champion", "data/championPatch", "da
 
       let adjustedStartingSeason = startingSeason;
 
-      console.log(leagueFile);
       // handle no starting season, and game is different than file
       if (leagueFile.hasOwnProperty("players")) {
         if (!leagueFile.hasOwnProperty("gameAttributes")) {
@@ -460,7 +457,6 @@ define(["dao", "db", "globals", "ui", "core/champion", "data/championPatch", "da
 
 			cpSorted.sort(function (a, b) { return a.rank - b.rank; });
 
-            console.log("It is here")
             console.log(cpSorted)
 
 			var topADC,topMID,topJGL,topTOP,topSUP;
@@ -807,7 +803,6 @@ define(["dao", "db", "globals", "ui", "core/champion", "data/championPatch", "da
                         goodNeutralBad = random.randInt(-1, 1);  // determines if this will be a good team or not
                         random.shuffle(pots);
 
-//                        for (n = 0; n < 8; n++) {
                         for (n = 0; n < 8; n++) {
                             profile = profiles[random.randInt(0, profiles.length - 1)];
 							if (Math.random() < .80) {

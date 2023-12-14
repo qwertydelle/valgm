@@ -72,30 +72,33 @@ define(["dao", "globals", "ui", "core/finances", "core/player", "core/team", "li
             promises = [];
 
             for (i = 0; i < numPlayers; i++) {
-//                baseRating = random.randInt(8, 31);
-//                baseRating = random.randInt(31, 37);
-//                baseRating = random.randInt(31, 37);
-//adjustment = (1-(teams[t2].pop/teams.length))*(-40)+20;	
+//               
 				if (g.gameType == 1) {
-					baseRating = random.randInt(0, 32);					
-				//''	baseRating = random.randInt(17, 57);	
-				//	pot	 = random.randInt(20, 95);	
-					//pot = Math.round(helpers.bound(random.realGauss(38, 25), baseRating, 90)); // 9 SUP					
-//					pot = Math.round(helpers.bound(random.realGauss(17, 31), baseRating, 100)); // 9 SUP  was used										
-				//	pot = Math.round(helpers.bound(random.realGauss(17, 70), baseRating, 100)); // 9 SUP										
-					pot = Math.round(helpers.bound(random.realGauss(17, 55), baseRating, 100)); // 9 SUP										
-//					pot = Math.round(helpers.bound(random.realGauss(48-g.numTeams/10, 25-g.numTeams/10+1), baseRating, 100)); // 9 SUP										
-				} else {
-//					baseRating = random.randInt(15, 37);					
-//					baseRating = random.randInt(8, 28);					
-					baseRating = random.randInt(0, 32);					
-//					pot = Math.round(helpers.bound(random.realGauss(48, 34), baseRating, 90)); // 9 SUP
-/////////					pot = Math.round(helpers.bound(random.realGauss(17, 31), baseRating, 100)); // 9 SUP	// was used									
-//					pot = Math.round(helpers.bound(random.realGauss(17, 40), baseRating, 100)); // 9 SUP										
-			//		pot = Math.round(helpers.bound(random.realGauss(17, 70), baseRating, 100)); // 9 SUP										
-					pot = Math.round(helpers.bound(random.realGauss(17, 55), baseRating, 100)); // 9 SUP										
+					baseRating = random.randInt(15, 45);
+                    
+                    if(baseRating == 65) {
+                        baseRating = random.randInt(30, 45);
+                    }
 
-					//pot = Math.round(helpers.bound(random.realGauss(48-g.numTeams/10, 25-g.numTeams/10+1), baseRating, 100)); // 9 SUP
+					pot = Math.round(helpers.bound(random.realGauss(17, 55), baseRating, 100)); // 9 SUP	
+                    
+                    if(pot == 100) {
+                        pot = Math.round(helpers.bound(random.realGauss(17, 55), baseRating, 100));
+                    }
+
+				} else {				
+					baseRating = random.randInt(15, 45);
+                    											
+					if(baseRating == 65) {
+                        baseRating = random.randInt(30, 45);
+                    }
+
+					pot = Math.round(helpers.bound(random.realGauss(17, 55), baseRating, 100)); // 9 SUP	
+                    
+                    if(pot == 100) {
+                        pot = Math.round(helpers.bound(random.realGauss(17, 55), baseRating, 100));
+                    }
+
 				}
 
                 profile = profiles[random.randInt(0, profiles.length - 1)];								
