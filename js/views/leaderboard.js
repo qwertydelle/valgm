@@ -18,6 +18,8 @@ define(["dao", "ui", "util/bbgmView", "lib/knockout", "globals", "lib/bluebird",
     function InitViewModel(inputs) {
         this.selectedRank = ko.observable()
         this.navigate = true;
+        this.frompagination = false;
+
 
         this.selectedRank.subscribe(function(newValue) {
             console.log(this)
@@ -46,7 +48,7 @@ define(["dao", "ui", "util/bbgmView", "lib/knockout", "globals", "lib/bluebird",
                 }
 
 
-                if(Object.keys(g.leaderboardData.page) !== 0 && this.navigate) {
+                if(Object.keys(g.leaderboardData.page) !== 0 && this.navigate && !this.frompagination) {
                     if(index == 9) {
                         g.leaderboardData.page.goToPage(1);
                     } else {
@@ -58,16 +60,17 @@ define(["dao", "ui", "util/bbgmView", "lib/knockout", "globals", "lib/bluebird",
             } else {
                 $("#rankimage").attr("src", "/img/badges/radiant-badge.png").css("opacity", 0).animate({opacity: 1}, 1000)
 
-                if(Object.keys(g.leaderboardData.page).length !== 0 && this.navigate) {
+                if(Object.keys(g.leaderboardData.page).length !== 0 && this.navigate && !this.frompagination) {
                     g.leaderboardData.page.goToPage(1);
                 }
 
                 sessionStorage.setItem("Leaderboard-select", newValue);
             }
 
-
+            console.log(this)
             this.navigate = true;
-        });
+            this.frompagination = false;
+        }.bind(this));
         
 
         console.log(this.selectedRank())
@@ -161,7 +164,6 @@ define(["dao", "ui", "util/bbgmView", "lib/knockout", "globals", "lib/bluebird",
                 }
             }
 
-
             return {
                 p: portion,
             }
@@ -206,6 +208,8 @@ define(["dao", "ui", "util/bbgmView", "lib/knockout", "globals", "lib/bluebird",
                         vm.selectedRank("Radiant");
                     }
                 }
+                
+                vm.frompagination = true;
 
                 console.log(vm)
             }

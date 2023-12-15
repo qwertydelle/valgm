@@ -76,8 +76,8 @@ define(["dao", "globals", "ui", "core/finances", "core/player", "core/team", "li
 				if (g.gameType == 1) {
 					baseRating = random.randInt(15, 45);
                     
-                    if(baseRating == 65) {
-                        baseRating = random.randInt(30, 45);
+                    if(baseRating == 45) {
+                        baseRating = random.randInt(20, 45);
                     }
 
 					pot = Math.round(helpers.bound(random.realGauss(17, 55), baseRating, 100)); // 9 SUP	
@@ -89,8 +89,8 @@ define(["dao", "globals", "ui", "core/finances", "core/player", "core/team", "li
 				} else {				
 					baseRating = random.randInt(15, 45);
                     											
-					if(baseRating == 65) {
-                        baseRating = random.randInt(30, 45);
+					if(baseRating == 45) {
+                        baseRating = random.randInt(20, 45);
                     }
 
 					pot = Math.round(helpers.bound(random.realGauss(17, 55), baseRating, 100)); // 9 SUP	
