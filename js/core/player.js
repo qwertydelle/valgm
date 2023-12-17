@@ -717,7 +717,7 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
 
             // Randomly regress
             if (Math.random() > 0.995 && age <= 23) {
-                p.ratings[r].pot -= random.uniform(5, 25);
+                p.ratings[r].pot -= random.uniform(5, 35);
             }
 
             baseChange = calcBaseChange(age, p.ratings[r].pot - p.ratings[r].ovr);
@@ -831,9 +831,8 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
 				}
 			}
 
-            skillMMR = 300;
 
-			p.ratings[r].MMR = MMRcalc(p.ratings[r].ovr,skillMMR);
+			p.ratings[r].MMR = MMRcalc(p.ratings[r].ovr, skillMMR);
 
 			fuzzedMMR = p.ratings[0].MMR + random.randInt(-500, 100);
 

@@ -83,8 +83,7 @@ define(["dao", "globals", "ui", "core/player", "core/team", "lib/bluebird", "lib
                     }),					
                     team.getPayroll(tx, tid).get(0),
                     team.getRegions(tx, tid).get(0),
-                    team.getCountries(tx, tid).get(0),										
-//                    team.getCountries(tx, tid).get(0),										
+                    team.getCountries(tx, tid).get(0),																				
                     team.getPositions(tx, tid).get(0)
                 ]).spread(function (playersTeam,numPlayersOnRoster, payroll,regions,countries,positions) {
                     var i, p;
@@ -96,7 +95,7 @@ define(["dao", "globals", "ui", "core/player", "core/team", "lib/bluebird", "lib
 					var maxCountry, onlyCountry, onlyThisCountry;
 
 					
-					missingPositions = ["Initiator","Sentinal","Duelist","Smokes","SUP"];
+					missingPositions = ["Initiator","Sentinal","Duelist","Smokes"];
 					numFromRegion = 0;
 					if (typeof(g.regionalRestrictions) == 'undefined') {
 						numFromRegion = 10;
