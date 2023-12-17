@@ -116,6 +116,12 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                 }
             }
         }
+
+        // for(let i = 0; i < 2; i++) {
+        //     for(let j = 0; j < 5;i++) {
+                
+        //     }
+        // }
 	}
 	
 	/**
@@ -186,7 +192,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
     GameSim.prototype.simRound = function(roundCounter, teamId, creditsData) {
         creditsData = creditsData === undefined? [[800,800,800,800,800],[800,800,800,800,800]]: creditsData;
-        let basicActions = ["peek", "hold", "fight", "fight", "utilPeek", "utilPeek", "utilTeamFight"];
+        let basicActions = ["peek", "hold", "fight", "fight", "fight", "utilPeek", "utilPeek", "utilTeamFight"];
         let deadPlayers = [[],[]];
         let enemyTeamID = teamId == 1? 0: 1;
 
@@ -282,7 +288,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
 
                         //Most pro players rarely ever have 0 kills a game this is to counter some players being plain horrible
-                        if(Math.random() > 0.9) {
+                        if(Math.random() > 0.66) {
                             if(Math.random() > 0.5) {
                                 boost += 200;
                             } else {
@@ -397,7 +403,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                         boost += (this.teams[teamId].synergy.def + this.teams[teamId].synergy.reb); 
                         enemyBoost += (this.teams[enemyTeamID].synergy.off + this.teams[enemyTeamID].synergy.reb); 
                         
-                        if(Math.random() > 0.9) {
+                        if(Math.random() > 0.66) {
                             if(Math.random() > 0.5) {
                                 boost += 200;
                             } else {
@@ -524,7 +530,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                             enemyBoost += Math.floor(Math.random() * 5);
                         }
 
-                        if(Math.random() > 0.96) {
+                        if(Math.random() > 0.66) {
                             if(Math.random() > 0.5) {
                                 boost += 200;
                             } else {

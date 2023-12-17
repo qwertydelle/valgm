@@ -1147,7 +1147,7 @@ define(["dao", "globals", "ui", "core/champion", "core/freeAgents", "core/financ
 					} else if (i==3) {
 						idealPosition = "Sentinal";
 					} else if (i==4) {
-						idealPosition = "Support";
+						idealPosition = "";
 					}
 				
 					if (idealPosition ==  position) {
@@ -1310,8 +1310,8 @@ define(["dao", "globals", "ui", "core/champion", "core/freeAgents", "core/financ
                     p.ovr = rating.ovr+YWTadj;
                     //Used in gamesim
                     p.matchRating.aim = ((rating.drb + rating.blk + rating.fg)/3)
-                    p.matchRating.utilUsage = ((rating.dnk + rating.ins)/2)
-                    p.matchRating.teamwork = ((rating.jmp + rating.endu)/2)
+                    p.matchRating.utilUsage = ((rating.dnk + rating.ins)/2)+langAdj
+                    p.matchRating.teamwork = ((rating.jmp + rating.endu)/2)+YWTadj
 																					
                     // These use the same formulas as the skill definitions in player.skills!
 					
