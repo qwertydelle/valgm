@@ -719,7 +719,13 @@ define([], function () {
 		["Screwface"],
 		["Clix"],
 		["Kaemi"],
-		["Bugha"]
+		["Bugha"],
+		["Cane"],
+		["Mongraal"],
+		["Shroud"],
+		["Stellar"],
+		["Furbsa"],
+		["Faide"]
     ];
 	
     suffix = [		
@@ -773,6 +779,8 @@ define([], function () {
 		["ofWar",4.04],
 		["ofEvil",4.06],
 		["Cells", 3.36],
+		["cells", 3.36],
+		["zera", 2.98],
     ];	
 	
     number = [

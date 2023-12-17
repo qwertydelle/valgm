@@ -66,21 +66,56 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
         //Give whole team 10% of top players ability 
         for(let teamID = 0;teamID < 2;teamID++) {
-            let tenPercent = this.teams[teamID].sortedPlayers[0].ovr * 0.10;
+
+            //Every player gets a certain percentage of the best players skill
+            let Percent = this.teams[teamID].sortedPlayers[0].ovr * (Math.random() * 0.15);
 
             console.log(this.teams[teamID])
 
             for(let i = 0;i < 5;i++) {
                 if(this.teams[teamID].sortedPlayers[0].id != this.teams[teamID].player[i].id) {
-                    this.teams[teamID].player[i].matchRating.aim += tenPercent
-                    this.teams[teamID].player[i].matchRating.utilUsage += tenPercent
-                    this.teams[teamID].player[i].matchRating.teamwork += tenPercent
+                    this.teams[teamID].player[i].matchRating.aim += Percent
+                    this.teams[teamID].player[i].matchRating.utilUsage += Percent
+                    this.teams[teamID].player[i].matchRating.teamwork += Percent
                 }
             }
         }
 
 		this.agentPicks();
+        
 
+        console.log(this.teams)
+        //Check for positions
+        for(let i = 0; i < 2;i++) {
+            for(let j = 0; j < 5;j++) {
+
+                //If all positions are filled reb should be 40
+
+                if(j === 0) {
+                    if(this.teams[i].player[j].pos === "Duelist") {
+                        this.teams[i].synergy.reb += 10;
+                    }
+                } else if(j === 1) {
+                    if(this.teams[i].player[j].pos === "Initiator") {
+                        this.teams[i].synergy.reb += 10;
+                    }
+                } else if(j === 2) {
+                    if(this.teams[i].player[j].pos === "Smokes") {
+                        this.teams[i].synergy.reb += 10;
+                    }
+                } else if(j === 3) {
+                    if(this.teams[i].player[j].pos === "Sentinal") {
+                        this.teams[i].synergy.reb += 10;
+                    }
+                } else {
+                    if(this.teams[i].player[j].pos === "Duelist" || this.teams[i].player[j].pos === "Initiator") {
+                        this.teams[i].synergy.off += 10;
+                    } else if(this.teams[i].player[j].pos === "Smokes" || this.teams[i].player[j].pos === "Sentinal") {
+                        this.teams[i].synergy.def += 10;
+                    }
+                }
+            }
+        }
 	}
 	
 	/**
@@ -241,6 +276,10 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                             enemyBoost += Math.floor(Math.random() * 5);
                         }
 
+                        //Adding overall synergy boosts
+                        boost += (this.teams[teamId].synergy.off + this.teams[teamId].synergy.reb); 
+                        enemyBoost += (this.teams[enemyTeamID].synergy.def + this.teams[enemyTeamID].synergy.reb); 
+
 
                         //Most pro players rarely ever have 0 kills a game this is to counter some players being plain horrible
                         if(Math.random() > 0.9) {
@@ -353,6 +392,10 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                         if((enemyPlayer.player.pos == "Sentinal" && enemyPlayer.agent.role == "Sentinal") || (enemyPlayer.player.pos == "Smokes" && enemyPlayer.agent.role == "Smokes")) {
                             enemyBoost += Math.floor(Math.random() * 5) - 0.5;
                         }
+
+                        //Adding overall synergy boosts
+                        boost += (this.teams[teamId].synergy.def + this.teams[teamId].synergy.reb); 
+                        enemyBoost += (this.teams[enemyTeamID].synergy.off + this.teams[enemyTeamID].synergy.reb); 
                         
                         if(Math.random() > 0.9) {
                             if(Math.random() > 0.5) {
@@ -481,13 +524,17 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                             enemyBoost += Math.floor(Math.random() * 5);
                         }
 
-                        if(Math.random() > 0.9) {
+                        if(Math.random() > 0.96) {
                             if(Math.random() > 0.5) {
                                 boost += 200;
                             } else {
                                 enemyBoost += 200;
                             }
                         }
+
+                        //Adding overall synergy boosts
+                        boost += (this.teams[teamId].synergy.off + this.teams[teamId].synergy.reb); 
+                        enemyBoost += (this.teams[enemyTeamID].synergy.off + this.teams[enemyTeamID].synergy.reb); 
     
                         
                         //Fighting the enemy
