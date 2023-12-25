@@ -44,18 +44,7 @@ define(["globals", "lib/faces", "lib/knockout", "util/helpers"], function (g, fa
             args = valueAccessor();
 
             season = viewModel.season();
-            series = viewModel.series()[args[0]][args[1]];
-		/*	console.log(args[0]);
-			console.log(args[1]);
-			console.log(series.away.seed());
-			console.log(series.home.seed());
-			console.log(series.home.tid);
-			console.log(series);*/
-						
-		//	console.log("matchup");
-		//	console.log(series);
-		//	console.log(series.home.tid);
-		//	console.log("matchupend");			
+            series = viewModel.series()[args[0]][args[1]];	
             source = '';
             if (series && series.home.tid) {
                 if (series.home.tid() === g.userTid) { source += '<span class="bg-info">'; }

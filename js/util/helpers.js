@@ -227,9 +227,9 @@ define(["dao", "globals", "lib/knockout", "util/eventLog"], function (dao, g, ko
 	   // LMS East Asia
 	   // Worlds - all plus Turkey Russia Oceania Brazil and Latin America
             {typeid: 0, teams: 10, tour: 4, name: "VCT Americas (10 Teams)"},
-            {typeid: -1, teams: 10, tour: 4, name: "EU LCS (10 Teams)"},
-            {typeid: 1, teams: 30, tour: 4, name: "NA LCS, CS, and Ladder (30 Teams)"},
-            {typeid: -2, teams: 30, tour: 4, name: "EU LCS, CS, and Ladder (30 Teams)"},
+            {typeid: -1, teams: 10, tour: 4, name: "VCT EMEA (10 Teams)"},
+            {typeid: 1, teams: 30, tour: 4, name: "VCT Americas (30 Teams)"},
+            {typeid: -2, teams: 30, tour: 4, name: "VCT EMEA (30 Teams)"},
             {typeid: 2, teams: 10, tour: 4, name: "LCK (10 Teams)"},
             {typeid: 3, teams: 12, tour: 32, name: "LPL (12 Teams)"},
             {typeid: 4, teams: 8, tour: 32, name: "LMS (8 Teams) "},

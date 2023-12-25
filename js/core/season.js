@@ -786,9 +786,6 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 		
 		console.log("New schedule every year?");
 
-//console.log(typeid);
-//console.log(g.typeid);
-
 		ifCS = 1;
 		if (g.gameType == 0) {
 		//	teams = helpers.getTeamsNADefault();

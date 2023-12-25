@@ -87,14 +87,14 @@
               <a data-bind="attrLeagueUrl: {href: ['player', teamLeaders.fg.pid]}, text: teamLeaders.fg.name"></a>: <span data-bind="round: [teamLeaders.fg.stat, 1]"></span> Kills<br>
 <!--              <a data-bind="attrLeagueUrl: {href: ['player', teamLeaders.fga.pid]}, text: teamLeaders.fga.name"></a>: <span data-bind="round: [teamLeaders.fga.stat, 1]"></span> Deaths<br>-->
               <a data-bind="attrLeagueUrl: {href: ['player', teamLeaders.fgp.pid]}, text: teamLeaders.fgp.name"></a>: <span data-bind="round: [teamLeaders.fgp.stat, 1]"></span> Assists<br>
-              <a data-bind="attrLeagueUrl: {href: ['player', teamLeaders.tp.pid]}, text: teamLeaders.tp.name"></a>: <span data-bind="round: [teamLeaders.tp.stat, 1]"></span> Creep Score<br>
+              <a data-bind="attrLeagueUrl: {href: ['player', teamLeaders.tp.pid]}, text: teamLeaders.tp.name"></a>: <span data-bind="round: [teamLeaders.tp.stat, 1]"></span> Average Combat Score<br>
               <a data-bind="attrLeagueUrl: {href: ['roster']}">» Full Roster</a>
             </p>
             <h3>League Leaders</h3>
             <p>
               <a data-bind="attrLeagueUrl: {href: ['player', leagueLeaders.fg.pid]}, text: leagueLeaders.fg.name"></a>, <a data-bind="attrLeagueUrl: {href: ['roster', leagueLeaders.fg.abbrev]}, text: leagueLeaders.fg.abbrev"></a>: <span data-bind="round: [leagueLeaders.fg.stat, 1]"></span> Kills <br>
               <a data-bind="attrLeagueUrl: {href: ['player', leagueLeaders.ast.pid]}, text: leagueLeaders.fgp.name"></a>, <a data-bind="attrLeagueUrl: {href: ['roster', leagueLeaders.fgp.abbrev]}, text: leagueLeaders.fgp.abbrev"></a>: <span data-bind="round: [leagueLeaders.fgp.stat, 1]"></span> Assists<br>
-              <a data-bind="attrLeagueUrl: {href: ['player', leagueLeaders.tp.pid]}, text: leagueLeaders.tp.name"></a>, <a data-bind="attrLeagueUrl: {href: ['roster', leagueLeaders.tp.abbrev]}, text: leagueLeaders.tp.abbrev"></a>: <span data-bind="round: [leagueLeaders.tp.stat, 1]"></span> Creep Score<br>
+              <a data-bind="attrLeagueUrl: {href: ['player', leagueLeaders.tp.pid]}, text: leagueLeaders.tp.name"></a>, <a data-bind="attrLeagueUrl: {href: ['roster', leagueLeaders.tp.abbrev]}, text: leagueLeaders.tp.abbrev"></a>: <span data-bind="round: [leagueLeaders.tp.stat, 1]"></span> Average Combat Score<br>
               <a data-bind="attrLeagueUrl: {href: ['leaders']}">» League Leaders</a><br>
               <a data-bind="attrLeagueUrl: {href: ['player_stats']}">» Player Stats</a>
             </p>
@@ -114,7 +114,7 @@
               Kills: <span data-bind="round: [fg, 1]"></span> (<span data-bind="ordinal: fgRank"></span>)<br>
               Deaths: <span data-bind="round: [fga, 1]"></span> (<span data-bind="ordinal: fgaRank"></span>)<br>
               Assists: <span data-bind="round: [fgp, 1]"></span> (<span data-bind="ordinal: fgpRank"></span>)<br>
-              Creep Score: <span data-bind="round: [tp, 1]"></span> (<span data-bind="ordinal: tpRank"></span>)<br>
+              Average Combat Score: <span data-bind="round: [tp, 1]"></span> (<span data-bind="ordinal: tpRank"></span>)<br>
               <a data-bind="attrLeagueUrl: {href: ['team_stats']}">» Team Stats</a>
             </p>
             <h3>Finances</h3>

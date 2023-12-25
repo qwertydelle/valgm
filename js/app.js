@@ -294,7 +294,6 @@ require(["db", "views", "ui", "data/changes", "lib/davis", "util/account", "util
 
         $("#light-mode").on("click", function() {
             changemode()
-            console.log("Button Clicked2")
         })
 
         // Hide ads on mobile, mobile is shitty enough already

@@ -51,14 +51,14 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
 
         // Default position
         if (ratings.drb >= 60) {
-            position = 'JGL';
+            position = 'Duelist';
 			ovrRating = ((2 * ratings.hgt + 2*ratings.stre + 2 * ratings.spd + 3 * ratings.jmp + 3 * ratings.endu + 3 * ratings.ins + 1 * ratings.dnk + 1*ratings.ft + 3*ratings.fg + 2 * ratings.tp + 4*ratings.blk + 1*ratings.stl + 4* ratings.drb + 1 * ratings.pss + ratings.reb) / 32);
 
         } else if (ratings.ins >= 70) {
-            position = 'SUP';
+            position = 'Initiator';
 			ovrRating = ((2 * ratings.hgt + 2*ratings.stre + 2 * ratings.spd + 4 * ratings.jmp + 6 * ratings.endu + 4 * ratings.ins + 1 * ratings.dnk + 4*ratings.ft + 1*ratings.fg + 2 * ratings.tp + 4*ratings.blk + 1*ratings.stl + 2* ratings.drb + 1 * ratings.pss + ratings.reb) / 34);
         } else {
-            position = 'MID';
+            position = 'Smokes';
 			ovrRating = ((2 * ratings.hgt + 2*ratings.stre + 2 * ratings.spd + 3 * ratings.jmp + 3 * ratings.endu + 2 * ratings.ins + 4 * ratings.dnk + 3*ratings.ft + 2*ratings.fg + 2 * ratings.tp + 4*ratings.blk + 1*ratings.stl + 2* ratings.drb + 1 * ratings.pss + ratings.reb) / 34);
 
 		}
@@ -538,13 +538,13 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
             amount *= helpers.bound(random.realGauss(1, 0.1), 0, 2);  // Randomize
         }
 
-		if (p.pos == "JGL") {
+		if (p.pos == "Sentinal") {
 		 amount *= .8;
-		} else if (p.pos == "SUP") {
+		} else if (p.pos == "Smokes") {
 		 amount *= .7;
-		} else if (p.pos == "MID") {
+		} else if (p.pos == "Duelist") {
 		 amount *= 1.4;
-		} else if (p.pos == "TOP") {
+		} else if (p.pos == "Initiator") {
 		 amount *= 1.1;
 		} else {
 		 amount *= 1.2;
@@ -671,9 +671,7 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
             } else {
                 val = -3+(p.ratings[r].reb-100)/100; //was 10 // was 5 // was 25
             }
-		//	console.log(p.ratings[r].reb);
-            // Factor in potential difference
-            // This only matters for young players who have potentialDifference != 0
+
 
             if (age <= 19) { // was 21
                 if (Math.random() < 0.40) {  // was .75
@@ -699,10 +697,11 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
 
             // Noise
             if (age <= 23) {
-                val += helpers.bound(random.realGauss(0, 5), -4, 10);
+                val += helpers.bound(random.realGauss(0, 5), -5, 10);
             } else {
                 val += helpers.bound(random.realGauss(0, 3), -2, 10);
             }
+
 
             return val;
         };
@@ -716,8 +715,8 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
             }
 
             // Randomly regress
-            if (Math.random() > 0.995 && age <= 23) {
-                p.ratings[r].pot -= random.uniform(5, 35);
+            if (Math.random() > 0.95 && age <= 23) {
+                p.ratings[r].pot -= random.uniform(5, 45);
             }
 
             baseChange = calcBaseChange(age, p.ratings[r].pot - p.ratings[r].ovr);
@@ -763,12 +762,6 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
                 p.ratings[r][ratingKeys[j]] = limitRating(p.ratings[r][ratingKeys[j]] + baseChangeLocal * random.uniform(0.5, 1.5));
             }
 
-            p.ratings[r].ovr = ovr(p.ratings[r]);
-            p.ratings[r].pot += -2 + Math.round(random.realGauss(0, 2));
-            if (p.ratings[r].ovr > p.ratings[r].pot || age > 22) {
-                p.ratings[r].pot = p.ratings[r].ovr;
-            }
-
 
 
 
@@ -795,7 +788,7 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
                     p.champions[j].skill += Math.random() * (5);
 				    p.champions[j].skill = Math.round(p.champions[j].skill,0);
                 }
-				if (p.champions[j].skill< 0) {
+				if (p.champions[j].skill < 0) {
 				   p.champions[j].skill = 0;
 				} else if (p.champions[j].skill > 100 ) {
 				   p.champions[j].skill = 100;
@@ -834,7 +827,31 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
 
 			p.ratings[r].MMR = MMRcalc(p.ratings[r].ovr, skillMMR);
 
-			fuzzedMMR = p.ratings[0].MMR + random.randInt(-500, 100);
+            if(age <= 23 && !generate) {
+                //Give more ovr for better leaderboard performance
+                let lastSeasonMMR = p.ratings[r - 1].MMR;
+                let thisSeasonMMR = p.ratings[r].MMR;
+
+                if((thisSeasonMMR - lastSeasonMMR) > 0) {
+                    ratingKeys = ["dnk", "ft", "tp", "ins", "blk"];
+                    for (j = 0; j < ratingKeys.length; j++) {
+                        p.ratings[r][ratingKeys[j]] = limitRating(p.ratings[r][ratingKeys[j]] + random.uniform(1,5));
+                    }
+                } else if((thisSeasonMMR - lastSeasonMMR) < 0) {
+                    ratingKeys = ["dnk", "ft", "tp", "ins", "blk"];
+                    for (j = 0; j < ratingKeys.length; j++) {
+                        p.ratings[r][ratingKeys[j]] = limitRating(p.ratings[r][ratingKeys[j]] + random.uniform(-5,-1));
+                    }
+                }
+            }
+
+            p.ratings[r].ovr = ovr(p.ratings[r]);
+            p.ratings[r].pot += -2 + Math.round(random.realGauss(0, 2));
+            if (p.ratings[r].ovr > p.ratings[r].pot || age > 22) {
+                p.ratings[r].pot = p.ratings[r].ovr;
+            }
+
+			fuzzedMMR = p.ratings[r].MMR + random.randInt(-500, 100);
 
             if(fuzzedMMR <= 0) {
                 fuzzedMMR = random.randInt(90, 150);
@@ -3043,7 +3060,7 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
             //Secondary roles are: IGL, Opper, and Flex
             if (ratings.hgt >= 80 && ratings.fg >= 60 && (ratings.blk >= 75 || ratings.drb >= 70)) {
                 position = "Duelist";
-            } else if (ratings.dnk >= 60 && ratings.hgt >= 70 && (ratings.jmp >= 60 || ratings.ins >= 70)) {
+            } else if (ratings.dnk >= 60 && ratings.hgt >= 65 && (ratings.jmp >= 60 || ratings.ins >= 70)) {
                 position = "Initiator";
             } else if(ratings.tp >= 65 && ratings.endu >= 65 && (ratings.dnk >= 70 || ratings.stre >= 60)) {
                 position = "Sentinal";
@@ -3054,7 +3071,7 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
 
                 if(ran < 0.25) {
                     position = "Duelist"
-                } else if(ran < 0.45) {
+                } else if(ran < 0.50) {
                     position = "Initiator"
                 } else if(ran < 0.75) {
                     position = "Smokes"
