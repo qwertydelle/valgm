@@ -640,6 +640,7 @@ define(["dao", "globals", "core/player", "lib/bluebird", "lib/underscore", "util
             ot: tx,
             callback: function (t) {
 
+                console.log(t)
                 // Young stars
                 return dao.players.getAll({
                     ot: tx,
@@ -693,7 +694,7 @@ define(["dao", "globals", "core/player", "lib/bluebird", "lib/underscore", "util
                     updated = false;	
 				//	console.log(t.tid+" "+maxLength+" "+t.countrySpecific+" "+t.country+" "+country);
                     if  ((maxLength>2) && (t.countrySpecific === country)) {
-						t.imgURLCountry = getCountryImage2(t.countrySpecific);		
+						t.imgURLCountry = getCountryImage2(t.country);		
 						//t.imgURLCountry = getCountryImage(country);
 					//	console.log(t.tid+" "+t.imgURLCountry);			
 						updated = true;	
@@ -711,7 +712,7 @@ define(["dao", "globals", "core/player", "lib/bluebird", "lib/underscore", "util
 							t.imgURLCountry = getCountryImage2("United States");													
 						} else {
 //							t.imgURLCountry = getCountryImage2(t.country);													
-							t.imgURLCountry = getCountryImage2(t.countrySpecific);													
+							t.imgURLCountry = getCountryImage2(t.country);													
 						}
 						
 						//t.imgURLCountry = getRegionImage(t.country);
@@ -723,7 +724,7 @@ define(["dao", "globals", "core/player", "lib/bluebird", "lib/underscore", "util
 					//		t.imgURLCountry = getCountryImage2("United States");													
 					//	} else {
 //							t.imgURLCountry = getCountryImage2(t.country);													
-							t.imgURLCountry = getCountryImage2(t.countrySpecific);													
+							t.imgURLCountry = getCountryImage2(t.country);													
 					//	}						
 						//t.imgURLCountry = getCountryImage2(country);
 						//console.log(t.tid+" "+t.imgURLCountry);
@@ -2559,7 +2560,6 @@ if (arguments[1] !== undefined) { throw new Error("No cb should be here"); }
      */
     function getCountryImage(country) {
 		var imgURLCountry;
-		//console.log(country);
 		imgURLCountry = "";
 		
 		console.log(country);		
@@ -2668,9 +2668,9 @@ if (arguments[1] !== undefined) { throw new Error("No cb should be here"); }
 		} else if (country=="EU") {
 			imgURLCountry = "/img/flags/flags/48/European Union.png";						
 		} else if (country == 'NA') {			
-			imgURLCountry = "/img/flags/flags/48/United_States.png";
+			imgURLCountry = "/img/flags/flags/48/United States.png";
 		} else if (country == 'EU') {				
-			imgURLCountry = "/img/flags/flags/48/European_Union.png";
+			imgURLCountry = "/img/flags/flags/48/European Union.png";
 		} else if (country == 'KR') {			
 			imgURLCountry = "/img/flags/flags/48/Korea.png";	
 		} else if (country == 'CN') {

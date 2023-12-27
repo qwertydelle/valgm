@@ -192,7 +192,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
     GameSim.prototype.simRound = function(roundCounter, teamId, creditsData) {
         creditsData = creditsData === undefined? [[800,800,800,800,800],[800,800,800,800,800]]: creditsData;
-        let basicActions = ["peek", "hold", "fight", "fight", "fight", "utilPeek", "utilPeek", "utilTeamFight"];
+        let basicActions = ["peek", "hold", "hold", "fight", "fight", "fight", "utilPeek", "utilPeek", "utilTeamFight"];
         let deadPlayers = [[],[]];
         let enemyTeamID = teamId == 1? 0: 1;
 
@@ -205,13 +205,9 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
         console.log(this.teams)
 
         //Rounds 
-        /*For Later 
-            change so topFrags have impact
-            Example: If top frag kills someone then spike getting planted is 100% 
-        */
         if(this.teams[teamId].stat.pts < 13 && this.teams[enemyTeamID].stat.pts < 13) {
             //Shuffle Player Id
-            let randomPlayerChoices = [0,1,2,3,4, this.teams[teamId].sortedIDs[0],this.teams[teamId].sortedIDs[0], this.teams[teamId].sortedIDs[1]]
+            let randomPlayerChoices = [0,1,2,3,4, this.teams[teamId].sortedIDs[0],this.teams[teamId].sortedIDs[0], this.teams[teamId].sortedIDs[1], 0]
             let randomPlayerPick = Math.floor(Math.random() * randomPlayerChoices.length)
 
 
@@ -223,7 +219,10 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                 agent: this.playerAgentPicks[teamId][randomPlayerPick]
             };
 
-            let randomEnemyPick = Math.floor(Math.random() * 5);
+            let randomEnemyChoices = [0,1,2,3,4, this.teams[enemyTeamID].sortedIDs[0],this.teams[enemyTeamID].sortedIDs[0], this.teams[enemyTeamID].sortedIDs[1], 0]
+            let randomEnemyPick = Math.floor(Math.random() * randomEnemyChoices.length)
+
+            randomEnemyPick = randomEnemyChoices[randomEnemyPick];
 
             let enemyPlayer = {
                 player: this.teams[enemyTeamID].player[randomEnemyPick],
@@ -310,7 +309,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                         creditsData[teamId][randomPlayerPick] += 200;
 
-                                        if(enemyPlayer.agent.role === "Sentinal" || (Math.random() > 0.8)) {
+                                        if(enemyPlayer.agent.role === "Sentinal" || (Math.random() > 0.6)) {
                                             plantedSpike = true;
                                         }            
                                     } else {
@@ -323,7 +322,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                         creditsData[enemyTeamID][randomEnemyPick] += 200;
 
-                                        if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.8)) && (plantedSpike)) {
+                                        if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.6)) && (plantedSpike)) {
                                             plantedSpike = false;
                                             normalTimer = 175;
                                         }    
@@ -352,7 +351,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                 creditsData[enemyTeamID][randomEnemyPick] += 200;
 
-                                if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.8)) && (plantedSpike)) {
+                                if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.6)) && (plantedSpike)) {
                                     plantedSpike = false;
                                     normalTimer = 175;
                                 }    
@@ -398,7 +397,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                 creditsData[enemyTeamID][randomEnemyPick] += 200;
 
-                                if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.8)) && (plantedSpike)) {
+                                if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.6)) && (plantedSpike)) {
                                     plantedSpike = false;
                                     normalTimer = 175;
                                 }    
@@ -458,7 +457,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
     
                                         creditsData[enemyTeamID][randomEnemyPick] += 200;
     
-                                        if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.8)) && (plantedSpike)) {
+                                        if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.6)) && (plantedSpike)) {
                                             plantedSpike = false;
                                             normalTimer = 175;
                                         }    
@@ -473,7 +472,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
     
                                     creditsData[teamId][randomPlayerPick] += 200;
     
-                                    if(enemyPlayer.agent.role === "Sentinal" || (Math.random() > 0.8)) {
+                                    if(enemyPlayer.agent.role === "Sentinal" || (Math.random() > 0.6)) {
                                         plantedSpike = true;
                                     }        
                                 }
@@ -499,7 +498,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                 this.recordStat(enemyTeamID, nextPlayer, "tp", 15)
     
                                 //Defuse spike
-                                if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.8)) && (plantedSpike)) {
+                                if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.6)) && (plantedSpike)) {
                                     plantedSpike = false;
                                     normalTimer = 175;
                                 }    
@@ -530,7 +529,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                         creditsData[enemyTeamID][randomEnemyPick] += 200;
     
-                                        if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.7)) && (plantedSpike)) {
+                                        if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.6)) && (plantedSpike)) {
                                             plantedSpike = false;
                                             normalTimer = 175;
                                         }    
@@ -618,7 +617,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                     creditsData[teamId][randomPlayerPick] += 200;
 
-                                    if(enemyPlayer.agent.role === "Sentinal" || (Math.random() > 0.8)) {
+                                    if(enemyPlayer.agent.role === "Sentinal" || (Math.random() > 0.6)) {
                                         plantedSpike = true;
                                     }        
                                 } else {
@@ -631,7 +630,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                     creditsData[enemyTeamID][randomEnemyPick] += 200;
 
-                                    if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.8) && (plantedSpike))) {
+                                    if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.6) && (plantedSpike))) {
                                         plantedSpike = false;
                                         normalTimer = 175;
                                     }    
@@ -646,7 +645,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                 creditsData[teamId][randomPlayerPick] += 200;
 
-                                if(enemyPlayer.agent.role === "Sentinal" || (Math.random() > 0.8)) {
+                                if(enemyPlayer.agent.role === "Sentinal" || (Math.random() > 0.6)) {
                                     plantedSpike = true;
                                 }    
                             }
@@ -660,7 +659,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                             creditsData[enemyTeamID][randomEnemyPick] += 200;
 
-                            if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.8)) && (plantedSpike)) {
+                            if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.6)) && (plantedSpike)) {
                                 plantedSpike = false;
                                 normalTimer = 175;
                             }    
@@ -676,7 +675,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                             creditsData[teamId][randomPlayerPick] += 200;
 
-                            if(enemyPlayer.agent.role === "Sentinal" || (Math.random() > 0.8)) {
+                            if(enemyPlayer.agent.role === "Sentinal" || (Math.random() > 0.6)) {
                                 plantedSpike = true;
                             } 
                         } else {
@@ -689,7 +688,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                             creditsData[enemyTeamID][randomEnemyPick] += 200;
 
-                            if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.8)) && (plantedSpike)) {
+                            if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.6)) && (plantedSpike)) {
                                 plantedSpike = false;
                                 normalTimer = 175;
                             } 
