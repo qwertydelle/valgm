@@ -192,7 +192,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
     GameSim.prototype.simRound = function(roundCounter, teamId, creditsData) {
         creditsData = creditsData === undefined? [[800,800,800,800,800],[800,800,800,800,800]]: creditsData;
-        let basicActions = ["peek", "hold", "hold", "fight", "fight", "fight", "utilPeek", "utilPeek", "utilTeamFight"];
+        let basicActions = ["peek", "peek", "peek", "hold", "hold", "fight", "fight", "fight", "utilPeek", "utilPeek", "utilTeamFight", "utilTeamFight"];
         let deadPlayers = [[],[]];
         let enemyTeamID = teamId == 1? 0: 1;
 
@@ -207,7 +207,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
         //Rounds 
         if(this.teams[teamId].stat.pts < 13 && this.teams[enemyTeamID].stat.pts < 13) {
             //Shuffle Player Id
-            let randomPlayerChoices = [0,1,2,3,4, this.teams[teamId].sortedIDs[0],this.teams[teamId].sortedIDs[0], this.teams[teamId].sortedIDs[1], 0]
+            let randomPlayerChoices = [0,1,2,3,4, this.teams[teamId].sortedIDs[0],this.teams[teamId].sortedIDs[0], this.teams[teamId].sortedIDs[0],this.teams[teamId].sortedIDs[1], 0]
             let randomPlayerPick = Math.floor(Math.random() * randomPlayerChoices.length)
 
 
@@ -219,7 +219,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                 agent: this.playerAgentPicks[teamId][randomPlayerPick]
             };
 
-            let randomEnemyChoices = [0,1,2,3,4, this.teams[enemyTeamID].sortedIDs[0],this.teams[enemyTeamID].sortedIDs[0], this.teams[enemyTeamID].sortedIDs[1], 0]
+            let randomEnemyChoices = [0,1,2,3,4, this.teams[enemyTeamID].sortedIDs[0],this.teams[enemyTeamID].sortedIDs[0], this.teams[enemyTeamID].sortedIDs[0],this.teams[enemyTeamID].sortedIDs[1], 0]
             let randomEnemyPick = Math.floor(Math.random() * randomEnemyChoices.length)
 
             randomEnemyPick = randomEnemyChoices[randomEnemyPick];
@@ -233,10 +233,10 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
             console.log(enemyPlayer)
 
             for(let i = 0; i < 5; i++) {
-                let randomBasicAction = Math.floor(Math.random() * basicActions.length);
+                let randomBasicAction = Math.floor(random.uniform(0, basicActions.length));
 
 
-                if((plantedSpike && spikeTimer >= 75) || (deadPlayers[1].length == 5)) {
+                if((plantedSpike && spikeTimer >= 100) || (deadPlayers[1].length == 5)) {
                     roundCounter += 1;
                     this.teams[teamId].stat.pts += 1;
 
@@ -249,7 +249,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                     }
 
                     break;
-                } else if((normalTimer >= 175) || (deadPlayers[0].length == 5)) {
+                } else if((normalTimer >= 275) || (deadPlayers[0].length == 5)) {
                     roundCounter += 1;
                     this.teams[enemyTeamID].stat.pts += 1;
 
@@ -294,6 +294,9 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                 enemyBoost += 200;
                             }
                         }
+
+                        boost += currentPlayer.agent.ratings.attack;
+                        enemyBoost += enemyPlayer.agent.ratings.defense;
     
     
                         if(Math.random() > 0.8) {                       
@@ -305,7 +308,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                         this.recordStat(enemyTeamID, randomEnemyPick, "fga", 1)
 
                                         //ACS
-                                        this.recordStat(teamId, randomPlayerPick, "tp", 10)
+                                        this.recordStat(teamId, randomPlayerPick, "tp", 15)
 
                                         creditsData[teamId][randomPlayerPick] += 200;
 
@@ -318,13 +321,13 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                         this.recordStat(teamId, randomPlayerPick, "fga", 1)
 
                                         //ACS
-                                        this.recordStat(enemyTeamID, randomEnemyPick, "tp", 10)
+                                        this.recordStat(enemyTeamID, randomEnemyPick, "tp", 15)
 
                                         creditsData[enemyTeamID][randomEnemyPick] += 200;
 
                                         if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.6)) && (plantedSpike)) {
                                             plantedSpike = false;
-                                            normalTimer = 175;
+                                            normalTimer = 275;
                                         }    
                                     }
                                 } else {
@@ -333,7 +336,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                     this.recordStat(enemyTeamID, randomEnemyPick, "fga", 1)
 
                                     //ACS
-                                    this.recordStat(teamId, randomPlayerPick, "tp", 10)
+                                    this.recordStat(teamId, randomPlayerPick, "tp", 15)
 
                                     creditsData[teamId][randomPlayerPick] += 200;
 
@@ -347,25 +350,25 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                 this.recordStat(teamId, randomPlayerPick, "fga", 1)
 
                                 //ACS
-                                this.recordStat(enemyTeamID, randomEnemyPick, "tp", 10)
+                                this.recordStat(enemyTeamID, randomEnemyPick, "tp", 15)
 
                                 creditsData[enemyTeamID][randomEnemyPick] += 200;
 
                                 if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.6)) && (plantedSpike)) {
                                     plantedSpike = false;
-                                    normalTimer = 175;
+                                    normalTimer = 275;
                                 }    
                             }
 
 
-                        } else if(Math.random() > 0.85) {
+                        } else if(Math.random() > 0.65) {
                             //Just kill the enemy
                             this.recordStat(teamId, randomPlayerPick, "fg", 1);
                             deadPlayers[enemyTeamID].push(randomEnemyPick);
                             this.recordStat(enemyTeamID, randomEnemyPick, "fga", 1)
 
                             //ACS
-                            this.recordStat(teamId, randomPlayerPick, "tp", 10)
+                            this.recordStat(teamId, randomPlayerPick, "tp", 15)
 
                             creditsData[teamId][randomPlayerPick] += 200;
 
@@ -380,7 +383,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                 this.recordStat(enemyTeamID, randomEnemyPick, "fga", 1)
 
                                 //ACS
-                                this.recordStat(teamId, randomPlayerPick, "tp", 10)
+                                this.recordStat(teamId, randomPlayerPick, "tp", 15)
 
                                 creditsData[teamId][randomPlayerPick] += 200;
 
@@ -393,13 +396,13 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                 this.recordStat(teamId, randomPlayerPick, "fga", 1)
 
                                 //ACS
-                                this.recordStat(enemyTeamID, randomEnemyPick, "tp", 10)
+                                this.recordStat(enemyTeamID, randomEnemyPick, "tp", 15)
 
                                 creditsData[enemyTeamID][randomEnemyPick] += 200;
 
                                 if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.6)) && (plantedSpike)) {
                                     plantedSpike = false;
-                                    normalTimer = 175;
+                                    normalTimer = 275;
                                 }    
                             }
                         }
@@ -418,10 +421,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                             enemyBoost += Math.floor(Math.random() * 5) - 0.5;
                         }
 
-                        //Adding overall synergy boosts
-                        boost += (this.teams[teamId].synergy.def + this.teams[teamId].synergy.reb); 
-                        enemyBoost += (this.teams[enemyTeamID].synergy.off + this.teams[enemyTeamID].synergy.reb); 
-                        
+                        //Most pro players rarely ever have 0 kills a game this is to counter some players being plain horrible
                         if(Math.random() > 0.66) {
                             if(Math.random() > 0.5) {
                                 boost += 200;
@@ -429,6 +429,10 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                 enemyBoost += 200;
                             }
                         }
+
+                        //Adding overall synergy boosts
+                        boost += (this.teams[teamId].synergy.def + this.teams[teamId].synergy.reb); 
+                        enemyBoost += (this.teams[enemyTeamID].synergy.off + this.teams[enemyTeamID].synergy.reb); 
     
 
                         if(Math.random() > 0.4) {
@@ -459,7 +463,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
     
                                         if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.6)) && (plantedSpike)) {
                                             plantedSpike = false;
-                                            normalTimer = 175;
+                                            normalTimer = 275;
                                         }    
                                     }
                                 } else {
@@ -500,7 +504,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                 //Defuse spike
                                 if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.6)) && (plantedSpike)) {
                                     plantedSpike = false;
-                                    normalTimer = 175;
+                                    normalTimer = 275;
                                 }    
                             }
                         } else {
@@ -531,7 +535,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
     
                                         if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.6)) && (plantedSpike)) {
                                             plantedSpike = false;
-                                            normalTimer = 175;
+                                            normalTimer = 275;
                                         }    
                                     }
                                 } else {
@@ -573,7 +577,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                 //Defuse spike
                                 if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.7)) && (plantedSpike)) {
                                     plantedSpike = false;
-                                    normalTimer = 175;
+                                    normalTimer = 275;
                                 }    
                             }
                         }
@@ -591,6 +595,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                             enemyBoost += Math.floor(Math.random() * 5);
                         }
 
+                        //Most pro players rarely ever have 0 kills a game this is to counter some players being plain horrible
                         if(Math.random() > 0.66) {
                             if(Math.random() > 0.5) {
                                 boost += 200;
@@ -617,7 +622,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                     creditsData[teamId][randomPlayerPick] += 200;
 
-                                    if(enemyPlayer.agent.role === "Sentinal" || (Math.random() > 0.6)) {
+                                    if((currentPlayer.agent.ratings.attack > enemyPlayer.agent.ratings.defense) || (Math.random() > 0.6)) {
                                         plantedSpike = true;
                                     }        
                                 } else {
@@ -630,9 +635,9 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                     creditsData[enemyTeamID][randomEnemyPick] += 200;
 
-                                    if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.6) && (plantedSpike))) {
+                                    if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.6) && (plantedSpike))) {
                                         plantedSpike = false;
-                                        normalTimer = 175;
+                                        normalTimer = 275;
                                     }    
                                 }
                             } else {
@@ -645,7 +650,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                 creditsData[teamId][randomPlayerPick] += 200;
 
-                                if(enemyPlayer.agent.role === "Sentinal" || (Math.random() > 0.6)) {
+                                if((currentPlayer.agent.ratings.attack > enemyPlayer.agent.ratings.defense)  || (Math.random() > 0.6)) {
                                     plantedSpike = true;
                                 }    
                             }
@@ -659,9 +664,9 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                             creditsData[enemyTeamID][randomEnemyPick] += 200;
 
-                            if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.6)) && (plantedSpike)) {
+                            if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.6)) && (plantedSpike)) {
                                 plantedSpike = false;
-                                normalTimer = 175;
+                                normalTimer = 275;
                             }    
                         }
                     } else if(basicActions[randomBasicAction] == "utilPeek") {
@@ -675,7 +680,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                             creditsData[teamId][randomPlayerPick] += 200;
 
-                            if(enemyPlayer.agent.role === "Sentinal" || (Math.random() > 0.6)) {
+                            if((currentPlayer.agent.ratings.attack > enemyPlayer.agent.ratings.defense)  || (Math.random() > 0.6)) {
                                 plantedSpike = true;
                             } 
                         } else {
@@ -688,9 +693,9 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                             creditsData[enemyTeamID][randomEnemyPick] += 200;
 
-                            if((currentPlayer.agent.role === "Sentinal" || (Math.random() > 0.6)) && (plantedSpike)) {
+                            if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.6)) && (plantedSpike)) {
                                 plantedSpike = false;
-                                normalTimer = 175;
+                                normalTimer = 275;
                             } 
                         }
                     } else if(basicActions[randomBasicAction] == "utilTeamFight") {
@@ -718,16 +723,22 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                             //ACS
                             this.recordStat(enemyTeamID, randomEnemyPick, "tp", 20)
 
+                            let nextPlayer = randomPlayerPick + 1;
+
+                            if(nextPlayer > 4) {
+                                nextPlayer = 0;
+                            }
+
                             creditsData[enemyTeamID][randomEnemyPick] += 200;
 
                             if(Math.random() > 0.5) {
-                                this.recordStat(enemyTeamID, randomEnemyPick + 1, "fgp", 1);
-                                this.recordStat(enemyTeamID, randomEnemyPick + 1, "tp", 25)
+                                this.recordStat(enemyTeamID, nextPlayer, "fgp", 1);
+                                this.recordStat(enemyTeamID, nextPlayer, "tp", 15)
                             }
 
                             if((Math.random() > 0.5) && (plantedSpike)) {
                                 plantedSpike = false;
-                                normalTimer = 175;
+                                normalTimer = 275;
                             }
                         }
                     }
@@ -738,8 +749,11 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                         i--;
                     }
 
-                    randomPlayerPick = Math.floor(Math.random() * 5)
-                    randomEnemyPick = Math.floor(Math.random() * 5);
+                    randomPlayerPick = Math.floor(Math.random() * randomPlayerChoices.length)
+                    randomEnemyPick = Math.floor(Math.random() * randomEnemyChoices.length)
+
+                    randomPlayerPick = randomPlayerChoices[randomPlayerPick];
+                    randomEnemyPick = randomEnemyChoices[randomPlayerPick];
                 }
                 
                 currentPlayer = { 

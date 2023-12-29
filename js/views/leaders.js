@@ -79,7 +79,7 @@ define(["dao", "globals", "ui", "core/player", "lib/bluebird", "lib/knockout", "
                 categories.push({name: "Kills", stat: "K", title: "Kills Per Game", data: [], minStats: ["gp", "fg"], minValue: [16, 0]});
                 //categories.push({name: "Deaths", stat: "Reb", title: "Rebounds Per Game", data: [], minStats: ["gp", "fga"], minValue: [16, 0]});
                 categories.push({name: "Assists", stat: "A", title: "Assists Per Game", data: [], minStats: ["gp", "fgp"], minValue: [16, 0]});
-                categories.push({name: "Creep Score", stat: "CS", title: "Creep Score Per Game", data: [], minStats: ["gp","tp"], minValue: [16, 0]});
+                categories.push({name: "Average Combat Score", stat: "ACS", title: "Average Combat Score Per Game", data: [], minStats: ["gp","tp"], minValue: [16, 0]});
                 categories.push({name: "KDA", stat: "KDA", title: "KDA", data: [], minStats: ["gp","tp"], minValue: [16, 0]});
            /*     categories.push({name: "Kills", stat: "K-30", title: "Kills Per 30 Minutes", data: [], minStats: ["gp", "fg"], minValue: [16, 0]});
                 //categories.push({name: "Deaths", stat: "Reb", title: "Rebounds Per Game", data: [], minStats: ["gp", "fga"], minValue: [16, 0]});
