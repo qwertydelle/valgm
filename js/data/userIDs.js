@@ -1010,7 +1010,7 @@ define([], function () {
 		["Wildfire"],
 		["Tuna"],
 		["Zaj"],
-		["Kaygofps"],
+		["Kaygo"],
 		["Iceykl"],
 		["Burger"],
 		["November"],
