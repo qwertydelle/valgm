@@ -78,38 +78,45 @@ define(["dao", "globals", "ui", "core/freeAgents", "core/player", "core/trade","
                 p = trade.filterUntradable([p])[0];
                 console.log(p)
 
-
-                for(let i = 0; i < p.stats.length; i++) {
-                    //Stupid Stat might change it to make actual sense later
-                    let currentYear = p.stats[i];
-                    currentYear.tpa = (currentYear.tp / 26)
+                if(p.stats) {
+                    for(let i = 0; i < p.stats.length; i++) {
+                        //Stupid Stat might change it to make actual sense later
+                        let currentYear = p.stats[i];
+                        currentYear.tpa = (currentYear.tp / 26)
+                    }
                 }
 
                 let tpaAverageCareer = 0;
                 //career stat
-                for(let i = 0; i < p.stats.length; i++) {
-                    //Stupid Stat might change it to make actual sense later
-                    let currentYear = p.stats[i];
-                    tpaAverageCareer += currentYear.tpa;
+                if(p.stats) {
+                    for(let i = 0; i < p.stats.length; i++) {
+                        //Stupid Stat might change it to make actual sense later
+                        let currentYear = p.stats[i];
+                        tpaAverageCareer += currentYear.tpa;
+                    }
                 }
 
-                p.careerStats.tpa = tpaAverageCareer/p.stats.length;
-
-                for(let i = 0; i < p.statsPlayoffs.length; i++) {
-                    //Stupid Stat might change it to make actual sense later
-                    let currentYear = p.statsPlayoffs[i];
-                    currentYear.tpa = (currentYear.tp / 26)
+                if(p.stats) {
+                    p.careerStats.tpa = tpaAverageCareer/p.stats.length;
                 }
 
-                tpaAverageCareer = 0;
-
-                for(let i = 0; i < p.statsPlayoffs.length; i++) {
-                    //Stupid Stat might change it to make actual sense later
-                    let currentYear = p.statsPlayoffs[i];
-                    tpaAverageCareer += currentYear.tpa;
+                if(p.statsPlayoffs) {
+                    for(let i = 0; i < p.statsPlayoffs.length; i++) {
+                        //Stupid Stat might change it to make actual sense later
+                        let currentYear = p.statsPlayoffs[i];
+                        currentYear.tpa = (currentYear.tp / 26)
+                    }
+    
+                    tpaAverageCareer = 0;
+    
+                    for(let i = 0; i < p.statsPlayoffs.length; i++) {
+                        //Stupid Stat might change it to make actual sense later
+                        let currentYear = p.statsPlayoffs[i];
+                        tpaAverageCareer += currentYear.tpa;
+                    }
+    
+                    p.careerStatsPlayoffs.tpa = tpaAverageCareer/p.statsPlayoffs.length;
                 }
-
-                p.careerStatsPlayoffs.tpa = tpaAverageCareer/p.statsPlayoffs.length;
 				
 				
                 return {

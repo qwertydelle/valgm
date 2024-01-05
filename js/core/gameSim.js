@@ -44,6 +44,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 		}
 		this.id = gid;
 		this.teams = [team1,team2]
+        this.overtime = 0;
 		//First Index for team 1, Second index for team 2
 		this.playerAgentPicks = [{},{}]
         this.currentWeapon = [{},{}]
@@ -159,11 +160,14 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
         let attackFirst = Math.floor(Math.random())
         this.simRound(roundCounter, attackFirst);
 
-
+        //Adding rounds from overtime to final score
+        for(let i = 0; i < 2; i++) {
+            this.teams[i].stat.pts += this.teams[i].stat.ptsQtrs[0];
+        }
 
         out = {
             gid: this.id,
-            overtimes: 0,
+            overtimes: this.overtime,
             team: this.teams
         }
 
@@ -174,8 +178,9 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
     };
 
 
-    GameSim.prototype.simRound = function(roundCounter, teamId, creditsData) {
+    GameSim.prototype.simRound = function(roundCounter, teamId, creditsData, overtime) {
         creditsData = creditsData === undefined? [[800,800,800,800,800],[800,800,800,800,800]]: creditsData;
+        overtime = typeof overtime === "undefined"?  false: overtime;
         let basicActions = ["peek", "peek", "peek", "peek", "hold", "hold", "hold", "hold", "fight", "fight", "fight", "utilPeek", "utilPeek", "utilTeamFight", "utilTeamFight"];
         let deadPlayers = [[],[]];
         let enemyTeamID = teamId == 1? 0: 1;
@@ -188,15 +193,17 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
         console.log(this.teams)
 
-        //Overtime logic(Deleted for now)
-        // if(this.teams[teamId].stat.pts === 12 && this.teams[enemyTeamID].stat.pts === 12) {
-        //     creditsData = [[5000,5000,5000,5000,5000],[5000,5000,5000,5000,5000]]
+        //Overtime logic(Come back to later)
+        if(this.teams[teamId].stat.pts === 12 && this.teams[enemyTeamID].stat.pts === 12 && !overtime) {
+            creditsData = [[5000,5000,5000,5000,5000],[5000,5000,5000,5000,5000]]
+            this.overtime += 1;
 
-            
-        // }
+            this.simRound(roundCounter, teamId, creditsData, true)
+            return;
+        }
 
         //Rounds 
-        if((this.teams[teamId].stat.pts < 13 && this.teams[enemyTeamID].stat.pts < 13)) {
+        if((this.teams[teamId].stat.pts < 13 && this.teams[enemyTeamID].stat.pts < 13) || overtime) {
             //Shuffle Player Id
             let randomPlayerChoices = [0,1,2,3,4, this.teams[teamId].sortedIDs[0],this.teams[teamId].sortedIDs[0],this.teams[teamId].sortedIDs[1], 0]
             let randomPlayerPick = Math.floor(Math.random() * randomPlayerChoices.length)
@@ -225,6 +232,13 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                 randomPlayerPick = 0;
             }
 
+             //Duelist usually dont go for first bloods as often on defense
+             if((deadPlayers[teamId].length === 0 && deadPlayers[teamId].length === 0) && Math.random() > 0.65) {
+                randomEnemyPick = 0;
+            }
+
+            
+
             let firstblood = false;
 
             console.log(currentPlayer)
@@ -236,7 +250,13 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                 if((plantedSpike && spikeTimer >= 85) || (deadPlayers[teamId].length == 5)) {
                     roundCounter += 1;
-                    this.teams[teamId].stat.pts += 1;
+
+                    if(!overtime) {
+                        this.teams[teamId].stat.pts += 1;
+                    } else {
+                        this.teams[teamId].stat.ptsQtrs[0] += 1;
+                        break;
+                    }
 
                     for(let i = 0; i < 5; i++) {
                         creditsData[teamId][i] += 3000;
@@ -247,9 +267,15 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                     }
 
                     break;
-                } else if((normalTimer >= 275) || (deadPlayers[enemyTeamID].length === 5)) {
+                } else if((normalTimer >= 185) || (deadPlayers[enemyTeamID].length === 5)) {
                     roundCounter += 1;
-                    this.teams[enemyTeamID].stat.pts += 1;
+
+                    if(!overtime) {
+                        this.teams[enemyTeamID].stat.pts += 1;
+                    } else {
+                        this.teams[enemyTeamID].stat.ptsQtrs[0] += 1;
+                        break;
+                    }
 
                     for(let i = 0; i < 5; i++) {
                         creditsData[enemyTeamID][i] += 3000;
@@ -297,8 +323,8 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                         enemyBoost += enemyPlayer.agent.ratings.defense;
     
     
-                        if(Math.random() > 0.8) {                       
-                            if(currentPlayer.player.compositeRating.dribbing + boost > enemyPlayer.player.compositeRating.dribbing + enemyBoost) {
+                        if(Math.random() > 0.6) {                       
+                            if(currentPlayer.player.matchRating.aim + boost > enemyPlayer.player.matchRating.aim + enemyBoost) {
                                 if(Math.random() > 0.5) {
                                     if(this.currentWeapon[teamId][randomPlayerPick].value > this.currentWeapon[enemyTeamID][randomEnemyPick].value) {
                                         this.recordStat(teamId, randomPlayerPick, "fg", 1);
@@ -310,7 +336,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                         creditsData[teamId][randomPlayerPick] += 200;
 
-                                        if(enemyPlayer.agent.role === "Sentinal" || (Math.random() > 0.4)) {
+                                        if((currentPlayer.agent.ratings.attack > enemyPlayer.agent.ratings.defense) || (Math.random() > 0.4)) {
                                             plantedSpike = true;
                                         }            
                                     } else {
@@ -323,9 +349,9 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                         creditsData[enemyTeamID][randomEnemyPick] += 200;
 
-                                        if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.4)) && (plantedSpike)) {
+                                        if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.65)) && (plantedSpike)) {
                                             plantedSpike = false;
-                                            normalTimer = 275;
+                                            normalTimer = 185;
                                         }    
                                     }
                                 } else {
@@ -352,14 +378,14 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                 creditsData[enemyTeamID][randomEnemyPick] += 200;
 
-                                if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.4)) && (plantedSpike)) {
+                                if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.65)) && (plantedSpike)) {
                                     plantedSpike = false;
-                                    normalTimer = 275;
+                                    normalTimer = 185;
                                 }    
                             }
 
 
-                        } else if(Math.random() > 0.65) {
+                        } else if(Math.random() > 0.6) {
                             //Just kill the enemy
                             this.recordStat(teamId, randomPlayerPick, "fg", 1);
                             deadPlayers[enemyTeamID].push(randomEnemyPick);
@@ -398,9 +424,9 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                 creditsData[enemyTeamID][randomEnemyPick] += 200;
 
-                                if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.4)) && (plantedSpike)) {
+                                if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.65)) && (plantedSpike)) {
                                     plantedSpike = false;
-                                    normalTimer = 275;
+                                    normalTimer = 185;
                                 }    
                             }
                         }
@@ -462,9 +488,9 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
     
                                         creditsData[enemyTeamID][randomEnemyPick] += 200;
     
-                                        if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.4)) && (plantedSpike)) {
+                                        if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.65)) && (plantedSpike)) {
                                             plantedSpike = false;
-                                            normalTimer = 275;
+                                            normalTimer = 185;
                                         }    
                                     }
                                 } else {
@@ -477,7 +503,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
     
                                     creditsData[teamId][randomPlayerPick] += 200;
     
-                                    if(enemyPlayer.agent.role === "Sentinal" || (Math.random() > 0.4)) {
+                                    if(currentPlayer.agent.ratings.attack > enemyPlayer.agent.ratings.defense  || (Math.random() > 0.4)) {
                                         plantedSpike = true;
                                     }        
                                 }
@@ -503,9 +529,9 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                 this.recordStat(enemyTeamID, nextPlayer, "tp", 10)
     
                                 //Defuse spike
-                                if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.4)) && (plantedSpike)) {
+                                if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.65)) && (plantedSpike)) {
                                     plantedSpike = false;
-                                    normalTimer = 275;
+                                    normalTimer = 185;
                                 }    
                             }
                         } else {
@@ -534,9 +560,9 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                         creditsData[enemyTeamID][randomEnemyPick] += 200;
     
-                                        if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.4)) && (plantedSpike)) {
+                                        if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.65)) && (plantedSpike)) {
                                             plantedSpike = false;
-                                            normalTimer = 275;
+                                            normalTimer = 185;
                                         }    
                                     }
                                 } else {
@@ -576,9 +602,9 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                 this.recordStat(enemyTeamID, nextPlayer, "tp", 10)
     
                                 //Defuse spike
-                                if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.4)) && (plantedSpike)) {
+                                if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.65)) && (plantedSpike)) {
                                     plantedSpike = false;
-                                    normalTimer = 275;
+                                    normalTimer = 185;
                                 }    
                             }
                         }
@@ -639,9 +665,9 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                     creditsData[enemyTeamID][randomEnemyPick] += 200;
 
-                                    if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.4) && (plantedSpike))) {
+                                    if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.65) && (plantedSpike))) {
                                         plantedSpike = false;
-                                        normalTimer = 275;
+                                        normalTimer = 185;
                                     }    
                                 }
                             } else {
@@ -668,9 +694,9 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                             creditsData[enemyTeamID][randomEnemyPick] += 200;
 
-                            if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.4)) && (plantedSpike)) {
+                            if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.65)) && (plantedSpike)) {
                                 plantedSpike = false;
-                                normalTimer = 275;
+                                normalTimer = 185;
                             }    
                         }
                     } else if(basicActions[randomBasicAction] == "utilPeek") {
@@ -697,9 +723,9 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                             creditsData[enemyTeamID][randomEnemyPick] += 200;
 
-                            if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.4)) && (plantedSpike)) {
+                            if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.65)) && (plantedSpike)) {
                                 plantedSpike = false;
-                                normalTimer = 275;
+                                normalTimer = 185;
                             } 
                         }
                     } else if(basicActions[randomBasicAction] == "utilTeamFight") {
@@ -748,7 +774,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                             if((Math.random() > 0.5) && (plantedSpike)) {
                                 plantedSpike = false;
-                                normalTimer = 275;
+                                normalTimer = 185;
                             }
                         }
                     }
@@ -772,8 +798,17 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                     firstblood = true;
                 }
 
-                randomPlayerPick = Math.floor(Math.random() * randomPlayerChoices.length)
-                randomEnemyPick = Math.floor(Math.random() * randomEnemyChoices.length)
+                //Overheating kinda keep using the same player if not dead
+                if(Math.random() < 0.65) {
+                    randomPlayerPick = Math.floor(Math.random() * randomPlayerChoices.length)
+                    randomEnemyPick = Math.floor(Math.random() * randomEnemyChoices.length)
+                } else {
+                    if(deadPlayers[1].includes(randomEnemyPick)) {
+                        randomEnemyPick = Math.floor(Math.random() * randomEnemyChoices.length)
+                    } else {
+                        randomPlayerPick = Math.floor(Math.random() * randomPlayerChoices.length)
+                    }
+                }
 
                 randomPlayerPick = randomPlayerChoices[randomPlayerPick];
                 randomEnemyPick = randomEnemyChoices[randomEnemyPick];
@@ -795,10 +830,26 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                 normalTimer += 15
             }
 
-            if(roundCounter == 12) {
+            if(roundCounter == 12 && !overtime) {
                 this.simRound(roundCounter, enemyTeamID, creditsData)
-            } else {
+            } else if(!overtime) {
                 this.simRound(roundCounter, teamId, creditsData)
+            }
+
+            //check if a team won overtime
+            if(this.teams[teamId].stat.ptsQtrs[0] >= this.teams[enemyTeamID].stat.ptsQtrs[0]) {
+                if(this.teams[teamId].stat.ptsQtrs[0] - this.teams[enemyTeamID].stat.ptsQtrs[0] == 2) {
+                    overtime = false;
+                }
+            } else if(this.teams[teamId].stat.ptsQtrs[0] <= this.teams[enemyTeamID].stat.ptsQtrs[0]) {
+                if(this.teams[enemyTeamID].stat.ptsQtrs[0] - this.teams[teamId].stat.ptsQtrs[0] == 2) {
+                    overtime = false;
+                }
+            }
+
+            if(overtime) {
+                this.overtime += 1;
+                this.simRound(roundCounter, enemyTeamID, creditsData, overtime)
             }
 
         } else {
