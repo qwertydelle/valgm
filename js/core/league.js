@@ -457,7 +457,6 @@ define(["dao", "db", "globals", "ui", "core/champion", "data/championPatch", "da
 
 			cpSorted.sort(function (a, b) { return a.rank - b.rank; });
 
-            console.log(cpSorted)
 
 			var topADC,topMID,topJGL,topTOP,topSUP;
 
@@ -472,8 +471,7 @@ define(["dao", "db", "globals", "ui", "core/champion", "data/championPatch", "da
 
             //Still here for backwards compatability
 			topSUP = [];
-
-            console.log(cDefault)
+            
 			for (i = 0; i < _.size(cpSorted); i++) {
 				if ((cpSorted[i].role == "Duelist") && (topADC.length < 5) ) {
 					for (j = 0; j < _.size(cDefault); j++) {
@@ -520,6 +518,8 @@ define(["dao", "db", "globals", "ui", "core/champion", "data/championPatch", "da
 				}
 
 			}
+
+            console.log(topADC)
 
 
             // Draft picks for the first 4 years, as those are the ones can be traded initially

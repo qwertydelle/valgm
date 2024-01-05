@@ -85,7 +85,7 @@
 										topSUP = [];
 
 										for (i = 0; i < _.size(cpSorted); i++) {
-											if ((cpSorted[i].role == "ADC") && (topADC.length < 5) ) {
+											if ((cpSorted[i].role == "Duelist") && (topADC.length < 5) ) {
 										//	   console.log(_.size(c));
 												for (j = 0; j < _.size(c); j++) {
 													if (c[j].name == cpSorted[i].champion) {
@@ -94,7 +94,7 @@
 													}
 												}
 											}
-											if ((cpSorted[i].role == "Middle") && (topMID.length < 5) ) {
+											if ((cpSorted[i].role == "Initiator") && (topMID.length < 5) ) {
 							//				  topMID.push(cpSorted[i].cpid);
 												for (j = 0; j < _.size(c); j++) {
 													if (c[j].name == cpSorted[i].champion) {
@@ -103,7 +103,7 @@
 													}
 												}
 											}
-											if ((cpSorted[i].role == "Jungle") && (topJGL.length < 5) ) {
+											if ((cpSorted[i].role == "Smokes") && (topJGL.length < 5) ) {
 							//				  topJGL.push(cpSorted[i].cpid);
 												for (j = 0; j < _.size(c); j++) {
 													if (c[j].name == cpSorted[i].champion) {
@@ -112,7 +112,7 @@
 													}
 												}
 											}
-											if ((cpSorted[i].role == "Top") && (topTOP.length < 5) ) {
+											if ((cpSorted[i].role == "Sentinal") && (topTOP.length < 5) ) {
 							//				  topTOP.push(cpSorted[i].cpid);
 												for (j = 0; j < _.size(c); j++) {
 													if (c[j].name == cpSorted[i].champion) {

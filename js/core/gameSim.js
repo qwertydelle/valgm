@@ -62,24 +62,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
             this.teams[teamID].sortedIDs = [this.teams[teamID].player.findIndex((function(e) { return e.id == this.teams[teamID].sortedPlayers[0].id}).bind(this)),this.teams[teamID].player.findIndex((function(e) { return e.id == this.teams[teamID].sortedPlayers[1].id}).bind(this))]
         }
-
-
-        //Give whole team 10% of top players ability 
-        for(let teamID = 0;teamID < 2;teamID++) {
-
-            //Every player gets a certain percentage of the best players skill
-            let Percent = this.teams[teamID].sortedPlayers[0].ovr * (Math.random() * 0.15);
-
-            console.log(this.teams[teamID])
-
-            for(let i = 0;i < 5;i++) {
-                if(this.teams[teamID].sortedPlayers[0].id != this.teams[teamID].player[i].id) {
-                    this.teams[teamID].player[i].matchRating.aim += Percent
-                    this.teams[teamID].player[i].matchRating.utilUsage += Percent
-                    this.teams[teamID].player[i].matchRating.teamwork += Percent
-                }
-            }
-        }
+       
 
 		this.agentPicks();
         
@@ -193,7 +176,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
     GameSim.prototype.simRound = function(roundCounter, teamId, creditsData) {
         creditsData = creditsData === undefined? [[800,800,800,800,800],[800,800,800,800,800]]: creditsData;
-        let basicActions = ["peek", "peek", "peek", "hold", "hold", "fight", "fight", "fight", "utilPeek", "utilPeek", "utilTeamFight", "utilTeamFight"];
+        let basicActions = ["peek", "peek", "peek", "peek", "hold", "hold", "hold", "hold", "fight", "fight", "fight", "utilPeek", "utilPeek", "utilTeamFight", "utilTeamFight"];
         let deadPlayers = [[],[]];
         let enemyTeamID = teamId == 1? 0: 1;
 
@@ -205,10 +188,17 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
         console.log(this.teams)
 
+        //Overtime logic(Deleted for now)
+        // if(this.teams[teamId].stat.pts === 12 && this.teams[enemyTeamID].stat.pts === 12) {
+        //     creditsData = [[5000,5000,5000,5000,5000],[5000,5000,5000,5000,5000]]
+
+            
+        // }
+
         //Rounds 
-        if(this.teams[teamId].stat.pts < 13 && this.teams[enemyTeamID].stat.pts < 13) {
+        if((this.teams[teamId].stat.pts < 13 && this.teams[enemyTeamID].stat.pts < 13)) {
             //Shuffle Player Id
-            let randomPlayerChoices = [0,1,2,3,4, this.teams[teamId].sortedIDs[0],this.teams[teamId].sortedIDs[0], this.teams[teamId].sortedIDs[0],this.teams[teamId].sortedIDs[1], 0]
+            let randomPlayerChoices = [0,1,2,3,4, this.teams[teamId].sortedIDs[0],this.teams[teamId].sortedIDs[0],this.teams[teamId].sortedIDs[1], 0]
             let randomPlayerPick = Math.floor(Math.random() * randomPlayerChoices.length)
 
 
@@ -220,7 +210,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                 agent: this.playerAgentPicks[teamId][randomPlayerPick]
             };
 
-            let randomEnemyChoices = [0,1,2,3,4, this.teams[enemyTeamID].sortedIDs[0],this.teams[enemyTeamID].sortedIDs[0], this.teams[enemyTeamID].sortedIDs[0],this.teams[enemyTeamID].sortedIDs[1], 0]
+            let randomEnemyChoices = [0,1,2,3,4, this.teams[enemyTeamID].sortedIDs[0],this.teams[enemyTeamID].sortedIDs[0],this.teams[enemyTeamID].sortedIDs[1], 0]
             let randomEnemyPick = Math.floor(Math.random() * randomEnemyChoices.length)
 
             randomEnemyPick = randomEnemyChoices[randomEnemyPick];
@@ -229,6 +219,10 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
             let enemyPlayer = {
                 player: this.teams[enemyTeamID].player[randomEnemyPick],
                 agent: this.playerAgentPicks[enemyTeamID][randomEnemyPick]
+            }
+
+            if((deadPlayers[teamId].length === 0 && deadPlayers[teamId].length === 0) && Math.random() > 0.45) {
+                randomPlayerPick = 0;
             }
 
             let firstblood = false;
@@ -240,7 +234,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                 let randomBasicAction = Math.floor(random.uniform(0, basicActions.length));
 
 
-                if((plantedSpike && spikeTimer >= 100) || (deadPlayers[1].length == 5)) {
+                if((plantedSpike && spikeTimer >= 85) || (deadPlayers[teamId].length == 5)) {
                     roundCounter += 1;
                     this.teams[teamId].stat.pts += 1;
 
@@ -253,7 +247,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                     }
 
                     break;
-                } else if((normalTimer >= 275) || (deadPlayers[0].length == 5)) {
+                } else if((normalTimer >= 275) || (deadPlayers[enemyTeamID].length === 5)) {
                     roundCounter += 1;
                     this.teams[enemyTeamID].stat.pts += 1;
 
@@ -325,7 +319,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                         this.recordStat(teamId, randomPlayerPick, "fga", 1)
 
                                         //ACS
-                                        this.recordStat(enemyTeamID, randomEnemyPick, "tp", 15)
+                                        this.recordStat(enemyTeamID, randomEnemyPick, "tp", 10)
 
                                         creditsData[enemyTeamID][randomEnemyPick] += 200;
 
@@ -340,7 +334,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                     this.recordStat(enemyTeamID, randomEnemyPick, "fga", 1)
 
                                     //ACS
-                                    this.recordStat(teamId, randomPlayerPick, "tp", 15)
+                                    this.recordStat(teamId, randomPlayerPick, "tp", 10)
 
                                     creditsData[teamId][randomPlayerPick] += 200;
 
@@ -354,7 +348,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                 this.recordStat(teamId, randomPlayerPick, "fga", 1)
 
                                 //ACS
-                                this.recordStat(enemyTeamID, randomEnemyPick, "tp", 15)
+                                this.recordStat(enemyTeamID, randomEnemyPick, "tp", 10)
 
                                 creditsData[enemyTeamID][randomEnemyPick] += 200;
 
@@ -387,7 +381,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                 this.recordStat(enemyTeamID, randomEnemyPick, "fga", 1)
 
                                 //ACS
-                                this.recordStat(teamId, randomPlayerPick, "tp", 15)
+                                this.recordStat(teamId, randomPlayerPick, "tp", 10)
 
                                 creditsData[teamId][randomPlayerPick] += 200;
 
@@ -400,7 +394,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                 this.recordStat(teamId, randomPlayerPick, "fga", 1)
 
                                 //ACS
-                                this.recordStat(enemyTeamID, randomEnemyPick, "tp", 15)
+                                this.recordStat(enemyTeamID, randomEnemyPick, "tp", 5)
 
                                 creditsData[enemyTeamID][randomEnemyPick] += 200;
 
@@ -433,6 +427,9 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                 enemyBoost += 200;
                             }
                         }
+
+                        boost += this.currentWeapon[teamId][randomPlayerPick].value
+                        enemyBoost += this.currentWeapon[enemyTeamID][randomEnemyPick].value
 
                         //Adding overall synergy boosts
                         boost += (this.teams[teamId].synergy.def + this.teams[teamId].synergy.reb); 
@@ -490,7 +487,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                 this.recordStat(teamId, randomPlayerPick, "fga", 1)
 
                                 //ACS
-                                this.recordStat(enemyTeamID, randomEnemyPick, "tp", 15)
+                                this.recordStat(enemyTeamID, randomEnemyPick, "tp", 10)
 
                                 let nextPlayer = randomPlayerPick + 1;
 
@@ -503,7 +500,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                 creditsData[enemyTeamID][randomEnemyPick] += 200;
 
                                 //ACS
-                                this.recordStat(enemyTeamID, nextPlayer, "tp", 15)
+                                this.recordStat(enemyTeamID, nextPlayer, "tp", 10)
     
                                 //Defuse spike
                                 if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.4)) && (plantedSpike)) {
@@ -599,6 +596,9 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                             enemyBoost += Math.floor(Math.random() * 5);
                         }
 
+                        boost += this.currentWeapon[teamId][randomPlayerPick].value
+                        enemyBoost += this.currentWeapon[enemyTeamID][randomEnemyPick].value
+
                         //Most pro players rarely ever have 0 kills a game this is to counter some players being plain horrible
                         if(Math.random() > 0.66) {
                             if(Math.random() > 0.5) {
@@ -650,7 +650,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                 this.recordStat(enemyTeamID, randomEnemyPick, "fga", 1)
 
                                 //ACS
-                                this.recordStat(teamId, randomPlayerPick, "tp", 15)
+                                this.recordStat(teamId, randomPlayerPick, "tp", 10)
 
                                 creditsData[teamId][randomPlayerPick] += 200;
 
@@ -693,7 +693,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                             this.recordStat(teamId, randomPlayerPick, "fga", 1)
 
                             //ACS
-                            this.recordStat(enemyTeamID, randomEnemyPick, "tp", 20)
+                            this.recordStat(enemyTeamID, randomEnemyPick, "tp", 10)
 
                             creditsData[enemyTeamID][randomEnemyPick] += 200;
 
@@ -708,11 +708,17 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                             deadPlayers[enemyTeamID].push(randomEnemyPick);
                             this.recordStat(enemyTeamID, randomEnemyPick, "fga", 1)
 
-                            this.recordStat(teamId, randomPlayerPick + 1, "fgp", 1);
-                            this.recordStat(teamId, randomPlayerPick + 1, "tp", 25)
+                            let nextPlayer = randomPlayerPick + 1;
+
+                            if(nextPlayer > 4) {
+                                nextPlayer = 0;
+                            }
+
+                            this.recordStat(teamId, nextPlayer, "fgp", 1);
+                            this.recordStat(teamId, nextPlayer, "tp", 5)
 
                             //ACS
-                            this.recordStat(teamId, randomPlayerPick, "tp", 20)
+                            this.recordStat(teamId, randomPlayerPick, "tp", 10)
 
                             creditsData[teamId][randomPlayerPick] += 200;
 
@@ -770,7 +776,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                 randomEnemyPick = Math.floor(Math.random() * randomEnemyChoices.length)
 
                 randomPlayerPick = randomPlayerChoices[randomPlayerPick];
-                randomEnemyPick = randomEnemyChoices[randomPlayerPick];
+                randomEnemyPick = randomEnemyChoices[randomEnemyPick];
                 
                 currentPlayer = { 
                     player: this.teams[teamId].player[randomPlayerPick],

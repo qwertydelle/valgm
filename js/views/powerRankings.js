@@ -71,21 +71,21 @@ define(["dao", "globals", "ui", "core/team", "lib/bluebird", "lib/jquery", "lib/
 					
                     for (j = 0; j < playerValuesByTid[i].length; j++) {
                         if (weightsPosition < weights.length) {
-							if  ( ((playerRolesByTid[i][j]== "ADC") && (!ADC)) || ((playerRolesByTid[i][j]== "TOP") && (!TOP)) || ((playerRolesByTid[i][j]== "JGL") && (!JGL)) || ((playerRolesByTid[i][j]== "MID") && (!MID)) || ((playerRolesByTid[i][j]== "SUP") && (!SUP))) {
+							if  ( ((playerRolesByTid[i][j]== "Duelist") && (!ADC)) || ((playerRolesByTid[i][j]== "Initiator") && (!TOP)) || ((playerRolesByTid[i][j]== "Smokes") && (!JGL)) || ((playerRolesByTid[i][j]== "Sentinal") && (!MID)) || ((playerRolesByTid[i][j]== "SUP") && (!SUP))) {
 						//		console.log(i+" "+playerRolesByTid[i][j]+" "+playerValuesByTid[i][j]);
 								teams[i].talent += weights[weightsPosition] * playerValuesByTid[i][j];
 								weightsPosition += 1;
 								
-								if (playerRolesByTid[i][j] == "ADC") {
+								if (playerRolesByTid[i][j] == "Duelist") {
 									ADC = true;
 								}
-								if (playerRolesByTid[i][j] == "TOP") {
+								if (playerRolesByTid[i][j] == "Initiator") {
 									TOP = true;
 								}
-								if (playerRolesByTid[i][j] == "JGL") {
+								if (playerRolesByTid[i][j] == "Smokes") {
 									JGL = true;
 								}
-								if (playerRolesByTid[i][j] == "MID") {
+								if (playerRolesByTid[i][j] == "Sentinal") {
 									MID = true;
 								}
 								if (playerRolesByTid[i][j] == "SUP") {
@@ -138,21 +138,21 @@ define(["dao", "globals", "ui", "core/team", "lib/bluebird", "lib/jquery", "lib/
 					
                     for (j = 0; j < playerValuesMMRByTid[i].length; j++) {
                         if (weightsPosition < weights.length) {
-							if  ( ((playerRolesMMRByTid[i][j]== "ADC") && (!ADC)) || ((playerRolesMMRByTid[i][j]== "TOP") && (!TOP)) || ((playerRolesMMRByTid[i][j]== "JGL") && (!JGL)) || ((playerRolesMMRByTid[i][j]== "MID") && (!MID)) || ((playerRolesMMRByTid[i][j]== "SUP") && (!SUP))) {
+							if  ( ((playerRolesMMRByTid[i][j]== "Duelist") && (!ADC)) || ((playerRolesMMRByTid[i][j]== "Initiator") && (!TOP)) || ((playerRolesMMRByTid[i][j]== "Smokes") && (!JGL)) || ((playerRolesMMRByTid[i][j]== "Sentinal") && (!MID)) || ((playerRolesMMRByTid[i][j]== "SUP") && (!SUP))) {
 						//		console.log(i+" "+playerRolesByTid[i][j]+" "+playerValuesByTid[i][j]);
 								teams[i].talentMMR += weights[weightsPosition] * playerValuesMMRByTid[i][j];
 								weightsPosition += 1;
 								
-								if (playerRolesMMRByTid[i][j] == "ADC") {
+								if (playerRolesMMRByTid[i][j] == "Duelist") {
 									ADC = true;
 								}
-								if (playerRolesMMRByTid[i][j] == "TOP") {
+								if (playerRolesMMRByTid[i][j] == "Initiator") {
 									TOP = true;
 								}
-								if (playerRolesMMRByTid[i][j] == "JGL") {
+								if (playerRolesMMRByTid[i][j] == "Smokes") {
 									JGL = true;
 								}
-								if (playerRolesMMRByTid[i][j] == "MID") {
+								if (playerRolesMMRByTid[i][j] == "Sentinal") {
 									MID = true;
 								}
 								if (playerRolesMMRByTid[i][j] == "SUP") {

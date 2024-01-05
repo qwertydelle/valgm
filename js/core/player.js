@@ -665,11 +665,11 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
             } else if (age <= 22) {
                 val = 0+(p.ratings[r].reb-100)/200; // was 150
             } else if (age <= 24) {
-                val = -1+(p.ratings[r].reb-100)/100; // was 3 // was 75
+                val = -5+(p.ratings[r].reb-100)/100; // was 3 // was 75
             } else if (age <= 26) {
-                val = -2+(p.ratings[r].reb-100)/100; // was 5 // was 3 // was 50
+                val = -10+(p.ratings[r].reb-100)/100; // was 5 // was 3 // was 50
             } else {
-                val = -3+(p.ratings[r].reb-100)/100; //was 10 // was 5 // was 25
+                val = -15+(p.ratings[r].reb-100)/100; //was 10 // was 5 // was 25
             }
 
 
@@ -687,12 +687,12 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
                 }
             } else if (age <= 23) {   // was .25 (new)
                 if (Math.random() < 0.05) {
-                    val += potentialDifference * random.uniform(0.0, 0.9);
+                    val += potentialDifference * random.uniform(-2.0, 0.9);
                 } else {
-                    val += potentialDifference * random.uniform(0.0, 0.2);  // was 0.3
+                    val += potentialDifference * random.uniform(-2.0, 0.2);  // was 0.3
                 }
             } else {
-                val += potentialDifference * random.uniform(0, 0.1);
+                val += potentialDifference * random.uniform(-5.0, 0.1);
             }
 
             // Noise
@@ -854,7 +854,7 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
 			fuzzedMMR = p.ratings[r].MMR + random.randInt(-500, 100);
 
             if(fuzzedMMR <= 0) {
-                fuzzedMMR = random.randInt(90, 150);
+                fuzzedMMR = random.randInt(90, 250);
             }     
 
             if (fuzzedMMR < 90) {
@@ -3937,10 +3937,7 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
 		if (p.pos == "Sentinal") {
 
 			for (i = 0; i <  topJGL.length; i++) {
-			//console.log(i);
-			//console.log(topJGL[i]);
 				skillMMR += p.champions[topJGL[i]].skill
-			//console.log(skillMMR);
 			}
 		}
 
@@ -3957,7 +3954,7 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
 		fuzzedMMR = p.ratings[0].MMR + random.randInt(-500, 100);
 
         if(fuzzedMMR <= 0) {
-            fuzzedMMR = random.randInt(90, 150);
+            fuzzedMMR = random.randInt(90, 250);
         } 
 
 		if (fuzzedMMR < 90) {

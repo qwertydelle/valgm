@@ -76,6 +76,19 @@ define(["dao", "globals", "ui", "core/freeAgents", "core/player", "core/trade","
 
                 // Add untradable property
                 p = trade.filterUntradable([p])[0];
+                console.log(p)
+
+                for(let i = 0; i < p.stats.length; i++) {
+                    //Stupid Stat might change it to make actual sense later
+                    let currentYear = p.stats[i];
+                    currentYear.tpa = (currentYear.tp / 26)
+                }
+
+                for(let i = 0; i < p.statsPlayoffs.length; i++) {
+                    //Stupid Stat might change it to make actual sense later
+                    let currentYear = p.statsPlayoffs[i];
+                    currentYear.tpa = (currentYear.tp / 26)
+                }
 				
 				
                 return {
