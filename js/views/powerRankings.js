@@ -120,11 +120,6 @@ define(["dao", "globals", "ui", "core/team", "lib/bluebird", "lib/jquery", "lib/
 						playerRolesMMRByTid[players[i].tid].push(players[i].pos);
 					}
 				}
-/*                for (i = 0; i < playerValuesByTid.length; i++) {
-                }*/
-                // Sort and weight the values - doesn't matter how good your 12th man is
-//                weights = [2, 1.5, 1.25, 1.1, 1, 0.1, 0.1, 0.1];
-
  
              //   weights = [3, 2.5, 2, 1.5, 1];
                 for (i = 0; i < playerValuesMMRByTid.length; i++) {
@@ -172,7 +167,7 @@ define(["dao", "globals", "ui", "core/team", "lib/bluebird", "lib/jquery", "lib/
 //                    teams[i].performance = teams[i].fg - teams[i].fga - 2.5 + 2.5 * (parseInt(teams[i].lastTen.split("-")[0], 5)) / 5;
 //                    teams[i].performance = (teams[i].fg + teams[i].fgp)/teams[i].fga;
                     teams[i].diff = (teams[i].pf - teams[i].oppTw);
-                    teams[i].performance = (teams[i].pf - teams[i].oppTw);
+                    teams[i].performance = (teams[i].tp - 0);
 					
                 }
 
