@@ -1316,7 +1316,7 @@ define(["dao", "globals", "ui", "core/champion", "core/freeAgents", "core/financ
                         p.matchRating.utilUsage = (((rating.dnk + rating.ins)/2)+langAdj)
                         p.matchRating.teamwork = ((rating.jmp + rating.endu)/2)+YWTadj
                     } else {
-                        p.matchRating.aim = ((rating.drb + rating.blk + rating.fg)/5)
+                        p.matchRating.aim = ((rating.drb + rating.blk + rating.fg)/3) - random.uniform(5,35)
                         p.matchRating.utilUsage = (((rating.dnk + rating.ins)/3)+langAdj)
                         p.matchRating.teamwork = ((rating.jmp + rating.endu)/3)+YWTadj
                     }

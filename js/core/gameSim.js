@@ -181,7 +181,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
     GameSim.prototype.simRound = function(roundCounter, teamId, creditsData, overtime) {
         creditsData = creditsData === undefined? [[800,800,800,800,800],[800,800,800,800,800]]: creditsData;
         overtime = typeof overtime === "undefined"?  false: overtime;
-        let basicActions = ["peek", "peek", "peek", "peek", "hold", "hold", "hold", "hold", "fight", "fight", "fight", "utilPeek", "utilPeek", "utilTeamFight", "utilTeamFight"];
+        let basicActions = ["peek", "peek", "peek", "peek", "hold", "hold", "hold", "hold", "fight", "fight", "fight", "utilPeek", "utilPeek", "utilTeamFight", "utilTeamFight", "nothing", "nothing"];
         let deadPlayers = [[],[]];
         let enemyTeamID = teamId == 1? 0: 1;
 
@@ -680,7 +680,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                 creditsData[teamId][randomPlayerPick] += 200;
 
-                                if((currentPlayer.agent.ratings.attack > enemyPlayer.agent.ratings.defense)  || (Math.random() > 0.4)) {
+                                if((currentPlayer.agent.ratings.attack > enemyPlayer.agent.ratings.defense)  || (Math.random() > 0.65)) {
                                     plantedSpike = true;
                                 }    
                             }
@@ -694,7 +694,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                             creditsData[enemyTeamID][randomEnemyPick] += 200;
 
-                            if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.65)) && (plantedSpike)) {
+                            if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.85)) && (plantedSpike)) {
                                 plantedSpike = false;
                                 normalTimer = 185;
                             }    
@@ -773,6 +773,27 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                             }
 
                             if((Math.random() > 0.5) && (plantedSpike)) {
+                                plantedSpike = false;
+                                normalTimer = 185;
+                            }
+                        }
+                    } else if(basicActions[randomBasicAction] == "nothing")  { //Not every action needs to end with a kill
+                        let boost = 0;
+                        let enemyBoost = 0;
+                        if(Math.random() > 0.66) {
+                            if(Math.random() > 0.5) {
+                                boost += 200;
+                            } else {
+                                enemyBoost += 200;
+                            }
+                        }
+
+                        if(currentPlayer.player.matchRating.utilUsage + currentPlayer.agent.ratings.ability + boost  > enemyPlayer.player.matchRating.utilUsage + currentPlayer.agent.ratings.ability + enemyBoost) {
+                            if((currentPlayer.agent.ratings.attack > enemyPlayer.agent.ratings.defense)  || (Math.random() > 0.5)) {
+                                plantedSpike = true;
+                            } 
+                        } else {
+                            if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.65)) && (plantedSpike)) {
                                 plantedSpike = false;
                                 normalTimer = 185;
                             }
