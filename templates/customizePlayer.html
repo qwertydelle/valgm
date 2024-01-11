@@ -124,11 +124,11 @@
           </div>
           <div class="col-xs-6 form-group">
             <label for="cap-face-eyes">Eyes</label>
-            <select class="form-control" name="face-eyes" data-bind="options: faceOptions.eyes, value: p.face().eyes()[0].id"></select>
+            <select class="form-control" name="face-eyes" data-bind="options: faceOptions.eyes, value: p.face().eye.id"></select>
           </div>
           <div class="col-xs-6 form-group">
             <label for="cap-face-eyes-angle">Eye Angle (-20 to 30)</label>
-            <input type="text" class="form-control" name="face-eyes-angle" data-bind="textInput: p.face().eyes()[0].angle"></input>
+            <input type="text" class="form-control" name="face-eyes-angle" data-bind="textInput: p.face().eye.angle"></input>
           </div>
           <div class="col-xs-6 form-group">
             <label for="cap-face-nose">Nose</label>

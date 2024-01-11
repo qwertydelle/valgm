@@ -7,14 +7,16 @@ define(["dao", "globals", "ui", "core/finances", "core/league","data/champions2"
 
     var mapping;
 
+    console.log(facesnew)
+
     // Same as faces.generate, but round of long decimals
     function generateFace() {
         var face;
 
-        face = faces.generate();
+        face = facesnew.generate();
         face.fatness = helpers.round(face.fatness, 2);
-        face.eyes[0].angle = helpers.round(face.eyes[0].angle, 1);
-        face.eyes[1].angle = helpers.round(face.eyes[1].angle, 1);
+        face.eye.angle = helpers.round(face.eye.angle, 1);
+        face.eye.angle = helpers.round(face.eye.angle, 1);
 
         return face;
     }
@@ -327,10 +329,10 @@ define(["dao", "globals", "ui", "core/finances", "core/league","data/champions2"
                 vars = {
                     appearanceOptions: ["Cartoon Face", "Image URL"],
                     faceOptions: {
-                        eyes: [0, 1, 2, 3],
-                        nose: [0, 1, 2],
-                        mouth: [0, 1, 2, 3, 4],
-                        hair: [0, 1, 2, 3, 4]
+                        eyes: ["eye1","eye10","eye11","eye12","eye13","eye14","eye15","eye16","eye17","eye18","eye19","eye2","eye3","eye4","eye5","eye6","eye7","eye8","eye9","female1","female10","female11","female12","female13","female14","female15","female16","female2","female3","female4","female5","female6","female7","female8","female9"],
+                        nose: ["honker","nose1","nose10","nose11","nose12","nose13","nose14","nose2","nose3","nose4","nose5","nose6","nose7","nose8","nose9","pinocchio","small"],
+                        mouth: ["angry","closed","mouth","mouth2","mouth3","mouth4","mouth5","mouth6","mouth7","mouth8","side","smile-closed","smile","smile2","smile3","smile4","straight"],
+                        hair: ["afro","afro2","bald","blowoutFade","cornrows","crop-fade","crop-fade2","crop","curly","curly2","curly3","curlyFade1","curlyFade2","dreads","emo","faux-hawk","fauxhawk-fade","female1","female10","female11","female12","female2","female3","female4","female5","female6","female7","female8","female9","hair","high","juice","longHair","messy-short","messy","middle-part","parted","shaggy1","shaggy2","short-bald","short-fade","short","short2","short3","shortBangs","spike","spike2","spike3","spike4","tall-fade"]
                     },
                     positions: positions,
                     country: country,
@@ -477,8 +479,8 @@ define(["dao", "globals", "ui", "core/finances", "core/league","data/champions2"
 														c,topADC,topMID,topJGL,topTOP,topSUP);
 
 										p.face.fatness = helpers.round(p.face.fatness, 2);
-										p.face.eyes[0].angle = helpers.round(p.face.eyes[0].angle, 1);
-										p.face.eyes[1].angle = helpers.round(p.face.eyes[1].angle, 1);
+										p.face.eye.angle = helpers.round(p.face.eye.angle, 1);
+										p.face.eye.angle = helpers.round(p.face.eye.angle, 1);
 
 										vars.appearanceOption = "Cartoon Face";
 										p.imgURL = "http://";
@@ -502,7 +504,6 @@ define(["dao", "globals", "ui", "core/finances", "core/league","data/champions2"
                         vars.appearanceOption = "Cartoon Face";
                         p.imgURL = "http://";
                     }
-				//	console.log(p);
 					
                     vars.originalTid = p.tid;
                     vars.p = p;
@@ -527,10 +528,10 @@ define(["dao", "globals", "ui", "core/finances", "core/league","data/champions2"
 
         // Since there are two eyes and the updated observable is the first one, update the second in parallel
         ko.computed(function () {
-            vm.p.face().eyes()[1].id(vm.p.face().eyes()[0].id());
+            vm.p.face().eye.id(vm.p.face().eye.id());
         }).extend({throttle: 1});
         ko.computed(function () {
-            vm.p.face().eyes()[1].angle(vm.p.face().eyes()[0].angle());
+            vm.p.face().eye.angle(vm.p.face().eye.angle());
         }).extend({throttle: 1});
 
         // Update picture display
@@ -540,7 +541,9 @@ define(["dao", "globals", "ui", "core/finances", "core/league","data/champions2"
             // changes. Without this "if", it hows a corrupted display for some reason if Image URL
             // is default and the face is switched to.
             if (vm.appearanceOption() === "Cartoon Face") {
-                faces.display("picture", ko.toJS(vm.p.face));
+                console.log(ko.toJS(vm.p.face))
+                facesnew.display("picture", ko.toJS(vm.p.face));
+                console.log(vm.p.face())
             }
         }).extend({throttle: 1});
 
@@ -554,8 +557,8 @@ define(["dao", "globals", "ui", "core/finances", "core/league","data/champions2"
             p.hgt = parseInt(p.hgt, 10);
             p.weight = parseInt(p.weight, 10);
             p.face.fatness = parseFloat(p.face.fatness);
-            p.face.eyes[0].angle = parseFloat(p.face.eyes[0].angle);
-            p.face.eyes[1].angle = parseFloat(p.face.eyes[1].angle);
+            p.face.eye.angle = parseFloat(p.face.eye.angle);
+            p.face.eye.angle = parseFloat(p.face.eye.angle);
 
             // Fix draft season
             if (p.tid === g.PLAYER.UNDRAFTED || p.tid === g.PLAYER.UNDRAFTED_2 || p.tid === g.PLAYER.UNDRAFTED_3) {
