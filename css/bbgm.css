@@ -811,6 +811,10 @@ tr.warning > td {
   padding: 10px 15px;
 }
 
+#randomize-face {
+  margin-top: 30px;
+}
+
 option {
   background-color: var(--val--bg-color);
 }

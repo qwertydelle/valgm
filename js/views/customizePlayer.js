@@ -583,18 +583,11 @@ define(["dao", "globals", "ui", "core/finances", "core/league","data/champions2"
             if (p.ratings[r].ovr > p.ratings[r].pot) {
                 p.ratings[r].pot = p.ratings[r].ovr;
             }
-			console.log(p.languages);
-		/*	for (i = 0; i <  123; i++) {
-				p.champions[i] = {};
-				p.champions[i].skill =  Math.round(Math.random()*100,1);
-				p.champions[i].name =   champion.name(i,0);
-			}*/
-		//	p.championAverage = -1;
+
 			var tx;
 			
 			tx = dao.tx(["champions","championPatch","players", "playerStats"], "readwrite");
 		 
-		//	console.log("GOT HERE");	
 			dao.champions.getAll({
 					ot: tx
 				}).then(function (c) {

@@ -321,14 +321,14 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
     function rank(MMR) {
 		var fuzzedMMR,rank;
 
-		fuzzedMMR = MMR+random.randInt(-50, 50);
+		fuzzedMMR = MMR + random.randInt(-500, 100);
         
         if (fuzzedMMR < 90) {
-            p.ratings[0].rank = "Immortal 2";
+            rank = "Immortal 2";
         } else if(fuzzedMMR < 500) {
-            p.ratings[0].rank = "Immortal 3";
+            rank = "Immortal 3";
         } else {
-            p.ratings[0].rank = "Radiant";
+            rank = "Radiant";
         }
 
 
