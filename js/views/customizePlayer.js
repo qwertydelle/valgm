@@ -7,8 +7,6 @@ define(["dao", "globals", "ui", "core/finances", "core/league","data/champions2"
 
     var mapping;
 
-    console.log(facesnew)
-
     // Same as faces.generate, but round of long decimals
     function generateFace() {
         var face;
@@ -319,7 +317,7 @@ define(["dao", "globals", "ui", "core/finances", "core/league","data/champions2"
                     text: "Free Agent"
                 });
 
-                positions = ["TOP", "JGL", "MID", "ADC", "SUP"];
+                positions = ["Duelist", "Initiator", "Smokes", "Sentinal", "SUP"];
 //                country = ["US","KR","CN", "DE", "RO", "ES", "SC", "GR", "AM", "BG", "ENG", "PL", "BE", "DK", "HU", "NO", "SE", "FR", "TW", "RU", "BR", "JP", "AU", "CL", "LatAmN", "LatAmS", "VN"];
                 country = ["United States","Korea","China", "Taiwan", "Canada","Dominican Republic","Mexico","Austria","Armenia", "Belgium", "Bulgaria","Czech Republic", "Denmark", "England", "Estonia", "France","Finland","Germany", "Greece", "Hungary","Iceland","Ireland","Italy","Netherlands", "Norway","Portugal", "Poland", "Romania", "Scotland", "Spain", "Sweden","Switzerland","Latvia", "Russia","Ukraine", "Brazil", "Japan", "Australia","New Zealand", "Colombia", "Costa Rica", "Ecuador", "Panama", "Peru", "Puerto Rico", "Venezuela", "Argentina", "Chile", "Paraguay", "Uruguay","Israel","Turkey","United Arab Emirates","South Africa","Malaysia","Philippines","Singapore", "Thailand","Vietnam"];
                 region = ["NA","EU","KR", "CN","TW","BR","CIG","CIS","JP","LatAm","OCE", "SEA","TR"];
@@ -595,9 +593,6 @@ define(["dao", "globals", "ui", "core/finances", "core/league","data/champions2"
 								ot: tx
 							}).then(function (cp) {
 							
-							/*console.log(cp.length);
-							console.log(c.length);							
-							console.log(c[0].name);							*/
 								p.champions = {};
 								for (i = 0; i <  c.length; i++) {
 									p.champions[i] = {};

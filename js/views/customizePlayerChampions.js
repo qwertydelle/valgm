@@ -179,7 +179,7 @@ define(["dao", "globals", "ui", "core/finances", "core/league", "core/player", "
                     text: "Free Agent"
                 });
 
-                positions = ["TOP", "JGL", "MID", "ADC", "SUP"];
+                positions = ["Duelist", "Initiator", "Smokes", "Sentinal", "SUP"];
                 country = ["US","KR","CN", "DE", "RO", "ES", "SC", "GR", "AM", "BG", "ENG", "PL", "BE", "DK", "HU", "NO", "SE", "FR", "TW", "RU", "BR", "JP", "AU", "CL", "LatAmN", "LatAmS", "VN"];
 
                 vars = {

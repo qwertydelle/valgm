@@ -95,7 +95,7 @@ define(["dao", "globals", "ui", "core/player", "core/team", "lib/bluebird", "lib
 					var maxCountry, onlyCountry, onlyThisCountry;
 
 					
-					missingPositions = ["Initiator","Sentinal","Duelist","Smokes"];
+					missingPositions = ["Initiator","Sentinal","Duelist","Smokes", "Support"];
 					numFromRegion = 0;
 					if (typeof(g.regionalRestrictions) == 'undefined') {
 						numFromRegion = 10;

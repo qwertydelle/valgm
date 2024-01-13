@@ -21,7 +21,7 @@ define(["dao", "globals", "lib/bluebird", "util/helpers", "util/random"], functi
 	
 	ownerType = g.ownerType;
 	microType = random.randInt(0,4);	
-	microString = ["TOP","Jungler","MID","ADC","Support"];	
+	microString = ["Duelist","Initiator","Smokes","Sentinal","Support"];	
 	
 	
 	if (ownerType == 0) { // standard, worst of all owners

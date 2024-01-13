@@ -42,6 +42,7 @@ define(["dao", "globals", "ui", "core/league", "core/player", "core/season", "co
                 ot: tx,
                 key: pid
             }).then(function (p) {
+
                 p.rosterOrder = rosterOrder;
                 return dao.players.put({
                     ot: tx,

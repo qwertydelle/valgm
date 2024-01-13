@@ -1904,15 +1904,15 @@ if (arguments[1] !== undefined) { throw new Error("No cb should be here"); }
 				
 				for (i = 0; i < (numPlayersOnRosterStart); i++) {
 				//	console.log(numPlayersOnRoster+" "+i+" "+players[i].pos);
-				   if (players[i].pos == "TOP") {
+				   if (players[i].pos == "Duelist") {
 					  top += 1;
-				   } else  if (players[i].pos == "MID") {
+				   } else  if (players[i].pos == "Initiator") {
 					  mid += 1;
-				   } else  if (players[i].pos == "JGL") {
+				   } else  if (players[i].pos == "Sentinal") {
 					  jgl += 1;
 				   } else  if (players[i].pos == "SUP") {
 					  sup += 1;
-				   } else  if (players[i].pos == "ADC") {
+				   } else  if (players[i].pos == "Smokes") {
 					  adc += 1;
 				   }
 				   
@@ -2348,17 +2348,17 @@ if (arguments[1] !== undefined) { throw new Error("No cb should be here"); }
 								console.log(numFromRegion+" "+players[i].born.loc+" "+g.teamCountryCache[tid]);
 							//	if ( (numFromRegion > 3) || (players[i].country != g.teamCountryCache[tid]) ) {
 //								   if ( ((players[i].pos == "TOP") && ((top>1)) ) ||  ((players[i].pos == "MID") && ((mid>1) || (p.country != g.teamCountryCache[tid]))) || ((players[i].pos == "JGL") && ((jgl>1) || (p.country != g.teamCountryCache[tid]))) || ((players[i].pos == "SUP") && ((sup>1) || (p.country != g.teamCountryCache[tid]))) || ((players[i].pos == "ADC") && ((adc>1) || (p.country != g.teamCountryCache[tid]))) ){						   
-								   if ( ((players[i].pos == "TOP") && (top>1) ) ||  ((players[i].pos == "MID") && (mid>1) ) || ((players[i].pos == "JGL") && (jgl>1)) || ((players[i].pos == "SUP") && (sup>1) ) || ((players[i].pos == "ADC") && (adc>1) ) ){						   
+								   if ( ((players[i].pos == "Duelist") && (top>1) ) ||  ((players[i].pos == "Initiator") && (mid>1) ) || ((players[i].pos == "Sentinal") && (jgl>1)) || ((players[i].pos == "SUP") && (sup>1) ) || ((players[i].pos == "Smokes") && (adc>1) ) ){						   
 									//	console.log("dropped: "+players[i].pos);
-										if (players[i].pos == "TOP") {
+										if (players[i].pos == "Duelist") {
 										  top -= 1;
-									   } else  if (players[i].pos == "MID") {
+									   } else  if (players[i].pos == "Initiator") {
 										  mid -= 1;
-										} else  if (players[i].pos == "JGL") {
+										} else  if (players[i].pos == "Smokes") {
 										  jgl -= 1;
 									   } else  if (players[i].pos == "SUP") {
 										  sup -= 1;
-									   } else  if (players[i].pos == "ADC") {
+									   } else  if (players[i].pos == "Sentinal") {
 										  adc -= 1;
 									   }						
 								   

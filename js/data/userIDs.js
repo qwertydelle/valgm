@@ -1183,7 +1183,8 @@ define([], function () {
 		["Movement"],
 		["Zronin"],
 		["Daimyo"],
-		["Justafreshie"]
+		["Justafreshie"],
+		["Dicey"]
     ];
 	
     suffix = [		
