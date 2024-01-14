@@ -66,7 +66,7 @@ define(["dao", "globals", "ui", "core/player", "core/team", "lib/bluebird", "lib
                 }
 
                 // Small chance of actually trying to sign someone in free agency, gets greater as time goes on
-                if (g.phase === g.PHASE.FREE_AGENCY && Math.random() < 0.99 * g.daysLeft / 30) {
+                if (g.phase === g.PHASE.FREE_AGENCY && Math.random() < 0.80 * g.daysLeft / 30) {
                     return signTeam(ti + 1);
                 }
 

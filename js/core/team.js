@@ -346,7 +346,6 @@ define(["dao", "globals", "core/player", "lib/bluebird", "lib/underscore", "util
             tx = dao.tx("players", "readwrite");
         }
 
-		//console.log("ROSTER AUTO SORT");
 		
         // Get roster and sort by value (no potential included)
         return dao.players.getAll({
@@ -1910,10 +1909,10 @@ if (arguments[1] !== undefined) { throw new Error("No cb should be here"); }
 					  mid += 1;
 				   } else  if (players[i].pos == "Sentinal") {
 					  jgl += 1;
-				   } else  if (players[i].pos == "SUP") {
-					  sup += 1;
 				   } else  if (players[i].pos == "Smokes") {
-					  adc += 1;
+                      adc += 1;
+				   } else  if (players[i].pos == player[i].pos) {
+                      sup += 1;;
 				   }
 				   
 //					player.release(tx, players[i], false);
