@@ -189,6 +189,9 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
         let spikeTimer = 0;
         let normalTimer = 0;
 
+        //Constants
+        let timerEnd = 155;
+
         this.manageBuys(creditsData)
 
         console.log(this.teams)
@@ -267,7 +270,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                     }
 
                     break;
-                } else if((normalTimer >= 185) || (deadPlayers[enemyTeamID].length === 5)) {
+                } else if((normalTimer >= timerEnd) || (deadPlayers[enemyTeamID].length === 5)) {
                     roundCounter += 1;
 
                     if(!overtime) {
@@ -351,7 +354,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                         if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (deadPlayers[teamId].length > 3) || Math.random() > 0.80) && (plantedSpike)) {
                                             plantedSpike = false;
-                                            normalTimer = 185;
+                                            normalTimer = timerEnd;
                                         }    
                                     }
                                 } else {
@@ -380,7 +383,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                 if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || deadPlayers[teamId].length > 3 || Math.random() > 0.80) && (plantedSpike)) {
                                     plantedSpike = false;
-                                    normalTimer = 185;
+                                    normalTimer = timerEnd;
                                 }    
                             }
 
@@ -426,7 +429,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                 if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || deadPlayers[teamId].length > 3 || Math.random() > 0.80) && (plantedSpike)) {
                                     plantedSpike = false;
-                                    normalTimer = 185;
+                                    normalTimer = timerEnd;
                                 }    
                             }
                         }
@@ -490,7 +493,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
     
                                         if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || deadPlayers[teamId].length > 3 || Math.random() > 0.80) && (plantedSpike)) {
                                             plantedSpike = false;
-                                            normalTimer = 185;
+                                            normalTimer = timerEnd;
                                         }    
                                     }
                                 } else {
@@ -531,7 +534,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                 //Defuse spike
                                 if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || deadPlayers[teamId].length > 3 || Math.random() > 0.80) && (plantedSpike)) {
                                     plantedSpike = false;
-                                    normalTimer = 185;
+                                    normalTimer = timerEnd;
                                 }    
                             }
                         } else {
@@ -562,7 +565,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
     
                                         if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || deadPlayers[teamId].length > 3 || Math.random() > 0.80) && (plantedSpike)) {
                                             plantedSpike = false;
-                                            normalTimer = 185;
+                                            normalTimer = timerEnd;
                                         }    
                                     }
                                 } else {
@@ -604,7 +607,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                 //Defuse spike
                                 if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || deadPlayers[teamId].length > 3 || Math.random() > 0.80) && (plantedSpike)) {
                                     plantedSpike = false;
-                                    normalTimer = 185;
+                                    normalTimer = timerEnd;
                                 }    
                             }
                         }
@@ -667,7 +670,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                     if(((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || deadPlayers[teamId].length > 3 || Math.random() > 0.80) && (plantedSpike))) {
                                         plantedSpike = false;
-                                        normalTimer = 185;
+                                        normalTimer = timerEnd;
                                     }    
                                 }
                             } else {
@@ -696,7 +699,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                             if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || deadPlayers[teamId].length > 3 || Math.random() > 0.80) && (plantedSpike)) {
                                 plantedSpike = false;
-                                normalTimer = 185;
+                                normalTimer = timerEnd;
                             }    
                         }
                     } else if(basicActions[randomBasicAction] == "utilPeek") {
@@ -725,7 +728,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                             if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || deadPlayers[teamId].length > 3 || Math.random() > 0.80) && (plantedSpike)) {
                                 plantedSpike = false;
-                                normalTimer = 185;
+                                normalTimer = timerEnd;
                             } 
                         }
                     } else if(basicActions[randomBasicAction] == "utilTeamFight") {
@@ -774,7 +777,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                             if((Math.random() > 0.5) && (plantedSpike)) {
                                 plantedSpike = false;
-                                normalTimer = 185;
+                                normalTimer = timerEnd;
                             }
                         }
                     } else if(basicActions[randomBasicAction] == "nothing")  { //Not every action needs to end with a kill
@@ -796,7 +799,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                         } else {
                             if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.65)) && (plantedSpike)) {
                                 plantedSpike = false;
-                                normalTimer = 185;
+                                normalTimer = timerEnd;
                             }
                         }
                     }
