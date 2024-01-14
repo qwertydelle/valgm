@@ -94,8 +94,11 @@ define(["dao", "globals", "ui", "core/player", "core/team", "lib/bluebird", "lib
 					var payUp;
 					var maxCountry, onlyCountry, onlyThisCountry;
 
+                    let randomPositions = ["Duelist", "Initiator", "Sentinal", "Smokes"];
+                    let randomNum = Math.floor(Math.random() * randomPositions.length)
+
 					
-					missingPositions = ["Initiator","Sentinal","Duelist","Smokes", "Support"];
+					missingPositions = ["Initiator","Sentinal","Duelist","Smokes", randomPositions[randomNum]];
 					numFromRegion = 0;
 					if (typeof(g.regionalRestrictions) == 'undefined') {
 						numFromRegion = 10;

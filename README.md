@@ -1,9 +1,7 @@
 # Valorant GM Alpha
 
 A single-player esport simulation game about the game valorant. Make trades, set rosters, draft
-rookies, and try to build the next dynasty, all from within your web browser.
-The game is implemented entirely in client-side JavaScript, backed by
-IndexedDB. This game is a fork of LOL GM by Jeremy Scheff.
+rookies, and try to build the next VCT Champion winning team. The game is implemented entirely in client side JavaScript, backed by IndexedDB. This game is a fork of LOL GM by Jeremy Scheff.
 
 ## Installing and Running
 

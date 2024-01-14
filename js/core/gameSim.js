@@ -205,7 +205,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
         //Rounds 
         if((this.teams[teamId].stat.pts < 13 && this.teams[enemyTeamID].stat.pts < 13) || overtime) {
             //Shuffle Player Id
-            let randomPlayerChoices = [0,1,2,3,4, this.teams[teamId].sortedIDs[0],this.teams[teamId].sortedIDs[0],this.teams[teamId].sortedIDs[1], 0]
+            let randomPlayerChoices = [0,1,2,3,4]
             let randomPlayerPick = Math.floor(Math.random() * randomPlayerChoices.length)
 
 
@@ -217,7 +217,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                 agent: this.playerAgentPicks[teamId][randomPlayerPick]
             };
 
-            let randomEnemyChoices = [0,1,2,3,4, this.teams[enemyTeamID].sortedIDs[0],this.teams[enemyTeamID].sortedIDs[0],this.teams[enemyTeamID].sortedIDs[1], 0]
+            let randomEnemyChoices = [0,1,2,3,4]
             let randomEnemyPick = Math.floor(Math.random() * randomEnemyChoices.length)
 
             randomEnemyPick = randomEnemyChoices[randomEnemyPick];
@@ -228,12 +228,12 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                 agent: this.playerAgentPicks[enemyTeamID][randomEnemyPick]
             }
 
-            if((deadPlayers[teamId].length === 0 && deadPlayers[teamId].length === 0) && Math.random() > 0.45) {
+            if((deadPlayers[teamId].length === 0 && deadPlayers[enemyTeamID].length === 0) && Math.random() > 0.75) {
                 randomPlayerPick = 0;
             }
 
              //Duelist usually dont go for first bloods as often on defense
-             if((deadPlayers[teamId].length === 0 && deadPlayers[teamId].length === 0) && Math.random() > 0.65) {
+             if((deadPlayers[teamId].length === 0 && deadPlayers[enemyTeamID].length === 0) && Math.random() > 0.75) {
                 randomEnemyPick = 0;
             }
 
@@ -349,7 +349,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                         creditsData[enemyTeamID][randomEnemyPick] += 200;
 
-                                        if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.65)) && (plantedSpike)) {
+                                        if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.45)) && (plantedSpike)) {
                                             plantedSpike = false;
                                             normalTimer = 185;
                                         }    
@@ -378,7 +378,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                 creditsData[enemyTeamID][randomEnemyPick] += 200;
 
-                                if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.65)) && (plantedSpike)) {
+                                if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.45)) && (plantedSpike)) {
                                     plantedSpike = false;
                                     normalTimer = 185;
                                 }    
@@ -424,7 +424,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                 creditsData[enemyTeamID][randomEnemyPick] += 200;
 
-                                if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.65)) && (plantedSpike)) {
+                                if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.45)) && (plantedSpike)) {
                                     plantedSpike = false;
                                     normalTimer = 185;
                                 }    
@@ -488,7 +488,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
     
                                         creditsData[enemyTeamID][randomEnemyPick] += 200;
     
-                                        if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.65)) && (plantedSpike)) {
+                                        if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.45)) && (plantedSpike)) {
                                             plantedSpike = false;
                                             normalTimer = 185;
                                         }    
@@ -529,7 +529,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                 this.recordStat(enemyTeamID, nextPlayer, "tp", 10)
     
                                 //Defuse spike
-                                if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.65)) && (plantedSpike)) {
+                                if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.45)) && (plantedSpike)) {
                                     plantedSpike = false;
                                     normalTimer = 185;
                                 }    
@@ -560,7 +560,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                         creditsData[enemyTeamID][randomEnemyPick] += 200;
     
-                                        if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.65)) && (plantedSpike)) {
+                                        if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.45)) && (plantedSpike)) {
                                             plantedSpike = false;
                                             normalTimer = 185;
                                         }    
@@ -602,7 +602,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                                 this.recordStat(enemyTeamID, nextPlayer, "tp", 10)
     
                                 //Defuse spike
-                                if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.65)) && (plantedSpike)) {
+                                if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.45)) && (plantedSpike)) {
                                     plantedSpike = false;
                                     normalTimer = 185;
                                 }    
@@ -665,7 +665,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                                     creditsData[enemyTeamID][randomEnemyPick] += 200;
 
-                                    if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.65) && (plantedSpike))) {
+                                    if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.45) && (plantedSpike))) {
                                         plantedSpike = false;
                                         normalTimer = 185;
                                     }    
@@ -694,7 +694,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
                             creditsData[enemyTeamID][randomEnemyPick] += 200;
 
-                            if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.85)) && (plantedSpike)) {
+                            if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.65)) && (plantedSpike)) {
                                 plantedSpike = false;
                                 normalTimer = 185;
                             }    
@@ -780,6 +780,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                     } else if(basicActions[randomBasicAction] == "nothing")  { //Not every action needs to end with a kill
                         let boost = 0;
                         let enemyBoost = 0;
+
                         if(Math.random() > 0.66) {
                             if(Math.random() > 0.5) {
                                 boost += 200;
