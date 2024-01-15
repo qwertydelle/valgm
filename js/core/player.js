@@ -998,6 +998,12 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
                 // More likely to re-sign your own players
                 return helpers.bound(mood + random.uniform(-1, 0.5), 0, 1000);
             }
+
+            /* FOR VAL: Younger Players are more willing to sign with worst teams to get experience */
+            if(p.age <= 19) {
+                return helpers.bound(mood + random.uniform(-1, 1.0), 0, 1000);
+            }
+            
             return helpers.bound(mood + random.uniform(-1, 1.5), 0, 1000);
         });
 

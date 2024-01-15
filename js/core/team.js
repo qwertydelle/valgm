@@ -2353,12 +2353,12 @@ if (arguments[1] !== undefined) { throw new Error("No cb should be here"); }
 										  top -= 1;
 									   } else  if (players[i].pos == "Initiator") {
 										  mid -= 1;
-										} else  if (players[i].pos == "Smokes") {
+										} else  if (players[i].pos == "Sentinal") {
 										  jgl -= 1;
-									   } else  if (players[i].pos == "SUP") {
-										  sup -= 1;
-									   } else  if (players[i].pos == "Sentinal") {
+									   } else  if (players[i].pos == "Smokes") {
 										  adc -= 1;
+									   } else  if (players[i].pos == players[i].pos) {
+										  sup -= 1;
 									   }						
 								   
 										/*if (p.country == g.teamCountryCache[tid]) {
