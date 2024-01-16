@@ -677,17 +677,17 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
                 if (Math.random() < 0.40) {  // was .75
                     val += potentialDifference * random.uniform(0.0, 0.9);  // was 0.2
                 } else {
-                    val += potentialDifference * random.uniform(0.0, 0.2);  // was 0.1
+                    val += potentialDifference * random.uniform(0.0, 0.5);  // was 0.1
                 }
             } else if (age <= 21) {   // was 23
                 if (Math.random() < 0.15) { // was .25
-                    val += potentialDifference * random.uniform(0.0, 0.9);  // was 0.2
+                    val += potentialDifference * random.uniform(0.0, 0.7);  // was 0.2
                 } else {
                     val += potentialDifference * random.uniform(0.0, 0.2);  // was 0.1
                 }
             } else if (age <= 23) {   // was .25 (new)
                 if (Math.random() < 0.05) {
-                    val += potentialDifference * random.uniform(-2.0, 0.9);
+                    val += potentialDifference * random.uniform(-2.0, 0.7);
                 } else {
                     val += potentialDifference * random.uniform(-2.0, 0.2);  // was 0.3
                 }
@@ -763,7 +763,10 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
             }
 
 
-
+            //Players gain new abilities over the years
+            if(p.age <= 21) {
+                p.pos2 = pos2(p.ratings[r], p.pos)
+            }
 
 			// champion
 //			p.champions = {};
@@ -983,6 +986,8 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
     function addToFreeAgents(ot, p, phase, baseMoods) {
         var pr;
 
+        console.log(p)
+
         phase = phase !== null ? phase : g.phase;
 
         pr = _.last(p.ratings);
@@ -999,10 +1004,18 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
                 return helpers.bound(mood + random.uniform(-1, 0.5), 0, 1000);
             }
 
+            /*some players just want you to come with money */
+            if(Math.random() > 0.98) {
+                return 0;
+            }
+
             /* FOR VAL: Younger Players are more willing to sign with worst teams to get experience */
             if(p.age <= 19) {
-                return helpers.bound(mood + random.uniform(-1, 1.0), 0, 1000);
+                return helpers.bound(mood + random.uniform(-5, 1.0), 0, 1000);
             }
+
+
+
             
             return helpers.bound(mood + random.uniform(-1, 1.5), 0, 1000);
         });
@@ -3121,77 +3134,26 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
      * @param {Object.<string, number>} ratings Ratings object.
      * @return {string} Position.
      */
-    function pos2(ratings) {
+    function pos2(ratings, firstPosition) {
         var c, g, pf, pg, position, sf, sg;
 
-        g = false;
-        pg = false;
-        sg = false;
-        sf = false;
-        pf = false;
-        c = false;
+        //Secondary Positions: Opper, IGL, FLEX, None
 
         // Default position
-        if (ratings.drb >= 50) {
-//            position = 'GF';
-            position = 'M';
+        if (ratings.blk >= 55 && ratings.stre >= 50 && firstPosition === "Duelist") {
+            position = 'Opper';
+        } else if(ratings.ednu >= 55 && ratings.jmp >= 60 && firstPosition !== "Duelist") {
+            position = 'IGL';
+        } else if(ratings.hgt >= 60 && ratings.spd >= 65) {
+            position = 'FLEX';
         } else {
-//            position = 'F';
-            position = 'A';
-        }
 
-        if (ratings.hgt <= 30 || ratings.spd >= 85) {
-            g = true;
-            if ((ratings.pss + ratings.drb) >= 100) {
-                pg = true;
+            //Just a random chance for now need to fix ratings later on
+            if(Math.random() > 0.85 && firstPosition !== "Duelist") {
+                position = 'IGL'
+            } else {
+                position = 'None'
             }
-            if (ratings.hgt >= 30) {
-                sg = true;
-            }
-        }
-        if (ratings.hgt >= 50 && ratings.hgt <= 65 && ratings.spd >= 40) {
-            sf = true;
-        }
-        if (ratings.hgt >= 70) {
-            pf = true;
-        }
-        if ((ratings.hgt + ratings.stre) >= 130) {
-            c = true;
-        }
-
-        if (pg && !sg && !sf && !pf && !c) {
-//            position = 'PG';
-            position = 'S';
-        } else if (!pg && (g || sg) && !sf && !pf && !c) {
-//            position = 'SG';
-//            position = 'SA';
-            position = 'F';
-        } else if (!pg && !sg && sf && !pf && !c) {
-//            position = 'SF';
-            position = 'T';
-        } else if (!pg && !sg && !sf && pf && !c) {
-//            position = 'PF';
-            position = 'R';
-        } else if (!pg && !sg && !sf && !pf && c) {
-//            position = 'C';
-            position = 'SM';
-        }
-
-        // Multiple poss
-        if ((pf || sf) && g) {
-//            position = 'GF';
-            position = 'FT';
-        } else if (c && (pf || sf)) {
-            // This means that anyone with c=true and height >=70 will NOT be labeled just a C. only pure Cs are short guys!
-//            position = 'FC';
-            position = 'RM';
-        } else if (pg && sg) {
-//            position = 'G';
-            position = 'SM';
-        }
-        if (position === 'F' && ratings.drb <= 20) {
-//            position = 'PF';
-            position = 'AM';
         }
 
         return position;
@@ -3871,7 +3833,7 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
         maxWeight = 170;
 
         p.pos = pos(p.ratings[0]);  // Position (TOP,MID,JGL,ADC,SUP)
-        p.pos2 = pos2(p.ratings[0]);  // Position (PG, SG, SF, PF, C, G, GF, FC)
+        p.pos2 = pos2(p.ratings[0], p.pos);  // Position (PG, SG, SF, PF, C, G, GF, FC)
 
         p.champions = {};
 

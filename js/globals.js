@@ -22,7 +22,7 @@ define(["lib/knockout", "util/random"], function (ko,random) {
     g.luxuryTax = 0;
     g.minContract = 15;  // [thousands of dollars]
     g.maxContract = 999;  // [thousands of dollars]
-
+    g.minRosterSize = 6;
 
     // Constants in all caps
     g.PHASE = {

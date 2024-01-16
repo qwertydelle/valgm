@@ -181,7 +181,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
     GameSim.prototype.simRound = function(roundCounter, teamId, creditsData, overtime) {
         creditsData = creditsData === undefined? [[800,800,800,800,800],[800,800,800,800,800]]: creditsData;
         overtime = typeof overtime === "undefined"?  false: overtime;
-        let basicActions = ["peek", "peek", "peek", "peek", "hold", "hold", "hold", "hold", "fight", "fight", "fight", "utilPeek", "utilPeek", "utilTeamFight", "utilTeamFight", "nothing", "nothing"];
+        let basicActions = ["peek", "peek", "peek", "peek", "hold", "hold", "hold", "fight", "fight", "fight", "utilPeek", "utilPeek", "utilTeamFight", "utilTeamFight", "nothing", "nothing"];
         let deadPlayers = [[],[]];
         let enemyTeamID = teamId == 1? 0: 1;
 
@@ -243,6 +243,8 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
             
 
             let firstblood = false;
+            let permenantRoundBoost = 0;
+            let enemyPermenantRoundBoost = 0;
 
             console.log(currentPlayer)
             console.log(enemyPlayer)
@@ -251,7 +253,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                 let randomBasicAction = Math.floor(random.uniform(0, basicActions.length));
 
 
-                if((plantedSpike && spikeTimer >= 85) || (deadPlayers[teamId].length == 5)) {
+                if((plantedSpike && spikeTimer >= 85) || (deadPlayers[teamId].length === 5)) {
                     roundCounter += 1;
 
                     if(!overtime) {
@@ -301,11 +303,11 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
     
                         //Make the boosts random later on
                         if((currentPlayer.player.pos == "Duelist" && currentPlayer.agent.role == "Duelist") || (currentPlayer.player.pos == "Initiator" && currentPlayer.agent.role == "Initiator")) {
-                            boost += Math.floor(Math.random() * 5);
+                            boost += Math.floor(Math.random() * 15);
                         }
     
                         if((enemyPlayer.player.pos == "Duelist" && enemyPlayer.agent.role == "Duelist") || (enemyPlayer.player.pos == "Initiator" && enemyPlayer.agent.role == "Initiator")) {
-                            enemyBoost += Math.floor(Math.random() * 5);
+                            enemyBoost += Math.floor(Math.random() * 15);
                         }
 
                         //Adding overall synergy boosts
@@ -314,7 +316,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
 
                         //Most pro players rarely ever have 0 kills a game this is to counter some players being plain horrible
-                        if(Math.random() > 0.66) {
+                        if(Math.random() > 0.75) {
                             if(Math.random() > 0.5) {
                                 boost += 200;
                             } else {
@@ -322,8 +324,10 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                             }
                         }
 
-                        boost += currentPlayer.agent.ratings.attack;
-                        enemyBoost += enemyPlayer.agent.ratings.defense;
+
+                        //permenant boosts
+                        boost += permenantRoundBoost;
+                        enemyBoost += enemyPermenantRoundBoost;
     
     
                         if(Math.random() > 0.6) {                       
@@ -441,15 +445,15 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
     
                         //Make the boosts random later on
                         if((currentPlayer.player.pos == "Sentinal" && currentPlayer.agent.role == "Sentinal") || (currentPlayer.player.pos == "Smokes" && currentPlayer.agent.role == "Smokes")) {
-                            boost += Math.floor(Math.random() * 5);
+                            boost += Math.floor(Math.random() * 15);
                         }
     
                         if((enemyPlayer.player.pos == "Sentinal" && enemyPlayer.agent.role == "Sentinal") || (enemyPlayer.player.pos == "Smokes" && enemyPlayer.agent.role == "Smokes")) {
-                            enemyBoost += Math.floor(Math.random() * 5) - 0.5;
+                            enemyBoost += Math.floor(Math.random() * 15);
                         }
 
                         //Most pro players rarely ever have 0 kills a game this is to counter some players being plain horrible
-                        if(Math.random() > 0.66) {
+                        if(Math.random() > 0.75) {
                             if(Math.random() > 0.5) {
                                 boost += 200;
                             } else {
@@ -463,6 +467,10 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                         //Adding overall synergy boosts
                         boost += (this.teams[teamId].synergy.def + this.teams[teamId].synergy.reb); 
                         enemyBoost += (this.teams[enemyTeamID].synergy.off + this.teams[enemyTeamID].synergy.reb); 
+
+                        //permenant boosts
+                        boost += permenantRoundBoost;
+                        enemyBoost += enemyPermenantRoundBoost;
     
 
                         if(Math.random() > 0.4) {
@@ -617,25 +625,29 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                         let enemyBoost = 0;
     
                         //Make the boosts random later on
-                        if(currentPlayer.player.pos == "Duelist" && currentPlayer.agent.role == "Duelist") {
-                            boost += Math.floor(Math.random() * 5);
+                        if((currentPlayer.player.pos == "Duelist" && currentPlayer.agent.role == "Duelist") || (currentPlayer.player.pos == "Initiator" && currentPlayer.agent.role == "Initiator")) {
+                            boost += Math.floor(Math.random() * 15);
                         }
     
-                        if(enemyPlayer.player.pos == "Duelist" && enemyPlayer.agent.role == "Duelist") {
-                            enemyBoost += Math.floor(Math.random() * 5);
+                        if((enemyPlayer.player.pos == "Duelist" && enemyPlayer.agent.role == "Duelist") || (enemyPlayer.player.pos == "Initiator" && enemyPlayer.agent.role == "Initiator")) {
+                            enemyBoost += Math.floor(Math.random() * 15);
                         }
 
                         boost += this.currentWeapon[teamId][randomPlayerPick].value
                         enemyBoost += this.currentWeapon[enemyTeamID][randomEnemyPick].value
 
                         //Most pro players rarely ever have 0 kills a game this is to counter some players being plain horrible
-                        if(Math.random() > 0.66) {
+                        if(Math.random() > 0.75) {
                             if(Math.random() > 0.5) {
                                 boost += 200;
                             } else {
                                 enemyBoost += 200;
                             }
                         }
+
+                        //permenant boosts
+                        boost += permenantRoundBoost;
+                        enemyBoost += enemyPermenantRoundBoost;
 
                         //Adding overall synergy boosts
                         boost += (this.teams[teamId].synergy.off + this.teams[teamId].synergy.reb); 
@@ -784,7 +796,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                         let boost = 0;
                         let enemyBoost = 0;
 
-                        if(Math.random() > 0.66) {
+                        if(Math.random() > 0.96) {
                             if(Math.random() > 0.5) {
                                 boost += 200;
                             } else {
@@ -804,7 +816,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                         }
                     }
                 } else {
-                    if(deadPlayers[0].length >= 5 || deadPlayers[1].length >= 5) {
+                    if(deadPlayers[teamId].length >= 5 || deadPlayers[enemyTeamID].length >= 5) {
                         continue;
                     } else {
                         i--;
@@ -815,16 +827,23 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                     if(deadPlayers[teamId].length == 1 && deadPlayers[enemyTeamID].length == 0) {
                         this.recordStat(enemyTeamID, randomEnemyPick, "scKills", 1);
                         this.recordStat(teamId, randomPlayerPick, "pf", 1)
+
+                        if(randomEnemyPick == 0) {
+                            enemyPermenantRoundBoost = 30
+                        }
                     } else if(deadPlayers[enemyTeamID].length == 1 && deadPlayers[teamId].length == 0) {
                         this.recordStat(teamId, randomPlayerPick, "scKills", 1);
                         this.recordStat(enemyTeamID, randomEnemyPick, "pf", 1);
+                        if(randomPlayerPick == 0) {
+                            permenantRoundBoost = 30;
+                        }
                     }
 
                     firstblood = true;
                 }
 
                 //Overheating kinda keep using the same player if not dead
-                if(Math.random() < 0.65) {
+                if(Math.random() < 0.55) {
                     randomPlayerPick = Math.floor(Math.random() * randomPlayerChoices.length)
                     randomEnemyPick = Math.floor(Math.random() * randomEnemyChoices.length)
                 } else {

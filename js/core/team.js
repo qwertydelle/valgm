@@ -1911,7 +1911,7 @@ if (arguments[1] !== undefined) { throw new Error("No cb should be here"); }
 					  jgl += 1;
 				   } else  if (players[i].pos == "Smokes") {
                       adc += 1;
-				   } else  if (players[i].pos == player[i].pos) {
+				   } else  if (players[i].pos) {
                       sup += 1;;
 				   }
 				   
@@ -1931,46 +1931,6 @@ if (arguments[1] !== undefined) { throw new Error("No cb should be here"); }
 //                    if (tid === g.userTid && g.autoPlaySeasons === 0) {
   //                      userTeamSizeError = 'Your team currently has less than the minimum number of players (' + g.minRosterSize + '). You must add players (through <a href="' + helpers.leagueUrl(["free_agents"]) + '">free agency</a> or <a href="' + helpers.leagueUrl(["trade"]) + '">trades</a>) before continuing.';
                     } else {
-                        // Auto-add players
-//console.log([tid, minFreeAgents.length, numPlayersOnRoster]);
-
-						//// Handle this by position
-                     /*   while ((numPlayersOnRoster < g.minRosterSize) && (minFreeAgents.length>0)) {
-                            p = minFreeAgents.shift();
-                            p.tid = tid;
-                            p = player.addStatsRow(tx, p, g.phase === g.PHASE.PLAYOFFS);
-                            p = player.setContract(p, p.contract, true);
-                            p.gamesUntilTradable = 4;
-							addedPos.push(p.pos);
-                            eventLog.add(null, {
-                                type: "freeAgent",
-                                text: 'The <a href="' + helpers.leagueUrl(["roster", g.teamAbbrevsCache[p.tid], g.season]) + '">' + g.teamNamesCache[p.tid] + '</a> signed <a href="' + helpers.leagueUrl(["player", p.pid]) + '">' + p.name + '</a> for ' + helpers.formatCurrency(p.contract.amount / 1000, "M") + '/year through ' + p.contract.exp + '.',
-                                showNotification: p.watch && typeof p.watch !== "function",
-                                pids: [p.pid],
-                                tids: [p.tid]
-                            });							
-                            promises.push(dao.players.put({ot: tx, value: p}));
-
-                            numPlayersOnRoster += 1;
-                        } */
-						
-
-						/*for (i = 0; i < (addedPos.length); i++) {
-						//	console.log(numPlayersOnRoster+" "+i+" "+players[i].pos);							
-						   if (addedPos[i] == "TOP") {
-							  top += 1;
-						   } else  if (addedPos[i] == "MID") {
-							  mid += 1;
-						   } else  if (addedPos[i] == "JGL") {
-							  jgl += 1;
-						   } else  if (addedPos[i] == "SUP") {
-							  sup += 1;
-						   } else  if (addedPos[i] == "ADC") {
-							  adc += 1;
-						   }
-						   
-		//					player.release(tx, players[i], false);
-						}*/				
 						
 						playersAdded = 0;
 						
@@ -2133,7 +2093,6 @@ if (arguments[1] !== undefined) { throw new Error("No cb should be here"); }
 							}
 						}							
 						
-//console.log([tid, minFreeAgents.length, numPlayersOnRoster]);
                     }
 //                } else if (numFromRegion < 3) {
                 } else if (numFromRegion < 0) {
@@ -2347,7 +2306,7 @@ if (arguments[1] !== undefined) { throw new Error("No cb should be here"); }
 								console.log(numFromRegion+" "+players[i].born.loc+" "+g.teamCountryCache[tid]);
 							//	if ( (numFromRegion > 3) || (players[i].country != g.teamCountryCache[tid]) ) {
 //								   if ( ((players[i].pos == "TOP") && ((top>1)) ) ||  ((players[i].pos == "MID") && ((mid>1) || (p.country != g.teamCountryCache[tid]))) || ((players[i].pos == "JGL") && ((jgl>1) || (p.country != g.teamCountryCache[tid]))) || ((players[i].pos == "SUP") && ((sup>1) || (p.country != g.teamCountryCache[tid]))) || ((players[i].pos == "ADC") && ((adc>1) || (p.country != g.teamCountryCache[tid]))) ){						   
-								   if ( ((players[i].pos == "Duelist") && (top>1) ) ||  ((players[i].pos == "Initiator") && (mid>1) ) || ((players[i].pos == "Sentinal") && (jgl>1)) || ((players[i].pos == "SUP") && (sup>1) ) || ((players[i].pos == "Smokes") && (adc>1) ) ){						   
+								   if ( ((players[i].pos == "Duelist") && (top>1) ) ||  ((players[i].pos == "Initiator") && (mid>1) ) || ((players[i].pos == "Sentinal") && (jgl>1)) || ((players[i].pos) && (sup>1) ) || ((players[i].pos == "Smokes") && (adc>1) ) ){						   
 									//	console.log("dropped: "+players[i].pos);
 										if (players[i].pos == "Duelist") {
 										  top -= 1;
@@ -2357,7 +2316,7 @@ if (arguments[1] !== undefined) { throw new Error("No cb should be here"); }
 										  jgl -= 1;
 									   } else  if (players[i].pos == "Smokes") {
 										  adc -= 1;
-									   } else  if (players[i].pos == players[i].pos) {
+									   } else  if (players[i].pos) {
 										  sup -= 1;
 									   }						
 								   
@@ -2376,56 +2335,8 @@ if (arguments[1] !== undefined) { throw new Error("No cb should be here"); }
 						}
                     }
 									console.log(numPlayersOnRoster+" "+playersDropped);
-//                } else if (numPlayersOnRoster < g.minRosterSize) {
-            /*    } 
-			if (tid === g.userTid && g.autoPlaySeasons === 0) {
-//                        userTeamSizeError = 'Your team currently does not have a TOP position playerhas less than the minimum number of players (' + g.minRosterSize + '). You must add players (through <a href="' + helpers.leagueUrl(["free_agents"]) + '">free agency</a> or <a href="' + helpers.leagueUrl(["trade"]) + '">trades</a>) before continuing.';
-			} else {
-			
-				//minFreeAgentsTop, minFreeAgentsMid, minFreeAgentsJgl, minFreeAgentsADC, minFreeAgentsSup,
-			//	console.log(tid+" need:"+playersAdded);
-					if (numPlayersOnRoster > 10) {
-					   if (tid === g.userTid && g.autoPlaySeasons === 0) {
-		//                        userTeamSizeError = 'Your team currently does not have a TOP position playerhas less than the minimum number of players (' + g.minRosterSize + '). You must add players (through <a href="' + helpers.leagueUrl(["free_agents"]) + '">free agency</a> or <a href="' + helpers.leagueUrl(["trade"]) + '">trades</a>) before continuing.';
-						} else {					*/
-						//	players.sort(function (a, b) { return a.value - b.value; }); // Lowest first				
-						/*	for (i = 0; i < (numPlayersOnRoster); i++) {
-								if ((player.born.loc == g.teamCountryCache[tid]) && (numFromRegion < 4)) {
-									
-								} else if ((players[i].pos == "TOP")&&(top>1)) {
-									promises.push(player.release(tx, players[i], true));
-									top -= 1;
-									playersAdded -= 1;	
-									numPlayersOnRoster -= 1;
-							   } else  if ((players[i].pos == "MID")&&(mid>1)) {
-									promises.push(player.release(tx, players[i], true));
-								  mid -= 1;
-									playersAdded -= 1;						
-									numPlayersOnRoster -= 1;
-							   } else  if ((players[i].pos == "JGL")&&(jgl>1)) {
-									promises.push(player.release(tx, players[i], true));
-								  jgl -= 1;
-									playersAdded -= 1;						
-									numPlayersOnRoster -= 1;
-							   } else  if ((players[i].pos == "SUP")&&(sup>1)) {
-									promises.push(player.release(tx, players[i], true));
-								  sup -= 1;
-									playersAdded -= 1;						
-									numPlayersOnRoster -= 1;
-							   } else  if ((players[i].pos == "ADC")&&(adc>1)) {
-									promises.push(player.release(tx, players[i], true));
-								  adc -= 1;
-									playersAdded -= 1;						
-									numPlayersOnRoster -= 1;
-							   }
-							   if (playersAdded<=0) {
-								 break;
-							   }
-							}*/
-					//	}
-				//	}
+
 				}				
-				//console.log(tid+" done now sort?"+playersAdded+" "+numPlayersOnRoster);
 				return Promise.all(promises);				
             }).then(function () {				
                 // Auto sort rosters (except player's team)
@@ -2501,7 +2412,7 @@ if (arguments[1] !== undefined) { throw new Error("No cb should be here"); }
             minFreeAgentsSup = [];
             for (i = 0; i < players.length; i++) {
                 if (players[i].contract.amount <= 100) {
-					 if (players[i].pos == "SUP") {
+					 if (players[i].pos) {
 						minFreeAgentsSup.push(players[i]);
 					}
                 }
@@ -2540,14 +2451,6 @@ if (arguments[1] !== undefined) { throw new Error("No cb should be here"); }
         });
     }
 	
-        /*return tx.complete().then(function () {
-            return updateCountry();
-//        });
-        }).then(function () {
-            return userTeamSizeError;
-
-        });
-    }*/
 
 
     /**
