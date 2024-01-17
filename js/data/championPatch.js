@@ -232,6 +232,7 @@ define([], function () {
 		["Smokes", "Viper", 12],
 		["Smokes", "Astra", 15],
 		["Smokes", "Omen", 21],
+		["Smokes", "Harbor", 22]
 	]
 
     return {
