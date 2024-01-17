@@ -190,7 +190,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
         let normalTimer = 0;
 
         //Constants
-        let timerEnd = 155;
+        let timerEnd = 255;
 
         this.manageBuys(creditsData)
 
@@ -249,7 +249,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
             console.log(currentPlayer)
             console.log(enemyPlayer)
 
-            for(let i = 0; i < 5; i++) {
+            for(let i = 0; i < 6; i++) {
                 let randomBasicAction = Math.floor(random.uniform(0, basicActions.length));
 
 
@@ -804,12 +804,12 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                             }
                         }
 
-                        if(currentPlayer.player.matchRating.utilUsage + currentPlayer.agent.ratings.ability + boost  > enemyPlayer.player.matchRating.utilUsage + currentPlayer.agent.ratings.ability + enemyBoost) {
-                            if((currentPlayer.agent.ratings.attack > enemyPlayer.agent.ratings.defense)  || (Math.random() > 0.5)) {
+                        if((currentPlayer.player.matchRating.utilUsage + currentPlayer.agent.ratings.ability + boost)  > (enemyPlayer.player.matchRating.utilUsage + currentPlayer.agent.ratings.ability + enemyBoost)) {
+                            if((currentPlayer.agent.ratings.attack + currentPlayer.agent.playerSkill > enemyPlayer.agent.ratings.defense + enemyPlayer.agent.playerSkill)  || (Math.random() > 0.5)) {
                                 plantedSpike = true;
                             } 
                         } else {
-                            if((currentPlayer.agent.ratings.defense < enemyPlayer.agent.ratings.attack || (Math.random() > 0.65)) && (plantedSpike)) {
+                            if(((currentPlayer.agent.ratings.defense + currentPlayer.agent.playerSkill < enemyPlayer.agent.ratings.attack + enemyPlayer.agent.playerSkill) || (Math.random() > 0.65)) && (plantedSpike)) {
                                 plantedSpike = false;
                                 normalTimer = timerEnd;
                             }
@@ -843,7 +843,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                 }
 
                 //Overheating kinda keep using the same player if not dead
-                if(Math.random() < 0.55) {
+                if(Math.random() < 0.65) {
                     randomPlayerPick = Math.floor(Math.random() * randomPlayerChoices.length)
                     randomEnemyPick = Math.floor(Math.random() * randomEnemyChoices.length)
                 } else {
@@ -980,6 +980,12 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                     }
 
                     //Add operator and odin logic here
+                    if(currentPlayer.player.pos2 == "Opper" || (Math.random() > 0.65 && currentPlayer.agent.role2 === "Opper")) {
+                        weaponsBuy = {
+                            "class": "Sniper Rifles",
+                            "weapon": "Operator"
+                        }
+                    }
 
                     let count = 0;
                     while(creditsData[i][j] < weaponsData[weaponsBuy.class][weaponsBuy.weapon].cost) {
@@ -1067,6 +1073,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 							picked = true;
 
 							usedAgents[i].push(agentData.hid);
+                            agentData.playerSkill = this.teams[i].player[shuffledPlayerId[j]].champions[agentData.hid].skill
 							this.playerAgentPicks[i][shuffledPlayerId[j]] = agentData;
 							this.teams[i].player[shuffledPlayerId[j]].champUsed = pick;
 
@@ -1096,6 +1103,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 							picked = true;
 
 							usedAgents[i].push(agentData.hid);
+                            agentData.playerSkill = this.teams[i].player[shuffledPlayerId[j]].champions[agentData.hid].skill
 							this.playerAgentPicks[i][shuffledPlayerId[j]] = agentData;
 							this.teams[i].player[shuffledPlayerId[j]].champUsed = pick;
                             this.recordStat(i, shuffledPlayerId[j], "champPicked", pick)

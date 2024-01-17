@@ -764,9 +764,10 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
 
 
             //Players gain new abilities over the years
-            if(p.age <= 21) {
+            if(p.age <= 19) {
                 p.pos2 = pos2(p.ratings[r], p.pos)
             }
+
 
 			// champion
 //			p.champions = {};
@@ -3140,11 +3141,11 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
         //Secondary Positions: Opper, IGL, FLEX, None
 
         // Default position
-        if (ratings.blk >= 55 && ratings.stre >= 50 && firstPosition === "Duelist") {
+        if (ratings.blk >= 45 && ratings.stre >= 45 && firstPosition === "Duelist") {
             position = 'Opper';
-        } else if(ratings.ednu >= 55 && ratings.jmp >= 60 && firstPosition !== "Duelist") {
+        } else if(ratings.ednu >= 55 && ratings.jmp >= 45 && firstPosition !== "Duelist") {
             position = 'IGL';
-        } else if(ratings.hgt >= 60 && ratings.spd >= 65) {
+        } else if(ratings.hgt >= 40 && ratings.spd >= 45) {
             position = 'FLEX';
         } else {
 

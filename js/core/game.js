@@ -1147,7 +1147,7 @@ define(["dao", "globals", "ui", "core/champion", "core/freeAgents", "core/financ
 					} else if (i==3) {
 						idealPosition = "Sentinal";
 					} else if (i==4) {
-						idealPosition = "";
+						idealPosition = players[i].pos;
 					}
 				
 					if (idealPosition ==  position) {
@@ -1184,17 +1184,7 @@ define(["dao", "globals", "ui", "core/champion", "core/freeAgents", "core/financ
 								  if  (championRank[r].rank < topRanked) {
 										topRanked = championRank[r].rank;
 								  }
-								 // break;
-								 
-								 ////// Make patch data used, but if wrong role, punish the patch ranking
-								 ////// need to get this working so using champs in wrong role is punished
-								 ////// then make sure game works without pick ban at league createElement
-								 ////// then write post
-						   /*} else if (players[i].champions[j].name == championRank[r].champion) {
-								  if  ( (championRank[r].rank+50) < topRanked) {
-										topRanked = championRank[r].rank+50;
-								  }*/
-						   
+
 						   }
 						   
 //						   else {
@@ -1203,30 +1193,10 @@ define(["dao", "globals", "ui", "core/champion", "core/freeAgents", "core/financ
 
 						}
 						
-//						players[i].champions[j].draftValue /= (topRanked)/200; // range from 1 to .5, or same to double
-						/*console.log(i+" "+j);
-						console.log(players[i].champions[j].draftValue);
-						console.log(adjustment+" "+topRanked+" "+idealPosition+" "+position);*/
 						players[i].champions[j].draftValue += (200*adjustment-topRanked)*.8; // range from 1 to .5, or same to double
-					/*	if (players[i].champions[j].name == "test1") {
-						  console.log(players[i].champions[j].draftValue);
-						}*/
-					//	console.log(players[i].champions[j].draftValue);
-						//console.log(players[i].champions[j].draftValue);
-				//		console.log(players[i].champions[j].draftValue+" "+adjustment+" "+topRanked+" "+idealPosition+" "+position);
-						
-//						players[i].champions[j].draftValue /= (topRanked+200)/400; // range from 1 to .5, or same to double
-					//	console.log(players[i].champions[j].draftValue);
-						//players[i].champions[j].draftValue /= (topRanked)/200; // range from 1 to .5, or same to double
-						//console.log(players[i].champions[j].draftValue);
 
-				/*	    players[i].champions[j].relativeValue = [];
-						for (k = 0; k < 125; j++) {
-						    players[i].champions[j].relativeValue[k] = [];
-							players[i].champions[j].relativeValue[k] = (players[i].champions[j].draftValue*c[j].ratings.relative[k])/50;
-						}*/
 					}
-                    p = {id: players[i].pid, userID: players[i].userID, name: players[i].name, pos: players[i].pos, posPlayed: players[i].posPlayed,champUsed: "",championRank: championRank,champRel: c, champions: players[i].champions, valueNoPot: players[i].valueNoPot, stat: {}, compositeRating: {}, skills: [], injury: players[i].injury, injured: players[i].injury.type !== "Healthy", ptModifier: players[i].ptModifier, pick: players[i].pick, ban: players[i].ban};
+                    p = {id: players[i].pid, userID: players[i].userID, name: players[i].name, pos: players[i].pos, pos2: players[i].pos2, posPlayed: players[i].posPlayed,champUsed: "",championRank: championRank,champRel: c, champions: players[i].champions, valueNoPot: players[i].valueNoPot, stat: {}, compositeRating: {}, skills: [], injury: players[i].injury, injured: players[i].injury.type !== "Healthy", ptModifier: players[i].ptModifier, pick: players[i].pick, ban: players[i].ban};
 //                    p = {id: players[i].pid, userID: players[i].userID, name: players[i].name, pos: players[i].pos,champRel: c, champions: players[i].champions, valueNoPot: players[i].valueNoPot, stat: {}, compositeRating: {}, skills: [], injury: players[i].injury, injured: players[i].injury.type !== "Healthy", ptModifier: players[i].ptModifier};
 
                     // Reset ptModifier for AI teams. This should not be necessary since it should always be 1, but let's be safe.
@@ -1313,8 +1283,8 @@ define(["dao", "globals", "ui", "core/champion", "core/freeAgents", "core/financ
                     //Consistency
                     if(Math.random() < rating.spd/100) {
                         p.matchRating.aim = ((rating.drb + rating.blk + rating.fg)/3)
-                        p.matchRating.utilUsage = (((rating.dnk + rating.ins)/2))
-                        p.matchRating.teamwork = ((rating.jmp + rating.endu)/2)
+                        p.matchRating.utilUsage = (((rating.dnk + rating.ins)/2)+langAdj)
+                        p.matchRating.teamwork = ((rating.jmp + rating.endu)/2+YWTadj)
                     } else {
                         p.matchRating.aim = ((rating.drb + rating.blk + rating.fg)/3) - random.uniform(5,30)
                         p.matchRating.utilUsage = (((rating.dnk + rating.ins)/3))
@@ -1375,14 +1345,7 @@ define(["dao", "globals", "ui", "core/champion", "core/freeAgents", "core/financ
                     p.compositeRating.defensePerimeter = makeComposite(rating, ['hgt', 'stre', 'spd', 'jmp', 'stl'], [1, 1, 2, 0.5, 1])+YWTadj+langAdj;
                     p.compositeRating.endurance = makeComposite(rating, ['constant', 'endu', 'hgt'], [1, 1, -0.1])+YWTadj+langAdj;
                     p.compositeRating.athleticism = makeComposite(rating, ['stre', 'spd', 'jmp', 'hgt'], [1, 1, 1, 0.5])+YWTadj+langAdj; // Currently only used for synergy calculation
-
-                  // These use the same formulas as the skill definitions in player.skills!
-                    /*for (k in g.compositeWeights) {
-                        if (g.compositeWeights.hasOwnProperty(k)) {
-                            p.compositeRating[k] = makeComposite(rating, g.compositeWeights[k].ratings, g.compositeWeights[k].weights);
-                        }
-                    }
-                    p.compositeRating.usage = Math.pow(p.compositeRating.usage, 1.9);*/							
+		
 					
 					
                     p.stat = {gs: 0, min: 0, fg: 0, fga: 0,fgp:0, fgAtRim: 0, fgaAtRim: 0, fgpAtRim: 0, fgLowPost: 0, fgaLowPost: 0, fgMidRange: 0, fgaMidRange: 0, tp: 0, tpa: 0, ft: 0, fta: 0, orb: 0, drb: 0,trb: 0, ast: 0, tov: 0, stl: 0, blk: 0, pf: 0, pts: 0, courtTime: 0, benchTime: 0, energy: 1,oppJM:0,oppInh:0,oppTw:0,champPicked:"",scTwr:0,scKills:0,
