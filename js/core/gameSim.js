@@ -165,6 +165,15 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
             this.teams[i].stat.pts += this.teams[i].stat.ptsQtrs[0];
         }
 
+
+        //Extra ACS Buff
+        for(let i = 0; i < 2;i++) {
+            for(let j = 0; j < 5; j++) {
+                this.recordStat(i, j, "tp", Math.floor(random.uniform(0, 25)))
+            }
+        }
+
+
         out = {
             gid: this.id,
             overtimes: this.overtime,
@@ -250,7 +259,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
             for(let i = 0; i < 6; i++) {
                 let randomBasicAction = Math.floor(random.uniform(0, basicActions.length));
 
-                if((plantedSpike && spikeTimer >= 55) || (deadPlayers[enemyTeamID].length === 5)) {
+                if((plantedSpike && spikeTimer >= 45) || (deadPlayers[enemyTeamID].length === 5)) {
                     roundCounter += 1;
 
                     if(!overtime) {
@@ -313,7 +322,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 
 
                         //Most pro players rarely ever have 0 kills a game this is to counter some players being plain horrible
-                        if(Math.random() > 0.75) {
+                        if(Math.random() > 0.65) {
                             if(Math.random() > 0.5) {
                                 boost += 200;
                             } else {
@@ -450,7 +459,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                         }
 
                         //Most pro players rarely ever have 0 kills a game this is to counter some players being plain horrible
-                        if(Math.random() > 0.75) {
+                        if(Math.random() > 0.65) {
                             if(Math.random() > 0.5) {
                                 boost += 200;
                             } else {
@@ -634,7 +643,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                         enemyBoost += this.currentWeapon[enemyTeamID][randomEnemyPick].value
 
                         //Most pro players rarely ever have 0 kills a game this is to counter some players being plain horrible
-                        if(Math.random() > 0.75) {
+                        if(Math.random() > 0.65) {
                             if(Math.random() > 0.5) {
                                 boost += 200;
                             } else {
@@ -793,7 +802,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                         let boost = 0;
                         let enemyBoost = 0;
 
-                        if(Math.random() > 0.96) {
+                        if(Math.random() > 0.85) {
                             if(Math.random() > 0.5) {
                                 boost += 200;
                             } else {
@@ -859,11 +868,11 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                 }
 
                 //Overheating kinda keep using the same player if not dead
-                if(Math.random() < 0.65) {
+                if(Math.random() < 0.5) {
                     randomPlayerPick = Math.floor(Math.random() * randomPlayerChoices.length)
                     randomEnemyPick = Math.floor(Math.random() * randomEnemyChoices.length)
                 } else {
-                    if(deadPlayers[1].includes(randomEnemyPick)) {
+                    if(deadPlayers[enemyTeamID].includes(randomEnemyPick)) {
                         randomEnemyPick = Math.floor(Math.random() * randomEnemyChoices.length)
                     } else {
                         randomPlayerPick = Math.floor(Math.random() * randomPlayerChoices.length)
