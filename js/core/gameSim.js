@@ -169,7 +169,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
         //Extra ACS Buff
         for(let i = 0; i < 2;i++) {
             for(let j = 0; j < 5; j++) {
-                this.recordStat(i, j, "tp", Math.floor(random.uniform(0, 25)))
+                this.recordStat(i, j, "tp", Math.floor(random.uniform(0, 45)))
             }
         }
 
@@ -1129,9 +1129,13 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
 						
 						if(!usedAgents[i].includes(agentData.hid) && agentData.role == this.teams[i].player[shuffledPlayerId[j]].pos) {
 							picked = true;
-
 							usedAgents[i].push(agentData.hid);
-                            agentData.playerSkill = this.teams[i].player[shuffledPlayerId[j]].champions[agentData.hid].skill
+
+                            if(this.teams[i].player[shuffledPlayerId[j]].pos2 === "FLEX") {
+                                agentData.playerSkill = this.teams[i].player[shuffledPlayerId[j]].champions[agentData.hid].skill + Math.random(5,15)
+                            } else {
+                                agentData.playerSkill = this.teams[i].player[shuffledPlayerId[j]].champions[agentData.hid].skill * 0.5
+                            }
 							this.playerAgentPicks[i][shuffledPlayerId[j]] = agentData;
 							this.teams[i].player[shuffledPlayerId[j]].champUsed = pick;
                             this.recordStat(i, shuffledPlayerId[j], "champPicked", pick)

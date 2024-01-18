@@ -799,7 +799,6 @@ define(["dao", "db", "globals", "ui", "core/champion", "data/championPatch", "da
 
 						baseRatings = [37+adjustment, 37+adjustment, 36+adjustment, 35+adjustment, 34+adjustment, 33+adjustment, 32+adjustment, 31+adjustment, 30+adjustment, 29+adjustment, 28+adjustment, 26+adjustment, 31+adjustment];
 						pots = [75+adjustment, 65+adjustment, 55+adjustment, 55+adjustment, 60+adjustment, 50+adjustment, 70+adjustment, 40+adjustment, 55+adjustment, 50+adjustment, 60+adjustment, 45+adjustment, 55+adjustment];
-						//console.log(base)
                         goodNeutralBad = random.randInt(-1, 1);  // determines if this will be a good team or not
                         random.shuffle(pots);
 
