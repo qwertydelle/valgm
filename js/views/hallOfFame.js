@@ -43,6 +43,7 @@ define(["dao", "globals", "ui", "core/player", "lib/jquery", "lib/knockout", "li
                     stats: ["season", "abbrev", "gp", "min", "trb", "ast", "pts", "per", "ewa","tp","fg","fga","fgp","kda"]
                 });
 
+
                 // This stuff isn't in player.filter because it's only used here.
                 for (i = 0; i < players.length; i++) {
                     players[i].peakOvr = 0;

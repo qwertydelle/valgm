@@ -3205,7 +3205,6 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
 
         playoffs = playoffs !== undefined ? playoffs : false;
 
-	//	console.log(playoffs);
         statsRow = {pid: p.pid, season: g.season, seasonSplit: g.seasonSplit, tid: p.tid, playoffs: playoffs, gp: 0, gs: 0, min: 0, fg: 0, fga: 0, fgp: 0, fgpAtRim: 0, fgAtRim: 0, fgaAtRim: 0, fgLowPost: 0, fgaLowPost: 0, fgMidRange: 0, fgaMidRange: 0, tp: 0, tpa: 0, ft: 0, fta: 0, orb: 0, drb: 0, trb: 0, ast: 0, tov: 0, stl: 0, blk: 0, pf: 0, pts: 0, per: 0, ewa: 0, yearsWithTeam: 1, oppJM: 0,oppTw: 0,oppInh: 0,	 champPicked: "",wardP:0,wardD:0,wardPT:0,wardDT:0,klsT:0,dthT:0,astT:0,gldT:0,mnnT:0,kda:0,klsP:0,dthP:0,astP:0,gldP:0,mnnP:0,wardDP:0,wardPP:0,rh:0,scTwr:0,scKills:0,
 			grExpTwr:0,
 			grExpKills:0,
@@ -4547,6 +4546,7 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
 		var kills,assists,deaths,gp,kda;
 		var usedSeasons;
         //mins = _.pluck(playerStats, "min");
+
         gp = _.pluck(playerStats, "gp");
 //        pers = _.pluck(playerStats, "per");
         kills = _.pluck(playerStats, "fg");
@@ -4588,42 +4588,36 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
 
 			if (g.gameType == 5) {
 				prls = {
-				   TOP: 2.5,
-					JGL: 2.3,
-					MID: 2.6,
-					ADC: 2.6,
-					SUP: 2.0
+				    Duelist: 0.5,
+					Smokes: 0.3,
+					Initiator: 0.6,
+					Sentinal: 0.6,
+					SUP: 0.0
 				};
 			} else {
 				prls = {
-				   TOP: 2.0,
-					JGL: 2.0,
-					MID: 2.0,
-					ADC: 2.0,
-					SUP: 2.0
+                    Duelist: 15.0,
+					Initiator: 15.0,
+					Smokes: 12.0,
+					Sentinal: 12.0,
+					SUP: 12.0
 				};
 			}
 			// Estimated wins added for each season http://insider.espn.go.com/nba/hollinger/statistics
 			ewas = [];
-		//	console.log(gp.length);
+
 			for (i = 0; i < gp.length; i++) {
-				//va = gp[i] * (pers[i] - prls[p.pos]) / 67;
-				if  (deaths[i] > 0) {
-				//	console.log(kda[i]);
-			//	console.log(kills[i]+" "+assists[i]+" "+deaths[i]+" "+prls[p.pos]);
-					va = gp[i] * ((kills[i] +assists[i])/deaths[i] - prls[p.pos]) / 16;
-				//	console.log(i+" "+va);
-				//	va = gp[i] * (kda[i] - prls[p.pos]) / 16.0;
-	//				va = gp[i] * (kda[i] - prls[p.pos]) / 16;
-					//console.log(i+" "+va);
+				if (deaths[i] > 0) {
+					va = gp[i] * ((kills[i] + assists[i])/deaths[i]) / 10;
+
+                    console.log(va)
+
 				} else {
 					va = 0;
 				}
-			  //  ewas.push(va / 30 * 0.8); // 0.8 is a fudge factor to approximate the difference between (in-game) EWA and (real) win shares
+
 				ewas.push(va); // 0.8 is a fudge factor to approximate the difference between (in-game) EWA and (real) win shares
 			}
-	//console.log(ewas)
-	//console.log(_.pluck(p.stats, "ewa"))
 
 			// Calculate career EWA and "dominance factor" DF (top 5 years EWA - 50)
 			ewas.sort(function (a, b) { return b - a; }); // Descending order
@@ -4635,16 +4629,13 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
 					df += ewas[i];
 				}
 			}
-		//			console.log(ewa);
-		//			console.log(df);
+
 			// Fudge factor for players generated when the league started
 			fudgeSeasons = g.startingSeason - p.draft.year ;
 			if (fudgeSeasons > 1) {
 				ewa += ewas[0] * (fudgeSeasons-1);
 			}
 
-			// Final formula
-		//	console.log(ewa+" "+df+" "+(ewa+df));
 
 			var cutOffByGameType;
 

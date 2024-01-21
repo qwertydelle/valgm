@@ -1476,6 +1476,8 @@
                     }).then(function (playerStats) {
 						var maxAge, minPot;
 						// Players meeting one of these cutoffs might retire
+
+						console.log(playerStats)
 						maxAge = 21;
 						minPot = 40;
 						
@@ -1490,12 +1492,7 @@
 						// update region if YWT > 2
 						// add language if player doesn't have it yet
 						if (p.tid >= 0) {
-							/* console.log("B: "+p.tid);
-							 console.log("B: "+g.teamCountryCache);
-							 console.log("B: "+g.teamCountryCache[p.tid]);
-							 console.log(p.born.loc);
-							 console.log(YWT);*/
-						//	 console.log(YWT);
+
 							if ((YWT[YWT.length-2] == 2) || (YWT[YWT.length-3] == 2) || (YWT[YWT.length-1] == 2)) {
 							//	console.log(g.teamCountryCache[p.tid]+" "+p.born.loc);
 								if (g.teamCountryCache[p.tid] != p.born.loc) {
@@ -1546,7 +1543,7 @@
 
                         // Update "free agent years" counter and retire players who have been free agents for more than one years
                         if (p.tid === g.PLAYER.FREE_AGENT) {
-                            if (p.yearsFreeAgent >= 1) {
+                            if (p.yearsFreeAgent >= 2) {
                                 p = player.retire(tx, p, playerStats);
                             } else {
                                 p.yearsFreeAgent += 1;

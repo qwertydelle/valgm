@@ -338,7 +338,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
     
                         if(Math.random() > 0.6) {                       
                             if(currentPlayer.player.matchRating.aim + boost > enemyPlayer.player.matchRating.aim + enemyBoost) {
-                                if(Math.random() > 0.5) {
+                                if(Math.random() > 0.4) {
                                     if(this.currentWeapon[teamId][randomPlayerPick].value > this.currentWeapon[enemyTeamID][randomEnemyPick].value) {
                                         this.recordStat(teamId, randomPlayerPick, "fg", 1);
                                         deadPlayers[enemyTeamID].push(randomEnemyPick);
@@ -927,7 +927,7 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
     }
 
     /**
-     * Simulates in game weapon buys.
+     * Simulates in game weapon buys. Runs for every player regardless of money or currentweapon.
      *
      *
      *
@@ -967,7 +967,9 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
                     agent: this.playerAgentPicks[i][j]
                 };
 
+
                 let weaponsBuy;
+
 
                 if(roundType === "pistol") {
                     if(currentPlayer.agent.role == "Duelist") {

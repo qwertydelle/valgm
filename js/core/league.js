@@ -151,12 +151,12 @@ define(["dao", "db", "globals", "ui", "core/champion", "data/championPatch", "da
 			divisions = [{did: 0, cid: 0, name: "VCT Americas"}];
 	    } else if (typeid == -1) {
 			teamsDefault = helpers.getTeamsEUDefault();
-			conferences = [{cid: 0, name: "League Championship Series"}];
-			divisions = [{did: 0, cid: 0, name: "LCS"}];
+			conferences = [{cid: 0, name: "Champions Tour: EMEA League"}];
+			divisions = [{did: 0, cid: 0, name: "VCT EMEA"}];
 		} else if ((typeid == 1) ) {
 			teamsDefault = helpers.getTeamsDefault();
-			conferences = [{cid: 0, name: "League Championship Series"}, {cid: 1, name: "Challenger Series"}, {cid: 2, name: "Ladder"}];
-			divisions = [{did: 0, cid: 0, name: "LCS"}, {did: 1, cid: 1, name: "CS"}, {did: 2, cid: 2, name: "L"}];
+			conferences = [{cid: 0, name: "Champions Tour: Americas League"}, {cid: 1, name: "VCT NA Ascension"}];
+			divisions = [{did: 0, cid: 0, name: "VCT Americas"}, {did: 1, cid: 1, name: "VCT NA Ascension"}];
 		} else if ((typeid == -2) ) {
 			teamsDefault = helpers.getTeamsDefaultEU();
 			conferences = [{cid: 0, name: "League Championship Series"}, {cid: 1, name: "Challenger Series"}, {cid: 2, name: "Ladder"}];
@@ -473,7 +473,7 @@ define(["dao", "db", "globals", "ui", "core/champion", "data/championPatch", "da
 			topSUP = [];
             
 			for (i = 0; i < _.size(cpSorted); i++) {
-				if ((cpSorted[i].role == "Duelist") && (topADC.length < 5) ) {
+				if ((cpSorted[i].role == "Sentinal") && (topADC.length < 5) ) {
 					for (j = 0; j < _.size(cDefault); j++) {
 					    if (cDefault[j].name == cpSorted[i].champion) {
 							topADC.push(cDefault[j].hid);
@@ -497,7 +497,7 @@ define(["dao", "db", "globals", "ui", "core/champion", "data/championPatch", "da
 						}
 					}
 				}
-				if ((cpSorted[i].role == "Sentinal") && (topTOP.length < 5) ) {
+				if ((cpSorted[i].role == "Duelist") && (topTOP.length < 5) ) {
 //				  topTOP.push(cpSorted[i].cpid);
 					for (j = 0; j < _.size(cDefault); j++) {
 					    if (cDefault[j].name == cpSorted[i].champion) {
