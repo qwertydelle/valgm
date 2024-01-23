@@ -356,7 +356,7 @@ define(["dao", "globals", "core/player", "lib/bluebird", "lib/underscore", "util
             var i,j,rosterNumber;
 
             players = player.filter(players, {
-                attrs: ["pid", "valueNoPot", "valueNoPotFuzz", "valueMMR","pos"],
+                attrs: ["pid", "valueNoPot", "valueNoPotFuzz", "valueMMR", "pos"],
                 showNoStats: true,
                 showRookies: true
             });
@@ -365,16 +365,14 @@ define(["dao", "globals", "core/player", "lib/bluebird", "lib/underscore", "util
 			var MMRundefined;
 			MMRundefined = 0;
             for (i = 0; i < players.length; i++) {
-				if ( (players[i].valueMMR == undefined)) {
+				if ((players[i].valueMMR == undefined)) {
 					MMRundefined += 1;
 				}
 			}
-			if ( MMRundefined > 0 ) {
+			if (MMRundefined > 0) {
 				if (tid === g.userTid && g.autoPlaySeasons === 0) {				
-	//                players.sort(function (a, b) { return b.valueNoPotFuzz - a.valueNoPotFuzz; });
 					players.sort(function (a, b) { return b.valueNoPotFuzz - a.valueNoPotFuzz; });
 				} else {
-	//                players.sort(function (a, b) { return b.valueNoPot - a.valueNoPot; });
 					players.sort(function (a, b) { return b.valueNoPot - a.valueNoPot; });
 				}			
 			} else {
@@ -426,7 +424,7 @@ define(["dao", "globals", "core/player", "lib/bluebird", "lib/underscore", "util
             }
 
             for (i = 0; i < players.length; i++) {
-			    if (players[i].pos == "SUP") {
+			    if (players[i].pos == players[i].pos) {
 					players[i].rosterOrder = 4;
 					position[4] = i;										
 					rosterNumber += 1;
@@ -639,7 +637,7 @@ define(["dao", "globals", "core/player", "lib/bluebird", "lib/underscore", "util
             ot: tx,
             callback: function (t) {
 
-                console.log(t)
+
                 // Young stars
                 return dao.players.getAll({
                     ot: tx,

@@ -4596,11 +4596,11 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
 				};
 			} else {
 				prls = {
-                    Duelist: 15.0,
-					Initiator: 15.0,
-					Smokes: 12.0,
-					Sentinal: 12.0,
-					SUP: 12.0
+                    Duelist:  0.5,
+					Initiator:  0.5,
+					Smokes:  0.5,
+					Sentinal:  0.5,
+					SUP:  0.5
 				};
 			}
 			// Estimated wins added for each season http://insider.espn.go.com/nba/hollinger/statistics

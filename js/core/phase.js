@@ -60,10 +60,6 @@
 									}).then(function (cp) {
 									
 									
-									/*console.log(c.length);
-									console.log(cp.length);
-									console.log(_.size(c));
-									console.log(_.size(cpSorted));*/
 									
 										var i,j;
 										var cpSorted;
@@ -85,7 +81,7 @@
 										topSUP = [];
 
 										for (i = 0; i < _.size(cpSorted); i++) {
-											if ((cpSorted[i].role == "Duelist") && (topADC.length < 5) ) {
+											if ((cpSorted[i].role == "Sentinal") && (topADC.length < 5) ) {
 										//	   console.log(_.size(c));
 												for (j = 0; j < _.size(c); j++) {
 													if (c[j].name == cpSorted[i].champion) {
@@ -112,7 +108,7 @@
 													}
 												}
 											}
-											if ((cpSorted[i].role == "Sentinal") && (topTOP.length < 5) ) {
+											if ((cpSorted[i].role == "Duelist") && (topTOP.length < 5) ) {
 							//				  topTOP.push(cpSorted[i].cpid);
 												for (j = 0; j < _.size(c); j++) {
 													if (c[j].name == cpSorted[i].champion) {
@@ -135,11 +131,6 @@
 										}											
 									
 									
-								/*	console.log(topADC);
-									console.log(topMID);
-									console.log(topJGL);
-									console.log(topTOP);
-									console.log(topSUP);									*/
 										//return draft.genPlayers(null, g.PLAYER.UNDRAFTED_3,null,null,c,topADC,topMID,topJGL,topTOP,topSUP);
 										// Add row to team stats and season attributes
 										return dao.teams.iterate({
@@ -215,8 +206,6 @@
 			//tx = dao.tx("schedule", "readwrite");
 			
 			return season.setSchedule(tx, season.newSchedule(teams)).then(function () {
-			//return setSchedule(newSchedule()).then(function () {
-				console.log("got here");
 
 				// First message from owner
 				if (g.showFirstOwnerMessage) {
@@ -249,18 +238,10 @@
 							read: false,
 							from: "The Commissioner",
 							year: g.season,
-							text: '<p>Hi. Sorry to bother you again, but if you like the game, please share it with your friends! Also:</p><p><a href="https://twitter.com/ZenGMGames">Follow Zen GM on Twitter</a></p><p><a href="https://www.facebook.com/ZenGMGames">Like Zen GM on Facebook</a></p><p><a href="http://www.reddit.com/r/ZenGMLOL/">Discuss LOL GM on Reddit</a></p><p>The more people that play LOL GM, the more motivation I have to continue improving it. So it is in your best interest to help me promote the game! If you have any other ideas, please <a href="mailto:baseball@zengm.com">email me</a>.</p>'
+							text: '<p>Hi. Sorry to bother you again, but if you like the game, please share it with your friends! Also:</p><p><a href="https://twitter.com/ZenGMGames">Follow Zen GM on Twitter</a></p><p><a href="https://www.facebook.com/ZenGMGames">Like Zen GM on Facebook</a></p><p><a href="http://www.reddit.com/r/ZenGMLOL/">Discuss VAL GM on Reddit</a></p><p>The more people that play VAL GM, the more motivation I have to continue improving it. So it is in your best interest to help me promote the game! If you have any other ideas, please <a href="mailto:baseball@zengm.com">email me</a>.</p>'
 						}					
 					});
 				}
-  /*      }).catch(function (err) {
-            // If there was any error in the phase change, abort transaction
-            tx.abort();
-            throw err;			
-        });
-
-        return tx.complete().then(function () {
-            return newPhaseFinalize(g.PHASE.REGULAR_SEASON);*/
 			}).then(function () {
 				return [undefined, ["playerMovement"]];
 			});
@@ -274,12 +255,6 @@
 
     function newPhasePlayoffs(tx) {
 		
-		
-  //      var  tx;
-
-   //     phaseChangeTx = dao.tx(["players", "playerStats", "playoffSeries", "releasedPlayers", "schedule", "teams"], "readwrite");		
-        // Achievements after regular season
-        //account.checkAchievement.septuawinarian();
         account.checkAchievement.eating();
 
         // Set playoff matchups
@@ -317,32 +292,8 @@
             tidLadder = [];	
 			tidCSPromotionTop = [];
 
-   /*         series = [[], [], [], []];  // First round, second round, third round, fourth round
-            for (cid = 0; cid < 2; cid++) {
-                teamsConf = [];
-                for (i = 0; i < teams.length; i++) {
-                    if (teams[i].cid === cid) {
-                        if (teamsConf.length < 8) {
-                            teamsConf.push(teams[i]);
-                            tidPlayoffs.push(teams[i].tid);
-                        }
-                    }
-                }
-                series[0][cid * 4] = {home: teamsConf[0], away: teamsConf[7]};
-                series[0][cid * 4].home.seed = 1;
-                series[0][cid * 4].away.seed = 8;
-                series[0][1 + cid * 4] = {home: teamsConf[3], away: teamsConf[4]};
-                series[0][1 + cid * 4].home.seed = 4;
-                series[0][1 + cid * 4].away.seed = 5;
-                series[0][2 + cid * 4] = {home: teamsConf[2], away: teamsConf[5]};
-                series[0][2 + cid * 4].home.seed = 3;
-                series[0][2 + cid * 4].away.seed = 6;
-                series[0][3 + cid * 4] = {home: teamsConf[1], away: teamsConf[6]};
-                series[0][3 + cid * 4].home.seed = 2;
-                series[0][3 + cid * 4].away.seed = 7;
-            }*/
 
-		   teamsConf = [];
+		   	teamsConf = [];
 			teamsConf2 = [];
 			teamsConf3 = [];
 
@@ -371,30 +322,39 @@
 							tidPlayoffs.push(teams[i].tid);
 							tidDemotion.push(teams[i].tid);							
 						}*/
+
+						//Getting top 6 teams from VCT Americas and pushing them into the tidLCS array
 						if ( (i<(teamsConf.length-3)) && (g.gameType==1) ) {						    
 							tidLCS.push(teamsConf[i].tid);
 						}
+
+						//This pulls the 2 one of last place teams and pushes them into the LCSPromotion array
 						if ( ((i==(teamsConf.length-3)) || (i==(teamsConf.length-2) )) && (g.gameType==1) ) {						    
 							tidLCSPromotion.push(teamsConf[i].tid);
 						}
-						if ( (i==(teamsConf.length-1))  && (g.gameType==1) ) {						    
+
+						//Takes the last team and pushes them into the Ladder Group
+						if ( (i==(teamsConf.length-1)) && (g.gameType==1) ) {						    
 							tidCS.push(teamsConf[i].tid);
 						}
 				
-					}	
-			
-					series[0][  0 ] = {home: teamsConf[3], away: teamsConf[4]};
+					}
+					
+					//VCT Americas First QuarterFinal Game
+					series[0][ 0] = {home: teamsConf[3], away: teamsConf[4]};
 					series[0][ 0 ].home.seed = 4;
 					series[0][ 0 ].away.seed = 5;	
 
-					
+					//Placing First place team in Semifinals
 					series[1][0] = {home: teamsConf[0],away: teamsConf[0] };
 					series[1][0].home.seed = 1;
 					
+					//VCT Americas Second QuarterFinal Game
 					series[0][1 ] = {home: teamsConf[2], away: teamsConf[5]};
 					series[0][1 ].home.seed = 3;
 					series[0][1 ].away.seed = 6;							
 					
+					//Placing second place team in semi finals
 					series[1][1] = {home: teamsConf[1],away: teamsConf[1] };
 					series[1][1].home.seed = 2;
 					
@@ -414,16 +374,21 @@
 							teamsConf2.push(teams[i]);
 						}						
 					}	
-					for (i = 0; i < teamsConf2.length; i++) {					
-//						if (i<(teamsConf2.length-2)) {
+					for (i = 0; i < teamsConf2.length; i++) {			
+
+						//Pushing top 4 team into the VCT Acension playoff
 						if (i<4) {
 							tidPlayoffs.push(teamsConf2[i].tid);
 							tidPromotion.push(teamsConf2[i].tid);
 							tidLCSPromotion.push(teamsConf2[i].tid);							
 						}
+
+						//Teams that didnt make it
 						if ( (i>=4) && (i<=(teamsConf2.length-3))) {
 							tidCSstay.push(teamsConf2[i].tid);												
 						}
+
+						//Bottom 3 teams are getting put in the CS Ladder promotion game
 						if (i>(teamsConf2.length-3)) {
 					//		tidPlayoffs.push(teams[i].tid);
 							tidDemotion.push(teamsConf2[i].tid);
@@ -436,6 +401,7 @@
 					}	
 
 					
+					//Quaterfinals for VCT Ascension 
 					series[0][  2 ] = {home: teamsConf2[0], away: teamsConf2[3]};
 					series[0][ 2 ].home.seed = 1;
 					series[0][ 2 ].away.seed = 4;	
@@ -464,6 +430,7 @@
 					
 				}			
 
+				//Now the ladder league
 				for (cid = 2; cid < 3; cid++) {
 						//	console.log(teamsConf2);
 					for (i = 0; i < teams.length; i++) {
@@ -492,26 +459,26 @@
 					series[1][5].home.seed = teamsConf2.length;
 
 					
-					series[0][4] = {home: teamsConf3[1], away: teamsConf3[6]};
-					series[0][4].home.seed = 2;
-					series[0][4].away.seed = 7;	
+					// series[0][4] = {home: teamsConf3[1], away: teamsConf3[6]};
+					// series[0][4].home.seed = 2;
+					// series[0][4].away.seed = 7;	
 					
 					
-					series[0][5] = {home: teamsConf3[2], away: teamsConf3[5]};
-					series[0][5].home.seed = 3;
-					series[0][5].away.seed = 6;							
+					// series[0][5] = {home: teamsConf3[2], away: teamsConf3[5]};
+					// series[0][5].home.seed = 3;
+					// series[0][5].away.seed = 6;							
 					
-					series[0][6] = {home: teamsConf3[8], away: teamsConf3[9]};
-					series[0][6].home.seed = 9;
-					series[0][6].away.seed = 10;							
+					// series[0][6] = {home: teamsConf3[8], away: teamsConf3[9]};
+					// series[0][6].home.seed = 9;
+					// series[0][6].away.seed = 10;							
 					
-					series[0][7] = {home: teamsConf3[0], away: teamsConf3[7]};
-					series[0][7].home.seed = 1;
-					series[0][7].away.seed = 8;							
+					// series[0][7] = {home: teamsConf3[0], away: teamsConf3[7]};
+					// series[0][7].home.seed = 1;
+					// series[0][7].away.seed = 8;							
 					
-					series[0][8] = {home: teamsConf3[3], away: teamsConf3[4]};
-					series[0][8].home.seed = 4;
-					series[0][8].away.seed = 5;							
+					// series[0][8] = {home: teamsConf3[3], away: teamsConf3[4]};
+					// series[0][8].home.seed = 4;
+					// series[0][8].away.seed = 5;							
 					
 
 
@@ -519,6 +486,7 @@
 									
 				
 			}
+			
 			if ((g.gameType == 2)  || (g.gameType == 5)) {			
 //					if ((g.gameType == 2) ) {		
 
@@ -2075,7 +2043,6 @@
     }
 
     function abort() {
-		console.log("got here");
         try {
             // Stop error from bubbling up, since this function is only called on purpose
             phaseChangeTx.onerror = function (e) {

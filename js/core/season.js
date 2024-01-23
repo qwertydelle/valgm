@@ -1328,32 +1328,22 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 
 					
 			
-			} else if (rnd < 8 || rnd > 8) {
-	//		console.log("Normal");						
+			} else if (rnd < 8 || rnd > 8) {					
 				for (i = seriesStart; i < seriesEnd; i++) {
 							//console.log(tids);						
 				
 					   wonNeeded = 3;
-				/*	 console.log("i: "+i);				 
-					 console.log("rnd: "+rnd);				 
-					 console.log("wonNeeded: "+wonNeeded);				 
-					 console.log("series[rnd][i].home.won: "+series[rnd][i].home.won);				 				 
-					 console.log("series[rnd][i].away.won: "+series[rnd][i].away.won);				 				 
-					 console.log("series[rnd][i].home.tid: "+series[rnd][i].home.tid);				 				 
-					 console.log("series[rnd][i].away.tid: "+series[rnd][i].away.tid);				 				 */
+
+
 					if ( (series[rnd][i].home.won < wonNeeded) && (series[rnd][i].away.won < wonNeeded) ) {
 						// Make sure to set home/away teams correctly! Home for the lower seed is 1st, 2nd, 5th, and 7th games.
 						numGames = series[rnd][i].home.won + series[rnd][i].away.won;
-					//	console.log(numGames);
 						if (numGames === 0  || numGames === 2 || numGames === 4) {
 							tids.push([series[rnd][i].home.tid, series[rnd][i].away.tid]);
-						//	console.log(tids);
 						} else {
-							tids.push([series[rnd][i].away.tid, series[rnd][i].home.tid]);
-						//	console.log(tids);						
+							tids.push([series[rnd][i].away.tid, series[rnd][i].home.tid]);					
 						}
-					}
-					//console.log("changed?: "+tids);						
+					}					
 					
 				}
 			}

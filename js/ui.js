@@ -495,13 +495,13 @@ define(["dao", "globals", "templates", "lib/bluebird", "lib/davis", "lib/html2ca
         } else if (g.phase === g.PHASE.REGULAR_SEASON) {
             // Regular season - pre trading deadline
 //            keys = ["play-menu-day", "play-menu-day-live", "play-menu-week", "play-menu-month", "play-menu-until-playoffs"];
-            keys = ["play-menu-day", "play-menu-day-live", "play-menu-week", "play-menu-until-playoffs"];
+            keys = ["play-menu-day", "play-menu-week", "play-menu-until-playoffs"];
         } else if (g.phase === g.PHASE.AFTER_TRADE_DEADLINE) {
             // Regular season - post trading deadline
-            keys = ["play-menu-day", "play-menu-day-live", "play-menu-week", "play-menu-month", "play-menu-until-playoffs"];
+            keys = ["play-menu-day", "play-menu-week", "play-menu-month", "play-menu-until-playoffs"];
         } else if (g.phase === g.PHASE.PLAYOFFS) {
             // Playoffs
-            keys = ["play-menu-day", "play-menu-day-live", "play-menu-week", "play-menu-month", "play-menu-through-playoffs"];
+            keys = ["play-menu-day", "play-menu-week", "play-menu-month", "play-menu-through-playoffs"];
         } else if (g.phase === g.PHASE.BEFORE_DRAFT) {
             // Offseason - pre draft
             keys = ["play-menu-until-resign-players"];

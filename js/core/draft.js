@@ -74,16 +74,16 @@ define(["dao", "globals", "ui", "core/finances", "core/player", "core/team", "li
             for (i = 0; i < numPlayers; i++) {
 //               
 				if (g.gameType == 1) {
-					baseRating = random.randInt(15, 45);
+					baseRating = random.randInt(15, 35);
                     
                     if(baseRating == 45) {
-                        baseRating = random.randInt(20, 45);
+                        baseRating = random.randInt(20, 35);
                     }
 
-					pot = Math.round(helpers.bound(random.realGauss(17, 55), baseRating, 100)); // 9 SUP	
+					pot = Math.round(helpers.bound(random.realGauss(17, 45), baseRating, 100)); // 9 SUP	
                     
                     if(pot == 100) {
-                        pot = Math.round(helpers.bound(random.realGauss(17, 55), baseRating, 100));
+                        pot = Math.round(helpers.bound(random.realGauss(17, 45), baseRating, 100));
                     }
 
 				} else {				
