@@ -1024,7 +1024,7 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 					seriesEnd = 2;				
 				} else if (g.gameType == 1) {	
 					seriesStart = 0;
-					seriesEnd = 9;							
+					seriesEnd = 4;							
 				} else if (g.gameType == 2) {	
 					seriesStart = 9;
 					seriesEnd = 10;				
@@ -1046,7 +1046,7 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 					seriesEnd = 2;				
 				} else if (g.gameType == 1) {	
 					seriesStart = 0;
-					seriesEnd = 7;							
+					seriesEnd = 4;							
 				} else if (g.gameType == 2) {	
 					seriesStart = 7;
 					seriesEnd = 8;				
@@ -1066,7 +1066,7 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 					seriesEnd = 2;				
 				} else if (g.gameType == 1) {	
 					seriesStart = 0;
-					seriesEnd = 6;							
+					seriesEnd = 2;							
 				} else if (g.gameType == 2) {	
 					seriesStart = 6;
 					seriesEnd = 7;				
@@ -1086,7 +1086,7 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 					seriesEnd = 0;				
 				} else if (g.gameType == 1) {	
 					seriesStart = 0;
-					seriesEnd = 1;							
+					seriesEnd = 0;							
 				} else if (g.gameType == 2) {	
 					seriesStart = 1;
 					seriesEnd = 2;				
@@ -1316,11 +1316,6 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 								} 								
 								
 						}
-					/*	console.log(series[8][0+i*2].home.won );
-						console.log(series[8][0+i*2].away.won );
-						console.log(series[8][1+i*2].home.won );
-						console.log(series[8][1+i*2].away.won );
-						console.log(j+" "+i+" "+threeWins+" "+threeWinsLocation);*/
 
 					}
 				}				
@@ -1333,8 +1328,7 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 							//console.log(tids);						
 				
 					   wonNeeded = 3;
-
-
+					console.log("Round: " + rnd + " Column: " + i);
 					if ( (series[rnd][i].home.won < wonNeeded) && (series[rnd][i].away.won < wonNeeded) ) {
 						// Make sure to set home/away teams correctly! Home for the lower seed is 1st, 2nd, 5th, and 7th games.
 						numGames = series[rnd][i].home.won + series[rnd][i].away.won;
@@ -1483,7 +1477,7 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 				}				
 
 				// CS Promotion		
-				if ( (g.gameType == 1)) {
+				if ( (g.gameType == 1 && false)) {
 							console.log(g.gameType);			
   //              return tx.complete().then(function () {
                 // return newPhase(g.PHASE.BEFORE_DRAFT);
@@ -1693,58 +1687,60 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 						
 
 					}
-				  for (i = 4; i < 6; i++) {
-						// LCS/CS Promotion 
+					
+					//VALGM: Commenting this out but this deals with CS Ladder Promotion
+				//   for (i = 4; i < 5; i++) {
+				// 		// LCS/CS Promotion 
 
-						if (series[rnd][i].home.won >= 3) {
-							key3 = series[rnd][i].home.tid;
-							key4 = series[rnd][i].away.tid;
-						} else if (series[rnd][i].away.won >= 3) {
-							key3 = series[rnd][i].away.tid;
-							key4 = series[rnd][i].home.tid;
-						}
+				// 		if (series[rnd][i].home.won >= 3) {
+				// 			key3 = series[rnd][i].home.tid;
+				// 			key4 = series[rnd][i].away.tid;
+				// 		} else if (series[rnd][i].away.won >= 3) {
+				// 			key3 = series[rnd][i].away.tid;
+				// 			key4 = series[rnd][i].home.tid;
+				// 		}
 
-						dao.teams.iterate({
-							ot: tx,
-							key: key3,
-							callback: function (t) {
-								var s;
+				// 		dao.teams.iterate({
+				// 			ot: tx,
+				// 			key: key3,
+				// 			callback: function (t) {
+				// 				var s;
 
-								s = t.seasons.length - 1;
-								console.log(t);
-								t.seasons[s].playoffRoundsWon = 8;
+				// 				s = t.seasons.length - 1;
+				// 				console.log(t);
+				// 				t.seasons[s].playoffRoundsWon = 8;
 
-								console.log(t.seasons[s].playoffRoundsWon);
-								t.seasons[s].hype += 0.05;
-								if (t.seasons[s].hype > 1) {
-									t.seasons[s].hype = 1;
-								}
+				// 				console.log(t.seasons[s].playoffRoundsWon);
+				// 				t.seasons[s].hype += 0.05;
+				// 				if (t.seasons[s].hype > 1) {
+				// 					t.seasons[s].hype = 1;
+				// 				}
 
-								return t;
-							}
-						});
+				// 				return t;
+				// 			}
+				// 		});
 
-						dao.teams.iterate({
-							ot: tx,
-							key: key4,
-							callback: function (t) {
-								var s;
+				// 		dao.teams.iterate({
+				// 			ot: tx,
+				// 			key: key4,
+				// 			callback: function (t) {
+				// 				var s;
 
-								s = t.seasons.length - 1;
-								console.log(t);
-								//t.seasons[s].playoffRoundsWon = 2;
-							//	t.seasons[s].hype += 0.05;
-								//t.seasons[s].playoffRoundsWon = 16;
+				// 				s = t.seasons.length - 1;
+				// 				console.log(t);
+				// 				//t.seasons[s].playoffRoundsWon = 2;
+				// 			//	t.seasons[s].hype += 0.05;
+				// 				//t.seasons[s].playoffRoundsWon = 16;
 
-								t.seasons[s].playoffRoundsWon = 6;
+				// 				t.seasons[s].playoffRoundsWon = 6;
 
-								console.log(t.seasons[s].playoffRoundsWon);								
-								return t;
-							}
-						});	
+				// 				console.log(t.seasons[s].playoffRoundsWon);								
+				// 				return t;
+				// 			}
+				// 		});	
 						
 
-					}					
+				// 	}					
 
 //					console.log("end Ladder playoffs");
 					// LCS w/ Ladder playoffs over, end playoffs
@@ -1757,8 +1753,8 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
             if (rnd === 3) {
 
 				// CS Promotion, 3rd place game
+				//VALGM: Added False for to keep CS OUT
 				if ( (g.gameType == 1)) {
-			
 					if (series[rnd][0].home.won >= 3) {
 						key = series[rnd][0].home.tid;
 						key2 = series[rnd][0].away.tid;
@@ -1809,7 +1805,6 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 							return true;
 					});
 					
-				
 				}
 				// LCK champ
 				if ( (g.gameType == 2)) {
@@ -3109,74 +3104,74 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 
 					// First CS promotional game second round
 				   // Find the two winning teams
-				   i = 4;
-					if (series[rnd][i].home.won >= 3) {
-						team1 = helpers.deepCopy(series[rnd][i].home);
-						tidsWon.push(series[rnd][i].home.tid);
-						tidsLost.push(series[rnd][i].away.tid);
-					} else {
-						team1 = helpers.deepCopy(series[rnd][i].away);
-						tidsWon.push(series[rnd][i].away.tid);
-						tidsLost.push(series[rnd][i].home.tid);
-					}
-					if (series[rnd][i + 1].home.won >= 3) {
-						team2 = helpers.deepCopy(series[rnd][i + 1].home);
-						tidsWon.push(series[rnd][i + 1].home.tid);
-						tidsLost.push(series[rnd][i + 1].away.tid);
-					} else {
-						team2 = helpers.deepCopy(series[rnd][i + 1].away);
-						tidsWon.push(series[rnd][i + 1].away.tid);
-						tidsLost.push(series[rnd][i + 1].home.tid);
-					}
+				//    i = 4;
+				// 	if (series[rnd][i].home.won >= 3) {
+				// 		team1 = helpers.deepCopy(series[rnd][i].home);
+				// 		tidsWon.push(series[rnd][i].home.tid);
+				// 		tidsLost.push(series[rnd][i].away.tid);
+				// 	} else {
+				// 		team1 = helpers.deepCopy(series[rnd][i].away);
+				// 		tidsWon.push(series[rnd][i].away.tid);
+				// 		tidsLost.push(series[rnd][i].home.tid);
+				// 	}
+				// 	if (series[rnd][i + 1].home.won >= 3) {
+				// 		team2 = helpers.deepCopy(series[rnd][i + 1].home);
+				// 		tidsWon.push(series[rnd][i + 1].home.tid);
+				// 		tidsLost.push(series[rnd][i + 1].away.tid);
+				// 	} else {
+				// 		team2 = helpers.deepCopy(series[rnd][i + 1].away);
+				// 		tidsWon.push(series[rnd][i + 1].away.tid);
+				// 		tidsLost.push(series[rnd][i + 1].home.tid);
+				// 	}
 					
-					matchup = {home: team1, away: team2};
-					matchup.home.won = 0;
-					matchup.away.won = 0;
-					series[1][4] = matchup;				
+				// 	matchup = {home: team1, away: team2};
+				// 	matchup.home.won = 0;
+				// 	matchup.away.won = 0;
+				// 	series[1][4] = matchup;				
 					
-				//// Second CS promotional game second round				
-					team1 = helpers.deepCopy(series[1][5].home)				
-					if (series[rnd][6].home.won >= 3) {
-						team2 = helpers.deepCopy(series[rnd][6].home);
-						tidsWon.push(series[rnd][6].home.tid);
-						tidsLost.push(series[rnd][6].away.tid);
-					} else {
-						team2 = helpers.deepCopy(series[rnd][6].away);
-						tidsWon.push(series[rnd][6].away.tid);
-						tidsLost.push(series[rnd][6].home.tid);
-					}
-					matchup = {home: team1, away: team2};
-					matchup.home.won = 0;
-					matchup.away.won = 0;
-					series[1][5] = matchup;
+				// //// Second CS promotional game second round				
+				// 	team1 = helpers.deepCopy(series[1][5].home)				
+				// 	if (series[rnd][6].home.won >= 3) {
+				// 		team2 = helpers.deepCopy(series[rnd][6].home);
+				// 		tidsWon.push(series[rnd][6].home.tid);
+				// 		tidsLost.push(series[rnd][6].away.tid);
+				// 	} else {
+				// 		team2 = helpers.deepCopy(series[rnd][6].away);
+				// 		tidsWon.push(series[rnd][6].away.tid);
+				// 		tidsLost.push(series[rnd][6].home.tid);
+				// 	}
+				// 	matchup = {home: team1, away: team2};
+				// 	matchup.home.won = 0;
+				// 	matchup.away.won = 0;
+				// 	series[1][5] = matchup;
 					
 					
-					// Third CS promotinal game second round
-				   // Find the two winning teams
-					i = 7;
-					if (series[rnd][i].home.won >= 3) {
-						team1 = helpers.deepCopy(series[rnd][i].home);
-						tidsWon.push(series[rnd][i].home.tid);
-						tidsLost.push(series[rnd][i].away.tid);
-					} else {
-						team1 = helpers.deepCopy(series[rnd][i].away);
-						tidsWon.push(series[rnd][i].away.tid);
-						tidsLost.push(series[rnd][i].home.tid);
-					}
-					if (series[rnd][i + 1].home.won >= 3) {
-						team2 = helpers.deepCopy(series[rnd][i + 1].home);
-						tidsWon.push(series[rnd][i + 1].home.tid);
-						tidsLost.push(series[rnd][i + 1].away.tid);
-					} else {
-						team2 = helpers.deepCopy(series[rnd][i + 1].away);
-						tidsWon.push(series[rnd][i + 1].away.tid);
-						tidsLost.push(series[rnd][i + 1].home.tid);
-					}
+				// 	// Third CS promotinal game second round
+				//    // Find the two winning teams
+				// 	i = 7;
+				// 	if (series[rnd][i].home.won >= 3) {
+				// 		team1 = helpers.deepCopy(series[rnd][i].home);
+				// 		tidsWon.push(series[rnd][i].home.tid);
+				// 		tidsLost.push(series[rnd][i].away.tid);
+				// 	} else {
+				// 		team1 = helpers.deepCopy(series[rnd][i].away);
+				// 		tidsWon.push(series[rnd][i].away.tid);
+				// 		tidsLost.push(series[rnd][i].home.tid);
+				// 	}
+				// 	if (series[rnd][i + 1].home.won >= 3) {
+				// 		team2 = helpers.deepCopy(series[rnd][i + 1].home);
+				// 		tidsWon.push(series[rnd][i + 1].home.tid);
+				// 		tidsLost.push(series[rnd][i + 1].away.tid);
+				// 	} else {
+				// 		team2 = helpers.deepCopy(series[rnd][i + 1].away);
+				// 		tidsWon.push(series[rnd][i + 1].away.tid);
+				// 		tidsLost.push(series[rnd][i + 1].home.tid);
+				// 	}
 					
-					matchup = {home: team1, away: team2};
-					matchup.home.won = 0;
-					matchup.away.won = 0;
-					series[1][6] = matchup;						
+				// 	matchup = {home: team1, away: team2};
+				// 	matchup.home.won = 0;
+				// 	matchup.away.won = 0;
+				// 	series[1][6] = matchup;						
 				
 				}			
 
@@ -3479,47 +3474,47 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 					
 					
 				//// First CS promotional final
-					team1 = helpers.deepCopy(series[2][4].home)				
-					if (series[rnd][4].home.won >= 3) {
-					    team2 = helpers.deepCopy(series[rnd][4].home);
-						tidsWon.push(series[rnd][4].home.tid);
-						tidsLost.push(series[rnd][4].away.tid);
-					} else {
-						team2 = helpers.deepCopy(series[rnd][4].away);
-						tidsWon.push(series[rnd][4].away.tid);
-						tidsLost.push(series[rnd][4].home.tid);
-					}
-					matchup = {home: team1, away: team2};
-					matchup.home.won = 0;
-					matchup.away.won = 0;
-					series[2][4] = matchup;				
+				// 	team1 = helpers.deepCopy(series[2][4].home)				
+				// 	if (series[rnd][4].home.won >= 3) {
+				// 	    team2 = helpers.deepCopy(series[rnd][4].home);
+				// 		tidsWon.push(series[rnd][4].home.tid);
+				// 		tidsLost.push(series[rnd][4].away.tid);
+				// 	} else {
+				// 		team2 = helpers.deepCopy(series[rnd][4].away);
+				// 		tidsWon.push(series[rnd][4].away.tid);
+				// 		tidsLost.push(series[rnd][4].home.tid);
+				// 	}
+				// 	matchup = {home: team1, away: team2};
+				// 	matchup.home.won = 0;
+				// 	matchup.away.won = 0;
+				// 	series[2][4] = matchup;				
 					
-					// CS Promoational 2nd Final
-				   // Find the two winning teams
-					i = 5;
-					if (series[rnd][i].home.won >= 3) {
-						team1 = helpers.deepCopy(series[rnd][i].home);
-						tidsWon.push(series[rnd][i].home.tid);
-						tidsLost.push(series[rnd][i].away.tid);
-					} else {
-						team1 = helpers.deepCopy(series[rnd][i].away);
-						tidsWon.push(series[rnd][i].away.tid);
-						tidsLost.push(series[rnd][i].home.tid);
-					}
-					if (series[rnd][i + 1].home.won >= 3) {
-						team2 = helpers.deepCopy(series[rnd][i + 1].home);
-						tidsWon.push(series[rnd][i + 1].home.tid);
-						tidsLost.push(series[rnd][i + 1].away.tid);
-					} else {
-						team2 = helpers.deepCopy(series[rnd][i + 1].away);
-						tidsWon.push(series[rnd][i + 1].home.tid);
-						tidsLost.push(series[rnd][i + 1].away.tid);
-					}
+				// 	// CS Promoational 2nd Final
+				//    // Find the two winning teams
+				// 	i = 5;
+				// 	if (series[rnd][i].home.won >= 3) {
+				// 		team1 = helpers.deepCopy(series[rnd][i].home);
+				// 		tidsWon.push(series[rnd][i].home.tid);
+				// 		tidsLost.push(series[rnd][i].away.tid);
+				// 	} else {
+				// 		team1 = helpers.deepCopy(series[rnd][i].away);
+				// 		tidsWon.push(series[rnd][i].away.tid);
+				// 		tidsLost.push(series[rnd][i].home.tid);
+				// 	}
+				// 	if (series[rnd][i + 1].home.won >= 3) {
+				// 		team2 = helpers.deepCopy(series[rnd][i + 1].home);
+				// 		tidsWon.push(series[rnd][i + 1].home.tid);
+				// 		tidsLost.push(series[rnd][i + 1].away.tid);
+				// 	} else {
+				// 		team2 = helpers.deepCopy(series[rnd][i + 1].away);
+				// 		tidsWon.push(series[rnd][i + 1].home.tid);
+				// 		tidsLost.push(series[rnd][i + 1].away.tid);
+				// 	}
 					
-					matchup = {home: team1, away: team2};
-					matchup.home.won = 0;
-					matchup.away.won = 0;
-					series[2][5] = matchup;		
+				// 	matchup = {home: team1, away: team2};
+				// 	matchup.home.won = 0;
+				// 	matchup.away.won = 0;
+				// 	series[2][5] = matchup;		
 
 				
 				}

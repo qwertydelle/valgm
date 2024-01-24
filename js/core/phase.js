@@ -452,11 +452,14 @@
 						}						
 					}	
 
-					series[2][4] = {home: teamsConf2[teamsConf2.length-2],away: teamsConf2[teamsConf2.length-2] };
-					series[2][4].home.seed = teamsConf2.length-1;
+
+					//Controls putting teams from Ascension into ladder for promotion games
 					
-					series[1][5] = {home: teamsConf2[teamsConf2.length-1],away: teamsConf2[teamsConf2.length-1] };
-					series[1][5].home.seed = teamsConf2.length;
+					// series[2][4] = {home: teamsConf2[teamsConf2.length-2],away: teamsConf2[teamsConf2.length-2] };
+					// series[2][4].home.seed = teamsConf2.length-1;
+					
+					// series[1][5] = {home: teamsConf2[teamsConf2.length-1],away: teamsConf2[teamsConf2.length-1] };
+					// series[1][5].home.seed = teamsConf2.length;
 
 					
 					// series[0][4] = {home: teamsConf3[1], away: teamsConf3[6]};

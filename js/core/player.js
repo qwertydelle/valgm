@@ -987,8 +987,6 @@ define(["dao", "globals","data/champions2","core/champion", "core/finances", "da
     function addToFreeAgents(ot, p, phase, baseMoods) {
         var pr;
 
-        console.log(p)
-
         phase = phase !== null ? phase : g.phase;
 
         pr = _.last(p.ratings);
