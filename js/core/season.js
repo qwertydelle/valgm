@@ -1066,7 +1066,7 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 					seriesEnd = 2;				
 				} else if (g.gameType == 1) {	
 					seriesStart = 0;
-					seriesEnd = 2;							
+					seriesEnd = 4;							
 				} else if (g.gameType == 2) {	
 					seriesStart = 6;
 					seriesEnd = 7;				
@@ -1619,9 +1619,6 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 					});					
 										
 					
-					
-						//return tx.complete().then(function () {
-//							return newPhase(g.PHASE.BEFORE_DRAFT);
 									console.log("here");
 							return true;
 						//});					
@@ -1755,6 +1752,7 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 				// CS Promotion, 3rd place game
 				//VALGM: Added False for to keep CS OUT
 				if ( (g.gameType == 1)) {
+					return true;
 					if (series[rnd][0].home.won >= 3) {
 						key = series[rnd][0].home.tid;
 						key2 = series[rnd][0].away.tid;
@@ -1799,8 +1797,6 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 							}
 						});
 					}).then(function () {					
-						//return tx.complete().then(function () {
-//							return newPhase(g.PHASE.BEFORE_DRAFT);
 
 							return true;
 					});
