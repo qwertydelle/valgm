@@ -142,14 +142,16 @@ define(["dao", "globals", "ui", "core/player", "core/team", "lib/bluebird", "lib
 							teamsConf2.push(i);
 						}
 					}				
-				}					
-				for (cid = 2; cid < 3; cid++) {
-					for (i = 0; i < teams.length; i++) {
-						if (teams[i].cid === cid) {
-							teamsConf3.push(i);
-						}
-					}				
-				}									
+				
+				}
+				//VALGM: No more conf 3
+				// for (cid = 2; cid < 3; cid++) {
+				// 	for (i = 0; i < teams.length; i++) {
+				// 		if (teams[i].cid === cid) {
+				// 			teamsConf3.push(i);
+				// 		}
+				// 	}				
+				// }									
 				
 				
 		/*		console.log(teams[teamsConf[7]].playoffRoundsWon);
