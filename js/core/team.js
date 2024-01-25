@@ -424,7 +424,7 @@ define(["dao", "globals", "core/player", "lib/bluebird", "lib/underscore", "util
             }
 
             for (i = 0; i < players.length; i++) {
-			    if (players[i].pos == players[i].pos) {
+			    if (players[i].pos == "SUP") {
 					players[i].rosterOrder = 4;
 					position[4] = i;										
 					rosterNumber += 1;
