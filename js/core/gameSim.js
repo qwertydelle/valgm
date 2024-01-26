@@ -253,8 +253,6 @@ define(["lib/underscore", "util/helpers", "util/random", "globals", "data/weapon
             let permenantRoundBoost = 0;
             let enemyPermenantRoundBoost = 0;
 
-            console.log(currentPlayer)
-            console.log(enemyPlayer)
 
             for(let i = 0; i < 6; i++) {
                 let randomBasicAction = Math.floor(random.uniform(0, basicActions.length));

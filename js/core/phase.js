@@ -402,13 +402,13 @@
 
 					
 					//Quaterfinals for VCT Ascension 
-					series[0][  2 ] = {home: teamsConf2[0], away: teamsConf2[3]};
-					series[0][ 2 ].home.seed = 1;
-					series[0][ 2 ].away.seed = 4;	
+					series[0][  2 ] = {home: teamsConf2[2], away: teamsConf2[5]};
+					series[0][ 2 ].home.seed = 3;
+					series[0][ 2 ].away.seed = 6;	
 
-					series[0][3  ] = {home: teamsConf2[1], away: teamsConf2[2]};
-					series[0][ 3 ].home.seed = 2;
-					series[0][ 3 ].away.seed = 3;							
+					series[0][3  ] = {home: teamsConf2[3], away: teamsConf2[4]};
+					series[0][ 3 ].home.seed = 4;
+					series[0][ 3 ].away.seed = 5;							
 
 					
 /*					series[2][2] = {home: teamsConf[teamsConf.length-3],away: teamsConf[teamsConf.length-3] };
@@ -416,11 +416,11 @@
 
 					series[2][3] = {home: teamsConf[teamsConf.length-2],away: teamsConf[teamsConf.length-2] };
 					series[2][3].home.seed = teamsConf.length-1;	*/
-					series[2][2] = {home: teamsConf[teamsConf.length-2],away: teamsConf[teamsConf.length-2] };
-					series[2][2].home.seed = teamsConf.length-1;
+					series[2][2] = {home: teamsConf2[0],away: teamsConf2[0] };
+					series[2][2].home.seed = 1;
 
-					series[2][3] = {home: teamsConf[teamsConf.length-3],away: teamsConf[teamsConf.length-3] };
-					series[2][3].home.seed = teamsConf.length-2;	
+					series[2][3] = {home: teamsConf2[1],away: teamsConf2[1] };
+					series[2][3].home.seed = 2;	
 					
 	/*				series[2][2] = {home: teamsConf[4],away: teamsConf[4] };
 					series[2][2].home.seed = 5;
@@ -899,13 +899,6 @@
           //  }
 			
 			
-			/*console.log(tidLCSChamp);
-			console.log(tidLCS);
-			console.log(tidLCSPromotion);
-			console.log(tidCS);
-			console.log(tidCSPromotionTop);
-			console.log(tidCSPromotion);
-			console.log(tidLadder);*/
             return Promise.all([			
 				dao.playoffSeries.put({
 					ot: tx,
@@ -1077,17 +1070,6 @@
 							}			
 						} else {
 					
-						/*	t = team.addStatsRow(t, true);
-
-							teamSeason.playoffRoundsWon = 0;
-							console.log(t.tid +" "+teamSeason.playoffRoundsWon);
-
-							// More hype for making the playoffs
-							teamSeason.hype += 0.05;
-							if (teamSeason.hype > 1) {
-								teamSeason.hype = 1;
-							}*/
-							
 						//	}
 							
 					//    } else {
@@ -1136,10 +1118,6 @@
         //var tx;
 		var i;
 
-  
-		console.log("does the game even get here?");
-		
-		console.log("does the game even get here?");
 		account.checkAchievement.hardware_store();
 		//account.checkAchievement.sleeper_pick();	
 	
@@ -1258,14 +1236,12 @@
 				
 				
 				for (i = 0; i < teams.length; i++) {
-				 console.log(i+" "+teams[i].playoffRoundsWon);
+
 				//push for each
 					if (teams[i].playoffRoundsWon > 16) {
 						newLCS.push(teams[i].tid);
 					} else if (teams[i].playoffRoundsWon > 6) {
 						newCS.push(teams[i].tid);
-					} else  {
-						newLadder.push(teams[i].tid);
 					}
 				}				
 				console.log(newLCS.length);
@@ -1274,12 +1250,7 @@
 				console.log(newLCS);
 				console.log(newCS);
 				console.log(newLadder);				
-				console.log("got Here");
-			/*	for (i = 0; i < teams.length; i++) {
-					if ((teams[i].playoffRoundsWon === 14)) {
-						tid = teams[i].tid;
-					}
-				}			*/
+
 				for (i = 0; i < newLCS.length; i++) {
 				//	console.log("going to be moved: "+tid)
 					dao.teams.iterate({
@@ -1291,9 +1262,6 @@
 
 							s = t.seasons.length - 1;
 
-					//		console.log(t.cid);
-					//		console.log(t.seasons[s].cidStart);
-					//		console.log(t.seasons[s].cidNext);
 							
 							t.cid = 0;
 							t.seasons[s].cidNext = 0;
