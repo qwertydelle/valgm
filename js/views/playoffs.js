@@ -148,40 +148,40 @@ define(["dao", "globals", "ui", "core/team", "lib/knockout", "util/bbgmView", "u
 							
 						}			
 
+						// Most of these commented out for a good reason
 						for (cid = 2; cid < 3; cid++) {
 							for (i = 0; i < teams.length; i++) {
 								if (teams[i].cid === cid) {
 									teamsConf3.push(teams[i]);
 								}
 							}	
-						//	console.log(teamsConf3.length);	
-							series[2][4] = {home: teamsConf2[(teamsConf2.length-2)],away: teamsConf2[(teamsConf2.length-2)] };
-							series[2][4].home.seed = (teamsConf2.length-1);
+							// series[2][4] = {home: teamsConf2[(teamsConf2.length-2)],away: teamsConf2[(teamsConf2.length-2)] };
+							// series[2][4].home.seed = (teamsConf2.length-1);
 							
-							series[1][5] = {home: teamsConf2[(teamsConf2.length-1)],away: teamsConf2[(teamsConf2.length-1)] };
-							series[1][5].home.seed = (teamsConf2.length);
+							// series[1][5] = {home: teamsConf2[(teamsConf2.length-1)],away: teamsConf2[(teamsConf2.length-1)] };
+							// series[1][5].home.seed = (teamsConf2.length);
 
 							
-							series[0][4] = {home: teamsConf3[1], away: teamsConf3[6]};
-							series[0][4].home.seed = 2;
-							series[0][4].away.seed = 7;	
+							// series[0][4] = {home: teamsConf3[1], away: teamsConf3[6]};
+							// series[0][4].home.seed = 2;
+							// series[0][4].away.seed = 7;	
 							
 							
-							series[0][5] = {home: teamsConf3[2], away: teamsConf3[5]};
-							series[0][5].home.seed = 3;
-							series[0][5].away.seed = 6;							
+							// series[0][5] = {home: teamsConf3[2], away: teamsConf3[5]};
+							// series[0][5].home.seed = 3;
+							// series[0][5].away.seed = 6;							
 							
-							series[0][6] = {home: teamsConf3[8], away: teamsConf3[9]};
-							series[0][6].home.seed = 9;
-							series[0][6].away.seed = 10;							
+							// series[0][6] = {home: teamsConf3[8], away: teamsConf3[9]};
+							// series[0][6].home.seed = 9;
+							// series[0][6].away.seed = 10;							
 							
-							series[0][7] = {home: teamsConf3[0], away: teamsConf3[7]};
-							series[0][7].home.seed = 1;
-							series[0][7].away.seed = 8;							
+							// series[0][7] = {home: teamsConf3[0], away: teamsConf3[7]};
+							// series[0][7].home.seed = 1;
+							// series[0][7].away.seed = 8;							
 							
-							series[0][8] = {home: teamsConf3[3], away: teamsConf3[4]};
-							series[0][8].home.seed = 4;
-							series[0][8].away.seed = 5;							
+							// series[0][8] = {home: teamsConf3[3], away: teamsConf3[4]};
+							// series[0][8].home.seed = 4;
+							// series[0][8].away.seed = 5;							
 							
 
 
@@ -224,9 +224,6 @@ define(["dao", "globals", "ui", "core/team", "lib/knockout", "util/bbgmView", "u
 					}		
 
 					if ((g.gameType == 3)  || (g.gameType == 5)) {			
-/*							for (i = 0; i < teams.length; i++) {
-									teamsConf.push(teams[i]);
-							}							*/
 
 							if ((g.gameType == 3) ) {			
 								for (i = 0; i < teams.length; i++) {							       
@@ -358,32 +355,6 @@ define(["dao", "globals", "ui", "core/team", "lib/knockout", "util/bbgmView", "u
 								series[0][13+cid*2 ].away.seed = 4;							*/
 								
 							} 	
-					/*	for (cid = 0; cid < 6; cid++) {
-							teamsConf = [];
-							for (i = 0; i < teams.length; i++) {
-								if (teams[i].cid === cid) {
-									teamsConf.push(teams[i]);
-								}
-							}	
-
-
-							series[0][ 12+cid*2 ] = {home: teamsConf[1], away: teamsConf[2]};
-							series[0][ 12+cid*2 ].home.seed = 2;
-							series[0][ 12+cid*2 ].away.seed = 3;	
-							
-							
-							series[0][13+cid*2 ] = {home: teamsConf[0], away: teamsConf[3]};
-							series[0][13+cid*2 ].home.seed = 1;
-							series[0][13+cid*2 ].away.seed = 4;							*/
-							
-							
-						/*	series[2][2] = {home: teamsConf[1],away: teamsConf[1] };
-							series[2][2].home.seed = 8;						
-							series[2][2].away.seed = 8;						
-							series[2][3] = {home: teamsConf[1],away: teamsConf[1] };
-							series[2][3].home.seed = 9;							
-							series[2][3].away.seed = 9;							*/
-					//	}
 						
 					}						
 															

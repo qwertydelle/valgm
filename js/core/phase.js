@@ -751,7 +751,7 @@
 				tidLCSPromotion.forEach(function (tid) {					
 					eventLog.add(null, {
 						type: "playoffs",
-						text: '<a href="' + helpers.leagueUrl(["roster", g.teamAbbrevsCache[tid], g.season]) + '">' + g.teamRegionsCache[tid] + '</a> made <a href="' + helpers.leagueUrl(["playoffs", g.season]) + '">the CS</a>.',
+						text: '<a href="' + helpers.leagueUrl(["roster", g.teamAbbrevsCache[tid], g.season]) + '">' + g.teamRegionsCache[tid] + '</a> made <a href="' + helpers.leagueUrl(["playoffs", g.season]) + '">VCT Ascension</a>.',
 						showNotification: tid === g.userTid,
 						tids: [tid]												
 					});

@@ -1086,7 +1086,7 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 					seriesEnd = 0;				
 				} else if (g.gameType == 1) {	
 					seriesStart = 0;
-					seriesEnd = 0;							
+					seriesEnd = 1;							
 				} else if (g.gameType == 2) {	
 					seriesStart = 1;
 					seriesEnd = 2;				
@@ -1269,13 +1269,7 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 						  threeWins += 1;
 						  threeWinsLocation[threeWins-1] = series[8][1+i*2].away.tid;
 						//  console.log(series[8][1+i*2].away.loss);
-						} 
-					//	console.log(threeWins);
-					//	console.log(threeWinsLocation);					
-				//		console.log(series[8][0+i*2].home.loss);	
-				//		console.log(series[8][0+i*2].away.loss);	
-				//		console.log(series[8][1+i*2].home.loss);	
-				//		console.log(series[8][1+i*2].away.loss);	
+						} 	
 						
 						if (threeWins == 2 || threeWins == 3 ) {
 								tids.push([threeWinsLocation[0], threeWinsLocation[1]]);
@@ -1355,7 +1349,6 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 			var Team2LCK, Team3LCK, Team1LPL, Team2LPL, Team3LPL, Team1LMS, Team2LMS, Team3LMS, Team1WC, Team2WC;
             // Now playoffSeries, rnd, series, and tids are set
 
-//console.log(tids);
             // If series are still in progress, write games and short circuit
             if (tids.length > 0) {
                 return setSchedule(tx, tids).then(function () {
@@ -1374,7 +1367,7 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 				if ((g.gameType == 0) || (g.gameType == 1)  ) {
 
 
-					// LCS champions
+					// VCT champions
 					if (series[rnd][0].home.won >= 3) {
 						key = series[rnd][0].home.tid;
 						key2 = series[rnd][0].away.tid;
@@ -1382,6 +1375,7 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 						key = series[rnd][0].away.tid;
 						key2 = series[rnd][0].home.tid;
 					}
+
 					dao.teams.iterate({
 						ot: tx,
 						key: key,
@@ -1395,9 +1389,7 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 								t.seasons[s].hype += 0.05;
 								
 								t.seasons[s].cash += 200000;
-								t.seasons[s].revenues.nationalTv.amount += 200000;	
-							//	console.log(t.seasons[s].cash);
-							//	console.log(t.seasons[s].revenues.nationalTv.amount);								
+								t.seasons[s].revenues.nationalTv.amount += 200000;								
 							} else {
 								t.seasons[s].playoffRoundsWon = 27;
 								t.seasons[s].hype *= .70;
@@ -1634,56 +1626,76 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 					}						
 				}				
 				
-				if ( (g.gameType == 1)) {
-							console.log(g.gameType);			
+				//VCT Ascension finals game promotion
+				if ( (g.gameType == 1)) {	
+				  let team1, team2;	
 				  for (i = 2; i < 4; i++) {
 						// LCS/CS Promotion 
-
 						if (series[rnd][i].home.won >= 3) {
+
+							if(i == 2) {
+								team1 = helpers.deepCopy(series[rnd][i].home);
+							} else if(i == 3) {
+								team2 = helpers.deepCopy(series[rnd][i].home);
+							}
+
 							key = series[rnd][i].home.tid;
 							key2 = series[rnd][i].away.tid;
 						} else if (series[rnd][i].away.won >= 3) {
+							if(i == 2) {
+								team1 = helpers.deepCopy(series[rnd][i].away);
+							} else if(i == 3) {
+								team2 = helpers.deepCopy(series[rnd][i].away);
+							}
+
 							key = series[rnd][i].away.tid;
 							key2 = series[rnd][i].home.tid;
 						}
-						dao.teams.iterate({
-							ot: tx,
-							key: key,
-							callback: function (t) {
-								var s;
 
-								s = t.seasons.length - 1;
-								console.log(t);
-								t.seasons[s].playoffRoundsWon = 17;
-								console.log(t.seasons[s].playoffRoundsWon);
-								t.seasons[s].hype += 0.05;
-								if (t.seasons[s].hype > 1) {
-									t.seasons[s].hype = 1;
-								}
 
-								return t;
-							}
-						});
+						// dao.teams.iterate({
+						// 	ot: tx,
+						// 	key: key,
+						// 	callback: function (t) {
+						// 		var s;
+
+						// 		s = t.seasons.length - 1;
+						// 		console.log(t);
+						// 		t.seasons[s].playoffRoundsWon = 17;
+						// 		console.log(t.seasons[s].playoffRoundsWon);
+						// 		t.seasons[s].hype += 0.05;
+						// 		if (t.seasons[s].hype > 1) {
+						// 			t.seasons[s].hype = 1;
+						// 		}
+
+						// 		return t;
+						// 	}
+						// });
 						
-						dao.teams.iterate({
-							ot: tx,
-							key: key2,
-							callback: function (t) {
-								var s;
+						// dao.teams.iterate({
+						// 	ot: tx,
+						// 	key: key2,
+						// 	callback: function (t) {
+						// 		var s;
 
-								s = t.seasons.length - 1;
-								console.log(t);
-								//t.seasons[s].playoffRoundsWon = 2;
-							//	t.seasons[s].hype += 0.05;
-								//t.seasons[s].playoffRoundsWon = 16;
-								t.seasons[s].playoffRoundsWon = 16;
-								console.log(t.seasons[s].playoffRoundsWon);								
-								return t;
-							}
-						});	
+						// 		s = t.seasons.length - 1;
+						// 		console.log(t);
+						// 		//t.seasons[s].playoffRoundsWon = 2;
+						// 	//	t.seasons[s].hype += 0.05;
+						// 		//t.seasons[s].playoffRoundsWon = 16;
+						// 		t.seasons[s].playoffRoundsWon = 16;
+						// 		console.log(t.seasons[s].playoffRoundsWon);								
+						// 		return t;
+						// 	}
+						// });	
 						
 
 					}
+
+					matchup = {home: team1, away: team2};
+					matchup.home.won = 0;
+					matchup.away.won = 0;
+					series[3][0] = matchup;
 					
 					//VALGM: Commenting this out but this deals with CS Ladder Promotion
 				//   for (i = 4; i < 5; i++) {
@@ -1752,7 +1764,7 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 				// CS Promotion, 3rd place game
 				//VALGM: Added False for to keep CS OUT
 				if ( (g.gameType == 1)) {
-					return true;
+					// return true;
 					if (series[rnd][0].home.won >= 3) {
 						key = series[rnd][0].home.tid;
 						key2 = series[rnd][0].away.tid;
@@ -2990,8 +3002,7 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 						matchup = {home: team1, away: team2};
 						matchup.home.won = 0;
 						matchup.away.won = 0;
-						series[1][1] = matchup;				
-			console.log(g.gameType);						
+						series[1][1] = matchup;										
 				}	
 				
 				if ( (g.gameType == 5)) {
@@ -3392,6 +3403,8 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 					} else if (series[rnd][2].away.won >= 3) {
 						key = series[rnd][2].away.tid;
 					}
+
+					//VCT MATCH UP HERE FOR series[2][2] and series[2][3]
 					dao.teams.iterate({
 						ot: tx,
 						key: key,
@@ -3450,6 +3463,7 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 					} else if (series[rnd][3].away.won >= 3) {
 						key = series[rnd][3].home.tid;
 					}
+
 					dao.teams.iterate({
 						ot: tx,
 						key: key,
