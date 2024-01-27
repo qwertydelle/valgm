@@ -246,18 +246,17 @@
       </tr>
 	  
 	  <tr> 
-	  <td  data-bind="visible: LCSExtended()" > Promotion Games </td>	  
+	  <td  data-bind="visible: LCSExtended()" > Promotion Games </td>
+    <td  data-bind="visible: LCSExtended()" > Finals </td>	  	  
 	  </tr>
 
       <tr   >
-      <td  data-bind="matchuptopseed: [2, 2]"></td>  
-
+        <td  data-bind="matchuptopseed: [2, 2]"></td>  
+        <td  rowspan="2" data-bind="matchuptopseed: [3, 0]"></td> 
       </tr>
       <tr  >
         <td   data-bind="matchuptopseed: [2, 3]"></td>  
-		
       </tr>
-	  
     </tbody>
   </table>
 </div>

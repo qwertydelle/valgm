@@ -1772,7 +1772,7 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 						key = series[rnd][0].home.tid;
 						key2 = series[rnd][0].away.tid;
 					}
-				
+					
 					
 					return dao.teams.iterate({
 						ot: tx,
@@ -1782,12 +1782,13 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 
 							s = t.seasons.length - 1;
 
-							t.seasons[s].playoffRoundsWon = 6; 
-							t.seasons[s].hype += 0.05; //hype but no rounds won
+							//HORRIBLE METHOD
+							t.seasons[s].playoffRoundsWon = 125;
+							t.seasons[s].hype += 0.05;
 							if (t.seasons[s].hype > 1) {
 								t.seasons[s].hype = 1;
 							}
-							
+
 							return t;
 						}
 					}).then(function () {
@@ -2962,7 +2963,6 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
             //
 			if (rnd == 0) {
 
-			console.log(rnd);
 				if ((g.gameType == 0) || (g.gameType == 1) || (g.gameType == 5)) {
 			
 					//// First LCS game second round
@@ -3404,35 +3404,36 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 						key = series[rnd][2].away.tid;
 					}
 
-					//VCT MATCH UP HERE FOR series[2][2] and series[2][3]
-					dao.teams.iterate({
-						ot: tx,
-						key: key,
-						callback: function (t) {
-							var s;
+					// dao.teams.iterate({
+					// 	ot: tx,
+					// 	key: key,
+					// 	callback: function (t) {
+					// 		var s;
 
-							s = t.seasons.length - 1;
+					// 		s = t.seasons.length - 1;
 
-							t.seasons[s].playoffRoundsWon = 17;
-							t.seasons[s].hype += 0.05;
-							if (t.seasons[s].hype > 1) {
-								t.seasons[s].hype = 1;
-							}
+					// 		t.seasons[s].playoffRoundsWon = 17;
+					// 		t.seasons[s].hype += 0.05;
+					// 		if (t.seasons[s].hype > 1) {
+					// 			t.seasons[s].hype = 1;
+					// 		}
 
-							return t;
-						}
-					});						
+					// 		return t;
+					// 	}
+					// });						
 				
 				//// First LCS promotional game second round				
 					team1 = helpers.deepCopy(series[2][2].home)
-					if (series[rnd][2].away.won >= 3) {
+
+					//Changed this for VALGM
+					if (series[rnd][2].home.won >= 3) {
 						team2 = helpers.deepCopy(series[rnd][2].home);
-						//tidsWon.push(series[rnd][2].home.tid);
-						//tidsLost.push(series[rnd][2].away.tid);
+						// tidsWon.push(series[rnd][2].home.tid);
+						// tidsLost.push(series[rnd][2].away.tid);
 					} else {
 						team2 = helpers.deepCopy(series[rnd][2].away);
-						//tidsWon.push(series[rnd][2].away.tid);
-						//tidsLost.push(series[rnd][2].home.tid);
+						// tidsWon.push(series[rnd][2].away.tid);
+						// tidsLost.push(series[rnd][2].home.tid);
 					}
 					
 					matchup = {home: team1, away: team2};
@@ -3444,14 +3445,14 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 					
 				//// Second LCS promotional game second round				
 					team1 = helpers.deepCopy(series[2][3].home)
-					if (series[rnd][3].home.won >= 3) {
-						team2 = helpers.deepCopy(series[rnd][3].home);
-						//tidsWon.push(series[rnd][3].home.tid);
-						//tidsLost.push(series[rnd][3].away.tid);
+					if (series[rnd][2].home.won >= 3) {
+						team2 = helpers.deepCopy(series[rnd][2].away);
+						// tidsWon.push(series[rnd][3].home.tid);
+						// tidsLost.push(series[rnd][3].away.tid);
 					} else {
-						team2 = helpers.deepCopy(series[rnd][3].away);
-						//tidsWon.push(series[rnd][3].away.tid);
-						//tidsLost.push(series[rnd][3].home.tid);
+						team2 = helpers.deepCopy(series[rnd][2].home);
+						// tidsWon.push(series[rnd][3].away.tid);
+						// tidsLost.push(series[rnd][3].home.tid);
 					}
 					matchup = {home: team1, away: team2};
 					matchup.home.won = 0;
@@ -3464,23 +3465,23 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 						key = series[rnd][3].home.tid;
 					}
 
-					dao.teams.iterate({
-						ot: tx,
-						key: key,
-						callback: function (t) {
-							var s;
+					// dao.teams.iterate({
+					// 	ot: tx,
+					// 	key: key,
+					// 	callback: function (t) {
+					// 		var s;
 
-							s = t.seasons.length - 1;
+					// 		s = t.seasons.length - 1;
 
-							t.seasons[s].playoffRoundsWon = 15;
-							//t.seasons[s].hype += 0.05;
-						//	if (t.seasons[s].hype > 1) {
-							//	t.seasons[s].hype = 1;
-							//}
+					// 		t.seasons[s].playoffRoundsWon = 15;
+					// 		//t.seasons[s].hype += 0.05;
+					// 	//	if (t.seasons[s].hype > 1) {
+					// 		//	t.seasons[s].hype = 1;
+					// 		//}
 
-							return t;
-						}
-					});						
+					// 		return t;
+					// 	}
+					// });						
 					
 					
 				//// First CS promotional final

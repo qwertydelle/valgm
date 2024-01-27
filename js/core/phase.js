@@ -1238,21 +1238,16 @@
 				for (i = 0; i < teams.length; i++) {
 
 				//push for each
-					if (teams[i].playoffRoundsWon > 16) {
+					if (teams[i].playoffRoundsWon === 125) {
+						console.log(teams[i])
 						newLCS.push(teams[i].tid);
 					} else if (teams[i].playoffRoundsWon > 6) {
 						newCS.push(teams[i].tid);
 					}
 				}				
-				console.log(newLCS.length);
-				console.log(newCS.length);
-				console.log(newLadder.length);				
-				console.log(newLCS);
-				console.log(newCS);
-				console.log(newLadder);				
+		
 
 				for (i = 0; i < newLCS.length; i++) {
-				//	console.log("going to be moved: "+tid)
 					dao.teams.iterate({
 						ot: tx,
 //						key: tid,
@@ -1264,17 +1259,18 @@
 
 							
 							t.cid = 0;
+							t.limit = 2;
 							t.seasons[s].cidNext = 0;
 							console.log(t.tid+" "+t.cid);
 							console.log(t.tid+" "+t.seasons[s].cidNext);
-							//t.seasons[s].playoffRoundsWon = 3;
-							//t.seasons[s].hype += 0.05;
 
 							return t;
 						}
 					});
 				
 				}
+
+				newCS = [];
 				
 				for (i = 0; i < newCS.length; i++) {
 					//console.log("going to be moved: "+tid)
