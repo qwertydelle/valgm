@@ -11,7 +11,7 @@ define(["dao", "globals", "ui", "core/finances", "core/league","data/champions2"
     function generateFace() {
         var face;
 
-        face = facesnew.generate();
+        face = facesnew.generate({jersey: {id: "esports"}});
         face.fatness = helpers.round(face.fatness, 2);
         face.eye.angle = helpers.round(face.eye.angle, 1);
         face.eye.angle = helpers.round(face.eye.angle, 1);
@@ -317,7 +317,7 @@ define(["dao", "globals", "ui", "core/finances", "core/league","data/champions2"
                     text: "Free Agent"
                 });
 
-                positions = ["Duelist", "Initiator", "Smokes", "Sentinal", "SUP"];
+                positions = ["Duelist", "Initiator", "Smokes", "Sentinal"];
 //                country = ["US","KR","CN", "DE", "RO", "ES", "SC", "GR", "AM", "BG", "ENG", "PL", "BE", "DK", "HU", "NO", "SE", "FR", "TW", "RU", "BR", "JP", "AU", "CL", "LatAmN", "LatAmS", "VN"];
                 country = ["United States","Korea","China", "Taiwan", "Canada","Dominican Republic","Mexico","Austria","Armenia", "Belgium", "Bulgaria","Czech Republic", "Denmark", "England", "Estonia", "France","Finland","Germany", "Greece", "Hungary","Iceland","Ireland","Italy","Netherlands", "Norway","Portugal", "Poland", "Romania", "Scotland", "Spain", "Sweden","Switzerland","Latvia", "Russia","Ukraine", "Brazil", "Japan", "Australia","New Zealand", "Colombia", "Costa Rica", "Ecuador", "Panama", "Peru", "Puerto Rico", "Venezuela", "Argentina", "Chile", "Paraguay", "Uruguay","Israel","Turkey","United Arab Emirates","South Africa","Malaysia","Philippines","Singapore", "Thailand","Vietnam"];
                 region = ["NA","EU","KR", "CN","TW","BR","CIG","CIS","JP","LatAm","OCE", "SEA","TR"];
@@ -431,18 +431,6 @@ define(["dao", "globals", "ui", "core/finances", "core/league","data/champions2"
 										}											
 									
 									
-									 /*console.log(topADC);
-									console.log(topMID);
-									console.log(topJGL);
-									console.log(topTOP);
-									console.log(topSUP);									*/
-//										return draft.genPlayers(null, g.PLAYER.UNDRAFTED_3,null,null,c,topADC,topMID,topJGL,topTOP,topSUP);
-							
-							
-/*							return draft.genPlayers(null, g.PLAYER.UNDRAFTED_3,null,null,t).then(function() {
-
-
-							});						*/
 							
 										var p, scoutingRank;
 
@@ -675,11 +663,6 @@ define(["dao", "globals", "ui", "core/finances", "core/league","data/champions2"
 							ui.realtimeUpdate([], helpers.leagueUrl(["player", pid]));
 						});
 					});				
-		/*		tx.complete().then(function () {
-					return league.setGameAttributes({lastDbChange: Date.now()});
-				}).then(function () {
-					ui.realtimeUpdate([], helpers.leagueUrl(["player", pid]));
-				});*/
 			});	
 		})		
     }
