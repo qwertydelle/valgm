@@ -44,6 +44,8 @@
 	
 
     function newPhasePreseason(tx) {
+
+		checkAscensionTeams(tx);
         return freeAgents.autoSign(tx).then(function () { // Important: do this before changing the season or contracts and stats are fucked up
             return require("core/league").setGameAttributes(tx, {season: g.season + 1});
         }).then(function () {
@@ -196,7 +198,6 @@
 
     function newPhaseRegularSeason(tx) {
 
-	
 		return team.filter({
 				attrs: ["tid","did", "cid"],
 				season: g.season,
@@ -253,6 +254,68 @@
         return newPhaseFinalize(g.PHASE.AFTER_TRADE_DEADLINE);
     }
 
+
+	function checkAscensionTeams(tx) {
+		team.filter({
+			ot: tx,
+            attrs: ["tid", "cid", "limit", "type"],
+            seasonAttrs: ["winp","cidNext"],
+            stats: ["kda","fg","fga","fgp","oppTw","pf"],							
+            season: g.season,
+            sortBy: ["winp","diffTower","kda"]
+		}).then(function(teams) {
+			for(let i = 0; i < teams.length;i++) {
+				if(teams[i].limit != undefined && teams[i].type) {
+					if(teams[i].limit == 0) {
+						teams[i].limit = undefined;
+						teams[i].cid = 1;
+						teams[i].cidNext = 1;
+
+						dao.teams.iterate({
+							ot: tx,
+							key: teams[i].tid,
+							callback: function (t) {
+								var s;
+			
+								s = t.seasons.length - 1;
+			
+								
+								t.cid = teams[i].cid;
+								t.limit = undefined;
+								t.type = undefined
+								t.seasons[s].cidNext = teams[i].cidNext
+			
+								return t;
+							}
+						})
+					} else {
+						teams[i].limit--;
+
+						dao.teams.iterate({
+							ot: tx,
+							key: teams[i].tid,
+							callback: function (t) {
+								var s;
+			
+								s = t.seasons.length - 1;
+			
+								
+								t.cid = teams[i].cid;
+								t.limit = teams[i].limit;
+								t.type = "TEMPT1";
+								t.seasons[s].cidNext = teams[i].cidNext
+			
+								return t;
+							}
+						})
+					}
+				}
+			}
+
+			console.log(teams)
+		})
+	}
+
     function newPhasePlayoffs(tx) {
 		
         account.checkAchievement.eating();
@@ -264,7 +327,6 @@
             seasonAttrs: ["winp","cidNext"],
             stats: ["kda","fg","fga","fgp","oppTw","pf"],							
             season: g.season,
-//            sortBy: ["winp","kda"]
             sortBy: ["winp","diffTower","kda"]
         }).then(function (teams) {
             var cid, i, series, teamsConf, tidPlayoffs, teamsConf2,teamsConf3;
@@ -1196,33 +1258,7 @@
         //    });
 			}).then(function () {
 			
-			
-			//for (i = 0; i < teams.length.length; i++) {
-			//	console.log("going to be moved: "+tid)
-		/*		dao.teams.iterate({
-					ot: tx,
-					callback: function (t) {
-						var s;
-
-						s = t.seasons.length - 1;
-
-				//		console.log(t.cid);
-				//		console.log(t.seasons[s].cidStart);
-				//		console.log(t.seasons[s].cidNext);
-						
-						//t.cid = 0;
-						t.seasons[s].imgURLCountry = t.imgURLCountry;
-						//console.log(t.imgURLCountry);
-						//console.log(t.seasons[s].imgURLCountry);
-						//t.seasons[s].playoffRoundsWon = 3;
-						//t.seasons[s].hype += 0.05;
-
-						return t;
-					}
-				});
-				
-			}).then(function () {	*/		
-			//}			
+					
 			
 			// change team cid for promotion and demotion
 			
@@ -1250,7 +1286,6 @@
 				for (i = 0; i < newLCS.length; i++) {
 					dao.teams.iterate({
 						ot: tx,
-//						key: tid,
 						key: newLCS[i],
 						callback: function (t) {
 							var s;
@@ -1260,9 +1295,8 @@
 							
 							t.cid = 0;
 							t.limit = 2;
+							t.type = "TEMPT1"
 							t.seasons[s].cidNext = 0;
-							console.log(t.tid+" "+t.cid);
-							console.log(t.tid+" "+t.seasons[s].cidNext);
 
 							return t;
 						}
