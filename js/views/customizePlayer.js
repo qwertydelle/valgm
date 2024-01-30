@@ -593,12 +593,6 @@ define(["dao", "globals", "ui", "core/finances", "core/league","data/champions2"
 									}
 									p.champions[i].name =   c[i].name;
 								}			
-								//console.log(player.champions.champion.length);
-							/*	var playerName = p.name;
-								var start_pos = playerName.indexOf("'") + 1;
-								var end_pos = playerName.indexOf("'",start_pos);
-								var userID = playerName.substring(start_pos,end_pos);
-								p.userID = userID;*/
 								
 								p.ratings[r].MMR = player.MMR(p.ratings[r],p.champions,p.pos,c,cp);
 								p.ratings[r].rank = player.rank(p.ratings[r].MMR);

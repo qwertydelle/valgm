@@ -35,7 +35,6 @@ define(["dao", "globals", "ui", "core/player", "core/team", "lib/bluebird", "lib
             strategies = _.pluck(teams, "strategy");
             hype = _.pluck(teams, "hype");
 
-
             // List of free agents, sorted by value
             players.sort(function (a, b) { return b.value - a.value; });
 
@@ -66,7 +65,7 @@ define(["dao", "globals", "ui", "core/player", "core/team", "lib/bluebird", "lib
                 }
 
                 // Small chance of actually trying to sign someone in free agency, gets greater as time goes on
-                if (g.phase === g.PHASE.FREE_AGENCY && Math.random() < 0.80 * g.daysLeft / 30) {
+                if (g.phase === g.PHASE.FREE_AGENCY && Math.random() < 0.80 * g.daysLeft / 30 || strategies[tid] === "rebuilding") {
                     return signTeam(ti + 1);
                 }
 
