@@ -531,7 +531,7 @@ define(["dao", "globals", "core/team", "lib/bluebird", "lib/jquery", "lib/unders
 							seriesEnd = 2;				
 						} else if (g.gameType == 1) {	
 							seriesStart = 0;
-							seriesEnd = 9;							
+					        seriesEnd = 4;							
 						} else if (g.gameType == 2) {	
 							seriesStart = 9;
 							seriesEnd = 10;				
@@ -553,7 +553,7 @@ define(["dao", "globals", "core/team", "lib/bluebird", "lib/jquery", "lib/unders
 							seriesEnd = 2;				
 						} else if (g.gameType == 1) {	
 							seriesStart = 0;
-							seriesEnd = 7;							
+							seriesEnd = 4;							
 						} else if (g.gameType == 2) {	
 							seriesStart = 7;
 							seriesEnd = 8;				
@@ -573,7 +573,7 @@ define(["dao", "globals", "core/team", "lib/bluebird", "lib/jquery", "lib/unders
 							seriesEnd = 2;				
 						} else if (g.gameType == 1) {	
 							seriesStart = 0;
-							seriesEnd = 6;							
+							seriesEnd = 4;							
 						} else if (g.gameType == 2) {	
 							seriesStart = 6;
 							seriesEnd = 7;				

@@ -1322,7 +1322,6 @@ define(["dao", "globals", "ui", "core/contractNegotiation", "core/draft", "core/
 							//console.log(tids);						
 				
 					   wonNeeded = 3;
-					console.log("Round: " + rnd + " Column: " + i);
 					if ( (series[rnd][i].home.won < wonNeeded) && (series[rnd][i].away.won < wonNeeded) ) {
 						// Make sure to set home/away teams correctly! Home for the lower seed is 1st, 2nd, 5th, and 7th games.
 						numGames = series[rnd][i].home.won + series[rnd][i].away.won;
