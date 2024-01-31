@@ -29,10 +29,3 @@ make
 cd valgm
 node server.js
 ```
-
-## Debugging and Problem Solving
-
-For debugging information, go to http://play.basketball-gm.com/ and click on
-Help > Debugging.
-
-To run the test suite, go to http://localhost:8080/test
