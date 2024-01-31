@@ -356,7 +356,7 @@ define(["dao", "globals", "core/player", "lib/bluebird", "lib/underscore", "util
             var i,j,rosterNumber;
 
             players = player.filter(players, {
-                attrs: ["pid", "valueNoPot", "valueNoPotFuzz", "valueMMR", "pos"],
+                attrs: ["pid", "valueNoPot", "valueNoPotFuzz", "valueMMR", "pos", "face"],
                 showNoStats: true,
                 showRookies: true
             });
@@ -446,7 +446,7 @@ define(["dao", "globals", "core/player", "lib/bluebird", "lib/underscore", "util
 					rosterNumber += 1;
 				}
 
-            }			
+            }
 			
 			
             // Update rosterOrder
@@ -459,6 +459,8 @@ define(["dao", "globals", "core/player", "lib/bluebird", "lib/underscore", "util
 
                     for (i = 0; i < players.length; i++) {
                         if (players[i].pid === p.pid) {
+                            
+
                             if (p.rosterOrder !== players[i].rosterOrder) {
                                 // Only write to DB if this actually changes
                                 p.rosterOrder = players[i].rosterOrder;
