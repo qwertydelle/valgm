@@ -23,6 +23,5 @@ app.get("/manifest_hack", (req, res) => {
     res.sendFile(__dirname + "/manifest_hack.html")
 })
 
-app.listen(3000)
+app.listen(process.env.PORT || 3000)
 console.log("Started");
-console.log("http://localhost:3000")
