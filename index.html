@@ -32,7 +32,7 @@
         loadCSS("css/bbgm-notifications.css");
         loadCSS("css/DT_bootstrap.css");
       } else {
-        loadCSS("./gen/bbgm.css");
+        loadCSS("gen/bbgm.css");
       }
 
       window.enableLogging =  false;
@@ -377,7 +377,7 @@
         script.dataset.main = bbgmPrefix + "js/app.js";
       } else {
         if (window.console) { console.log("If you want to see accurate error messages, click Tools > Enable Debug Mode."); }
-        script.src = bbgmPrefix + "./gen/app.js";
+        script.src = bbgmPrefix + "gen/app.js";
       }
       body.appendChild(script);
     </script>
