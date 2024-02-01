@@ -29,7 +29,9 @@ build-css:
 	del ".\genoutput.css"
 
 # target: build-js - Run the RequireJS optimizer to concatenate and minify all JavaScript files.
-build-js: 
+build-js:
+	npm install
+	npm install node-minify -g
 	node r.js -o baseUrl=js paths.requireLib=lib/require optimize=uglify2 preserveLicenseComments=false generateSourceMaps=true name=app include=requireLib mainConfigFile=js/app.js out=gen/app.js
 
 # target: appcache-timestamp - Update the timestamp in bbgm.appcache so that browsers will look for changed files
