@@ -8,7 +8,7 @@ define(["dao", "globals", "ui", "core/player", "lib/bluebird", "lib/underscore",
     function genFileName(leagueName, season, grouping) {
         var fileName;
 
-        fileName = "LOLGM_" + leagueName.replace(/[^a-z0-9]/gi, '_') + "_" + season + "_" + (season === "all" ? "seasons" : "season") + (grouping === "averages" ? "_Average_Stats" : "_Game_Stats");
+        fileName = "VALGM_" + leagueName.replace(/[^a-z0-9]/gi, '_') + "_" + season + "_" + (season === "all" ? "seasons" : "season") + (grouping === "averages" ? "_Average_Stats" : "_Game_Stats");
 
         return fileName + ".csv";
     }
