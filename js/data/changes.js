@@ -10,6 +10,10 @@ define(["lib/jquery", "util/eventLog"], function ($, eventLog) {
     all = [{
         date: "2024-02-01",
         msg: 'Initial Public Offering 🙂'
+    },
+    {
+        date: "2024-02-03",
+        msg: 'Added VCT EMEA 16 teams'
     }];
 
     function check() {

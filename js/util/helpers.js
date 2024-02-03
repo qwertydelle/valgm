@@ -231,7 +231,7 @@ define(["dao", "globals", "lib/knockout", "util/eventLog"], function (dao, g, ko
             {typeid: 1, teams: 30, tour: 4, name: "VCT Americas (16 Teams)"},
 
             //Commented out for now
-            // {typeid: -2, teams: 30, tour: 4, name: "VCT EMEA (16 Teams)"},
+            {typeid: -2, teams: 30, tour: 4, name: "VCT EMEA (16 Teams)"},
             // {typeid: 2, teams: 10, tour: 4, name: "LCK (10 Teams)"},
             // {typeid: 3, teams: 12, tour: 32, name: "LPL (12 Teams)"},
             // {typeid: 4, teams: 8, tour: 32, name: "LMS (8 Teams) "},
@@ -354,21 +354,12 @@ define(["dao", "globals", "lib/knockout", "util/eventLog"], function (dao, g, ko
             {colors: ["#800080", "#33CC33", "#FFD700"], tid: 13, cid: 1, did: 1, region: "Lollipoppy Illuminati", name: "Lollipoppy Illuminati", abbrev: "LIL", pop: 17,country: "EU", imgURLCountry :"/img/flags/flags/48/European Union.png"},
             {colors: ["#FFA500", "#00CED1", "#FFFFFF"], tid: 14, cid: 1, did: 1, region: "Summerwolf", name: "Summerwolf", abbrev: "SWF", pop: 16,country: "EU", imgURLCountry :"/img/flags/flags/48/European Union.png"},
             {colors: ["#FFD700", "#00BFFF", "#FFFFFF"], tid: 15, cid: 1, did: 1, region: "Team Beach", name: "Beach", abbrev: "BCH", pop: 15,country: "EU", imgURLCountry :"/img/flags/flags/48/European Union.png"},
-            {colors: ["#32CD32", "#FF0000", "#000000"], tid: 16, cid: 2, did: 2, region: "Win or Bench", name: "Win or Bench", abbrev: "WoB", pop: 14,country: "EU", imgURLCountry :"/img/flags/flags/48/European Union.png"},
-            {colors: ["#9932CC", "#00FF00", "#FF4500"], tid: 17, cid: 2, did: 2, region: "Team Total Toxic", name: "Total Toxic", abbrev: "TTT", pop: 13,country: "EU", imgURLCountry :"/img/flags/flags/48/European Union.png"},
-            {colors: ["#FF0000", "#000000", "#FFA500"], tid: 18, cid: 2, did: 2, region: "Red Zed Redemption", name: "Red Zed Redemption", abbrev: "RZR", pop: 12,country: "EU", imgURLCountry :"/img/flags/flags/48/European Union.png"},
-            {colors: ["#FFFF00", "#FF4500", "#0000FF"], tid: 19, cid: 2, did: 2, region: "Flash Ignite LVL 1", name: "Flash Ignite LVL 1", abbrev: "Fl1", pop: 11,country: "EU", imgURLCountry :"/img/flags/flags/48/European Union.png"},
-            {colors: ["#FF8C00", "#000000", "#FFD700"], tid: 20, cid: 2, did: 2, region: "Deft Punk", name: "Deft Punk", abbrev: "DP", pop: 10,country: "EU", imgURLCountry :"/img/flags/flags/48/European Union.png"},
-            {colors: ["#FF0000", "#000000", "#FFA500"], tid: 21, cid: 2, did: 2, region: "Feeder Esports", name: "Feeder", abbrev: "FDR", pop: 9,country: "EU", imgURLCountry :"/img/flags/flags/48/European Union.png"},
-            {colors: ["#008000", "#ADD8E6", "#FFD700"], tid: 22, cid: 2, did: 2, region: "Earth Wind and Fiora", name: "Earth Wind and Fiora", abbrev: "EWF", pop: 8,country: "EU", imgURLCountry :"/img/flags/flags/48/European Union.png"},
-            {colors: ["#808080", "#FF0000", "#000000"], tid: 23, cid: 2, did: 2, region: "Lost at Bans", name: "Lost at Bans", abbrev: "LaB", pop: 7,country: "EU", imgURLCountry :"/img/flags/flags/48/European Union.png"},
-            {colors: ["#FFD700", "#00FFFF", "#000000"], tid: 24, cid: 2, did: 2, region: "Eggs or I Feed", name: "Eggs or I Feed", abbrev: "EIF", pop: 6,country: "EU", imgURLCountry :"/img/flags/flags/48/European Union.png"},
-            {colors: ["#FFA500", "#00FF00", "#0000FF"], tid: 25, cid: 2, did: 2, region: "Spirit Bomb Survivors", name: "Spirit Bomb Survivors", abbrev: "SBS", pop: 5,country: "EU", imgURLCountry :"/img/flags/flags/48/European Union.png"},
-            {colors: ["#8B008B", "#FFD700", "#000000"], tid: 26, cid: 2, did: 2, region: "Zed Poet Society", name: "Zed Poet Society", abbrev: "ZPS", pop: 4,country: "EU", imgURLCountry :"/img/flags/flags/48/European Union.png"},
-            {colors: ["#006400", "#0000FF", "#FFFFFF"], tid: 27, cid: 2, did: 2, region: "Did We Win", name: "Did We Win", abbrev: "DWW", pop: 3,country: "EU", imgURLCountry :"/img/flags/flags/48/European Union.png"},
-            {colors: ["#eaeaea", "#893168", "#0000FF"], tid: 28, cid: 2, did: 2, region: "Team Cancer", name: "Cancer", abbrev: "TC", pop: 2,country: "EU", imgURLCountry :"/img/flags/flags/48/European Union.png"},
-            {colors: ["#ffd97d", "#FFFFFF", "#FFFFFF"], tid: 29, cid: 2, did: 2, region: "Vexillum", name: "Vexillum", abbrev: "VEX", pop: 1,country: "EU", imgURLCountry :"/img/flags/flags/48/European Union.png"}
-			
+            {colors: ["#32CD32", "#FF0000", "#000000"], tid: 16, cid: 1, did: 1, region: "Win or Bench", name: "Win or Bench", abbrev: "WoB", pop: 14,country: "EU", imgURLCountry :"/img/flags/flags/48/European Union.png"},
+            {colors: ["#9932CC", "#00FF00", "#FF4500"], tid: 17, cid: 1, did: 1, region: "Team Total Toxic", name: "Total Toxic", abbrev: "TTT", pop: 13,country: "EU", imgURLCountry :"/img/flags/flags/48/European Union.png"},
+            {colors: ["#FF0000", "#000000", "#FFA500"], tid: 18, cid: 1, did: 1, region: "Red Zed Redemption", name: "Red Zed Redemption", abbrev: "RZR", pop: 12,country: "EU", imgURLCountry :"/img/flags/flags/48/European Union.png"},
+            {colors: ["#FFFF00", "#FF4500", "#0000FF"], tid: 19, cid: 1, did: 1, region: "Flash Ignite LVL 1", name: "Flash Ignite LVL 1", abbrev: "Fl1", pop: 11,country: "EU", imgURLCountry :"/img/flags/flags/48/European Union.png"},
+            {colors: ["#FF8C00", "#000000", "#FFD700"], tid: 20, cid: 1, did: 1, region: "Deft Punk", name: "Deft Punk", abbrev: "DP", pop: 10,country: "EU", imgURLCountry :"/img/flags/flags/48/European Union.png"},
+            {colors: ["#FF0000", "#000000", "#FFA500"], tid: 21, cid: 1, did: 1, region: "Feeder Esports", name: "Feeder", abbrev: "FDR", pop: 9,country: "EU", imgURLCountry :"/img/flags/flags/48/European Union.png"},
         ];
 
         teams = addPopRank(teams);

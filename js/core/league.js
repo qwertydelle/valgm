@@ -159,8 +159,8 @@ define(["dao", "db", "globals", "ui", "core/champion", "data/championPatch", "da
 			divisions = [{did: 0, cid: 0, name: "VCT Americas"}, {did: 1, cid: 1, name: "VCT NA Ascension"}];
 		} else if ((typeid == -2) ) {
 			teamsDefault = helpers.getTeamsDefaultEU();
-			conferences = [{cid: 0, name: "League Championship Series"}, {cid: 1, name: "Challenger Series"}, {cid: 2, name: "Ladder"}];
-			divisions = [{did: 0, cid: 0, name: "LCS"}, {did: 1, cid: 1, name: "CS"}, {did: 2, cid: 2, name: "L"}];
+			conferences = [{cid: 0, name: "Champions Tour: EMEA League"}, {cid: 1, name: "VCT EMEA Ascension"}];
+			divisions = [{did: 0, cid: 0, name: "VCT EMEA"}, {did: 1, cid: 1, name: "VCT EMEA Ascension"}];
 		} else if (typeid == 2) {
 			teamsDefault = helpers.getTeamsLCKDefault();
 			conferences = [{cid: 0, name: "League Champions Korea"}];
